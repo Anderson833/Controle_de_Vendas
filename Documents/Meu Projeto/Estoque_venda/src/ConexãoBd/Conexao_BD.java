@@ -29,7 +29,7 @@ public class Conexao_BD {
             
             
         } catch (Exception e) {
-            throw new RuntimeException( "Não Salvo no Banco"+e);
+            
         }
        
         

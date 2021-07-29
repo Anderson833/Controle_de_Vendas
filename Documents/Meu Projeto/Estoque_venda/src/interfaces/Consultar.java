@@ -5,10 +5,12 @@
  */
 package interfaces;
 
+import ConexãoBd.Conexao_BD;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -23,6 +25,7 @@ public class Consultar extends javax.swing.JFrame {
      */
     public Consultar() {
         initComponents();
+        setLocationRelativeTo(this);
     }
 
     /**
@@ -37,29 +40,62 @@ public class Consultar extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txtID = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tabelaUsuario = new javax.swing.JTable();
         btcst = new javax.swing.JButton();
-        exebirtd = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         deletaUsu = new javax.swing.JButton();
+        btver = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        TbUsuario = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Consultar");
 
         jPanel1.setBackground(new java.awt.Color(51, 255, 204));
 
         jLabel1.setText("Digite ID do Usuário:");
 
-        tabelaUsuario.setModel(new javax.swing.table.DefaultTableModel(
+        txtID.setText("11");
+        txtID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtIDActionPerformed(evt);
+            }
+        });
+
+        btcst.setText("Consultar");
+        btcst.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btcstActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel2.setText("Consultar Usuário");
+
+        deletaUsu.setText("Deletar");
+        deletaUsu.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        deletaUsu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deletaUsuActionPerformed(evt);
+            }
+        });
+
+        btver.setText("Visualizar");
+        btver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btverActionPerformed(evt);
+            }
+        });
+
+        TbUsuario.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Id:", "Nome:", "Endereço:", "Telefone:", "UsuLogin:", "Senha:"
+                "idUsuario", "Nome", "Endereço", "Telefone", "Login", "Senha"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false
@@ -73,96 +109,65 @@ public class Consultar extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(tabelaUsuario);
-
-        btcst.setText("Consultar");
-        btcst.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btcstActionPerformed(evt);
-            }
-        });
-
-        exebirtd.setText("Exibir Todos");
-        exebirtd.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                exebirtdActionPerformed(evt);
-            }
-        });
-
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel2.setText("Consultar Usuário");
-
-        deletaUsu.setText("Deletar");
-        deletaUsu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                deletaUsuActionPerformed(evt);
-            }
-        });
+        jScrollPane1.setViewportView(TbUsuario);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(56, 56, 56)
-                .addComponent(btcst, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(100, 100, 100)
-                .addComponent(deletaUsu, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(93, 93, 93)
-                .addComponent(exebirtd, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(150, Short.MAX_VALUE))
+                .addGap(81, 81, 81)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29)
+                .addComponent(txtID)
+                .addGap(122, 122, 122))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(81, 81, 81)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(29, 29, 29)
-                                .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(296, 296, 296)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1)))
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(118, 118, 118)
+                .addComponent(btcst, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 111, Short.MAX_VALUE)
+                .addComponent(deletaUsu, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 140, Short.MAX_VALUE)
+                .addComponent(btver, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(78, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(56, 56, 56)
+                .addComponent(jScrollPane1)
+                .addGap(42, 42, 42))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(31, 31, 31)
+                .addGap(39, 39, 39)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(51, 51, 51)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(34, 141, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btcst, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(deletaUsu, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(exebirtd, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(50, 50, 50))))
+                .addGap(43, 43, 43)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(44, 44, 44)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(42, 42, 42)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btver, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(deletaUsu, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btcst, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(46, 46, 46))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(1, 1, 1)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -170,26 +175,26 @@ public class Consultar extends javax.swing.JFrame {
 
     private void btcstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btcstActionPerformed
 
-        Integer n=Integer.parseInt(txtID.getText());
+             Integer n=Integer.parseInt(txtID.getText());
 
         try {
 
-            Class.forName("com.mysql.jdbc.Driver");
+           
 
-            Connection Conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/estoque_venda","root","");
+            Connection Conn = Conexao_BD.getConnection();
 
-            String sql="select idUsu,nome,endereco,telefone,usuario,senha from usuario where idUsu= "+n+"";
+            String sql="select idUsu,nome,endereco,telefone,login,senha from usuario where idUsu= "+n+"";
 
             PreparedStatement Patm = Conn.prepareStatement(sql);
 
             ResultSet Rst = Patm.executeQuery();
 
-            DefaultTableModel modelo = (DefaultTableModel) tabelaUsuario.getModel();
+            DefaultTableModel modelo = (DefaultTableModel) TbUsuario.getModel();
 
             while(Rst.next()){
 
                 String [] lista = new String[]{Rst.getString("idUsu"),Rst.getString("nome"),Rst.getString("endereco")
-                    ,Rst.getString("telefone"),Rst.getString("usuario") ,Rst.getString("senha")};
+                    ,Rst.getString("telefone"),Rst.getString("login") ,Rst.getString("senha")};
 
                 modelo.addRow(lista);
 
@@ -201,39 +206,8 @@ public class Consultar extends javax.swing.JFrame {
 
         } catch (Exception e) {
         }
+   
     }//GEN-LAST:event_btcstActionPerformed
-
-    private void exebirtdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exebirtdActionPerformed
-
-        try {
-
-            Class.forName("com.mysql.jdbc.Driver");
-
-            Connection Conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/estoque_venda","root","");
-
-            String sql="select * from usuario";
-
-            PreparedStatement Patm = Conn.prepareStatement(sql);
-
-            ResultSet Rst = Patm.executeQuery();
-
-            DefaultTableModel modelo = (DefaultTableModel) tabelaUsuario.getModel();
-
-            while(Rst.next()){
-
-                String [] lista = new String[]{Rst.getString("idUsu"),Rst.getString("nome"),Rst.getString("endereco")
-                    ,Rst.getString("telefone"),Rst.getString("usuario") ,Rst.getString("senha")};
-
-                modelo.addRow(lista);
-
-            }
-           Rst.close();
-            Patm.close();
-            Conn.close();
-
-        } catch (Exception e) {
-        }
-    }//GEN-LAST:event_exebirtdActionPerformed
 
     private void deletaUsuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deletaUsuActionPerformed
 
@@ -264,6 +238,44 @@ public class Consultar extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_deletaUsuActionPerformed
+
+    private void btverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btverActionPerformed
+      
+          try {
+
+           
+
+            Connection Conn = Conexao_BD.getConnection();
+
+            String sql="SELECT * FROM usuario";
+
+            PreparedStatement Patm = Conn.prepareStatement(sql);
+
+            ResultSet Rst = Patm.executeQuery();
+
+            DefaultTableModel md = (DefaultTableModel) TbUsuario.getModel();
+
+            while(Rst.next()){
+
+                String [] lista = new String[]{Rst.getString("idUsu"),Rst.getString("nome"),Rst.getString("endereco")
+                    ,Rst.getString("telefone"),Rst.getString("login") ,Rst.getString("senha")};
+
+                md.addRow(lista);
+
+            }
+           Rst.close();
+            Patm.close();
+            Conn.close();
+
+        } catch (SQLException e) {
+        }
+        
+        
+    }//GEN-LAST:event_btverActionPerformed
+
+    private void txtIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtIDActionPerformed
 
     /**
      * @param args the command line arguments
@@ -301,14 +313,14 @@ public class Consultar extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable TbUsuario;
     private javax.swing.JButton btcst;
+    private javax.swing.JButton btver;
     private javax.swing.JButton deletaUsu;
-    private javax.swing.JButton exebirtd;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tabelaUsuario;
     private javax.swing.JTextField txtID;
     // End of variables declaration//GEN-END:variables
 }
