@@ -25,7 +25,7 @@ import javax.swing.JOptionPane;
 public class DaoProduto {
 
    
-    
+    //MÉTODO PARA SALVAR UMA LIZSTA DE PRODUTO; 
     public  List<Prod> unit(){
         
       

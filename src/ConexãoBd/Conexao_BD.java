@@ -14,6 +14,7 @@ import java.sql.DriverManager;
  */
 public class Conexao_BD {
     
+    //Instânciando conexão com Classe Conexao_BD;
     public static Connection getConnection(){
        
         

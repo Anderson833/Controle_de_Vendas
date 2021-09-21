@@ -21,7 +21,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class login  {
     
-     
+     //MÉTODO PARA REALIZAR LOGIN DO USUÁRIO;
     public boolean logar(String usuario,String senha) throws SQLException{
         
         
