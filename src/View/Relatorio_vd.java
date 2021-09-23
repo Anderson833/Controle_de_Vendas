@@ -5,7 +5,7 @@
  */
 package View;
 
-import ConexãoBd.Conexao_BD;
+import Conexao.Conexao_BD;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

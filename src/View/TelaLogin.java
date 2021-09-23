@@ -5,7 +5,7 @@
  */
 package View;
 
-import ConexãoBd.login;
+import Dao.Daologin;
 
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -23,6 +23,8 @@ public class TelaLogin extends javax.swing.JFrame {
      */
     public TelaLogin() {
         initComponents();
+        
+        //CENTRALIZANDO VIEW AO CENTRO;
         setLocationRelativeTo(this);
     }
 
@@ -142,46 +144,42 @@ public class TelaLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void PASSWORDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PASSWORDActionPerformed
-        // TODO add your handling code here:
+       
     }//GEN-LAST:event_PASSWORDActionPerformed
 
     private void BTLOGINActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTLOGINActionPerformed
-        // TODO add your handling code here:
+      
         
-             login lg = new login();
-        
-       
-        
+        //Criando objetos da Classe DaoLogin;
+        Daologin lg = new Daologin();
+
         try {
-            
-            if(lg.logar(txtUSUARIO.getText(),PASSWORD.getText())){
+                 //Pssando objeto para Pegar Usuário é senha dos Campos da View TelaLogin;
+            if (lg.logar(txtUSUARIO.getText(), PASSWORD.getText())) {
+               
+                //Instânciando view  TelaPrincipal;
                 TelaPrincipal tp = new TelaPrincipal();
+                //Passando objeto para abrir TelaPrincipal ao Logar;
                 tp.setVisible(true);
+                //Fechando a  TelaLgin;
                 this.dispose();
-              
-            }
-            
-            else{
+
+            } else {
+                //Caso tenha dados Incorretos mostrar essa mensagem;
                 JOptionPane.showMessageDialog(null, "Usuário ou Senha Incorreta!");
             }
         } catch (SQLException ex) {
-            Logger.getLogger(TelaLogin.class.getName()).log(Level.SEVERE, null, ex);
+             //Caso tenha dados errados mostrar essa mensagem;
+            JOptionPane.showMessageDialog(null, "Error De lohin !");
         }
-        
-     
-        
+
+
     }//GEN-LAST:event_BTLOGINActionPerformed
 
     private void txtUSUARIOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUSUARIOActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_txtUSUARIOActionPerformed
 
-     
-      
-    
-    
-    
-    
     /**
      * @param args the command line arguments
      */
