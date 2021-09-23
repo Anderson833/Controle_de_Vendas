@@ -275,7 +275,7 @@ public class Produto extends javax.swing.JFrame {
               
               //seta valor
              prod.setCodProd(txtCodProd.getText());
-             //Passando objeto dacasse ProdutoModel´para objeto da classe ProdutoDao;
+             //Passando objeto da classe ProdutoModel´para objeto da classe ProdutoDao;
              dao.deletaProduto(prod);
         
     }
@@ -301,7 +301,7 @@ public class Produto extends javax.swing.JFrame {
               prod.setDescricao(txtDescricao.getText());
               prod.setValorUnit(Double.parseDouble(txtValorUnt.getText()));
               prod.setEstoque(Integer.parseInt(txtEstoque.getText()));
-             //Passando objeto dacasse ProdutoModel´para objeto da classe ProdutoDao;
+             //Passando objeto da classe ProdutoModel´para objeto da classe ProdutoDao;
               dao.atualizarProdtuo(prod);
               
               
@@ -324,7 +324,7 @@ public class Produto extends javax.swing.JFrame {
               prod.setDescricao(txtDescricao.getText());
               prod.setValorUnit(Double.parseDouble(txtValorUnt.getText()));
               prod.setEstoque(Integer.parseInt(txtEstoque.getText()));
-                 //Passando objeto dacasse ProdutoModel´para objeto da classe ProdutoDao;
+                 //Passando objeto da classe ProdutoModel´para objeto da classe ProdutoDao;
               dao.adicionarProduto(prod);
               
         
@@ -398,7 +398,7 @@ public class Produto extends javax.swing.JFrame {
          
      }
      
-     //Método para limpar os campod de textos;
+     //Método para limpar os campos de textos;
      public void limpar(){
           txtCodProd.setText("");
          txtNome.setText("");

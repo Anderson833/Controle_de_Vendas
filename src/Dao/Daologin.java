@@ -23,24 +23,25 @@ public class Daologin  extends Conexao_BD {
      //MÉTODO PARA REALIZAR LOGIN DO USUÁRIO;
     public boolean logar(String usuario,String senha) throws SQLException{
         
-        //Intânciando conexão com classe Conexso_BD;
+        //Instânciando conexão com classe Conexso_BD;
         Connection conn=Conexao_BD.getConnection();
     
         
         try {
           
-           
+             //Comando para selecionar usuário e senha no banco de dados;
              String sql="select * from usuario where login=? and senha=? ";
              
-             PreparedStatement Patm = conn.prepareStatement(sql);
-             Patm.setString(1, usuario);
-             Patm.setString(2, senha);
+             PreparedStatement patm = conn.prepareStatement(sql);
+             patm.setString(1, usuario);
+             patm.setString(2, senha);
              
    
-             
-             //Fechando as Conexões com  Método da Classe Conexao_BD ;
-              fecharConexoes();
- 
+           //Fechando conexão PreparedStatement;
+           patm.close();
+          
+           //Fechando conexão Connection;
+           conn.close();
           
         } catch (Exception ex) {
             //Caso ocorrer aldo errado mostrar essa mensagem;

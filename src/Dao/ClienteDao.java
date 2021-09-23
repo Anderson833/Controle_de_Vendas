@@ -26,7 +26,7 @@ public class ClienteDao {
         
        
         try {
-            //Inserinto os dados docliente no banco de dados;
+            //Inserinto os dados do cliente no banco de dados;
             String sql="insert into cliente(codCli,nome,endereco,telefone,IdUsu)values(?,?,?,?,?)";
              
             PreparedStatement patm = conn.prepareStatement(sql);
@@ -165,7 +165,7 @@ public class ClienteDao {
             
             
             PreparedStatement patm = conn.prepareStatement(sql);
-            //Passandoos valores nos paramentros;
+            //Passandos valores nos paramentros;
             patm.setString(1,cliente.getNome());
             patm.setString(2,cliente.getEndereco());
             patm.setString(3,cliente.getTelefone());

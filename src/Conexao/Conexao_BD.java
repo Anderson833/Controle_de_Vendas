@@ -41,35 +41,6 @@ public class Conexao_BD {
 
     }
 
-     //Método para Fechar as Conexões;
-    public void fecharConexoes(){
-
-        
-        try {
-            
-            //Abrindo uma Connection;
-            Connection conn = null;
-
-             //Abrindo um PreparedStatement;
-            PreparedStatement patm = null;
-
-            //Abrindo um ResultSet;
-            ResultSet rst = null;
-        
-            //Fechando ResultSet;
-              rst.close();
-    
-            //Fechando PreparedStatement;
-             patm.close();
-            
-             //Fechando Connection;
-             conn.close();
-            
-            
-        } catch (Exception e) {
-        }
-       
-      
-    }
+   
 
 }
