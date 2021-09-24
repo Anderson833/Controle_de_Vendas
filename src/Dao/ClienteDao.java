@@ -26,7 +26,7 @@ public class ClienteDao {
         
        
         try {
-            //Inserinto os dados do cliente no banco de dados;
+            //Inserindo os dados do cliente no banco de dados;
             String sql="insert into cliente(codCli,nome,endereco,telefone,IdUsu)values(?,?,?,?,?)";
              
             PreparedStatement patm = conn.prepareStatement(sql);
@@ -159,7 +159,7 @@ public class ClienteDao {
         Connection conn=Conexao_BD.getConnection();
                try {
            
-          //Comando para que realizar atualização no banco de dados;
+          //Comando para  realizar atualização no banco de dados;
             String sql="UPDATE cliente SET nome=?,endereco=?, telefone=? WHERE codCli=?";
             
             
