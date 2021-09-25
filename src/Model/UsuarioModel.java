@@ -3,10 +3,11 @@ package Model;
 
 /**
  *
- * @author ander
+ * @author anderson
  */
 public class UsuarioModel {
     
+    //Atributos do usuário;
     
     private String idUsu;
     private String nome;

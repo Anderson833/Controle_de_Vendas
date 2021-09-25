@@ -2,7 +2,6 @@
 package Dao;
 
 import Conexao.Conexao_BD;
-import Model.ClienteModel;
 import Model.UsuarioModel;
 
 import java.sql.Connection;
