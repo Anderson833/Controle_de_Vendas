@@ -3,6 +3,7 @@ package Dao;
 
 import Conexao.Conexao_BD;
 import Model.EstoqueModel;
+import Model.ProdutoModel;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,8 +18,8 @@ import javax.swing.JOptionPane;
  */
 public class EstoqueDao {
     
-      //Método para adicionar dados na tabela estoque ao banco de dados;
-    public void adicionarProdAoEstoque(EstoqueModel estoque){
+      //Método para adicionar dados na tabela estoque no banco de dados;
+    public void adicionarAoEstoque(EstoqueModel estoque){
         
         //Criando uma Connection com Classe Conexao_BD; 
         Connection conn=Conexao_BD.getConnection();
@@ -43,10 +44,10 @@ public class EstoqueDao {
             
             if(upd>0){
                 //Caso de tudo certo exibir essa mensagem;
-                JOptionPane.showMessageDialog(null, "Estoque Realizado Com Sucesso");
+                JOptionPane.showMessageDialog(null, "Estoque salvor Com Sucesso");
             }else{
                 //Caso de error  exibir essa mensagem;
-                JOptionPane.showMessageDialog(null, "Estoque Não Realizado !","Error ",JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Estoque não salvor !","Error ",JOptionPane.ERROR_MESSAGE);
             }
             
              //Fechando conexão PreparedStatement;
@@ -115,5 +116,93 @@ public class EstoqueDao {
         return listEstoque;
          
      }
+     
+     
+     
+        //Método para deletar estoque no banco de dados pelo código do estoque;
+      public void deletatoque(EstoqueModel estoque){
+          
+           //Criando uma Connection com Classe Conexao_BD; 
+        Connection conn=Conexao_BD.getConnection();
+             
+        try {
+
+          // Comando que  Deletar estoque pelo código;
+            String sql = "DELETE FROM estoque WHERE codEstoq=?";
+
+            PreparedStatement patm = conn.prepareStatement(sql);
+             
+            //Passando em paramentros código do estoque;
+            patm.setString(1,estoque.getCodEstoq());
+            
+            //Executar;
+            int res = patm.executeUpdate();
+
+            if (res > 0) {
+                //Caso de tudo certo será exibido essa mensagem para usuário;
+                JOptionPane.showMessageDialog(null, "Estoque Deletado com Sucesso !", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                 //Caso de error será exibido essa mensagem para usuário;
+                JOptionPane.showMessageDialog(null, "Estoque não Deletado !", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+            //Fechando conexão PreparedStatement;
+            patm.close();
+            
+            //Fechando conexão Connection;
+            conn.close();
+            
+
+        } catch (Exception e) {
+            //Caso de error ao deletar mostrar essa mensagem;
+             JOptionPane.showMessageDialog(null, "Error ao Deletar Estoque !", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        
+      }
+    
+      
+       //Método para fazer atualização dos dados do estoque;
+       public void atualizarEstoque(EstoqueModel estoque){  
+           //Criando uma Connection com Classe Conexao_BD; 
+        Connection conn=Conexao_BD.getConnection();
+               try {
+           
+          //Comando para que realizar atualização no banco de dados;
+            String sql="UPDATE estoque SET codProd=?, entrada=?, saida=?, qtd_Estoque=? ,data=? WHERE codEstoq=?";
+            
+            
+            
+            PreparedStatement patm = conn.prepareStatement(sql);
+            //Passandoos valores nos paramentros;
+          
+            patm.setString(1,estoque.getCodProd());
+            patm.setInt(2,estoque.getEntrada());
+            patm.setInt(3,estoque.getSaida());
+            patm.setInt(4,estoque.getQtdEstoq());
+            patm.setString(5,estoque.getData());
+            patm.setString(6,estoque.getCodEstoq());
+            //Executar;
+             int res= patm.executeUpdate();
+            
+            if(res>0){
+                //Mensagem para mostrar para usuário caso esteja tudo correto!;
+                JOptionPane.showMessageDialog(null,"Estoque Atualizador com Sucesso !","Sucesso!",JOptionPane.INFORMATION_MESSAGE);
+            }else{
+                //Mensagem oara exibir para usuário caso tenha informações incorretas;
+                JOptionPane.showMessageDialog(null,"Estoque não Atualizador !","Error",JOptionPane.ERROR_MESSAGE);
+            }
+            
+            //Fechando conexão PreparedStatement;
+            patm.close();
+            
+            //Fechando conexão Connection;
+            conn.close();
+            
+        } catch (Exception e) {
+            //Mensagem caso de error;
+              JOptionPane.showMessageDialog(null,"Error ao Atualizar Estoque !","Error",JOptionPane.ERROR_MESSAGE);
+        }
+     
+       }
     
 }

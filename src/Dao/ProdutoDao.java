@@ -6,7 +6,6 @@
 package Dao;
 
 import Conexao.Conexao_BD;
-import Model.ClienteModel;
 import Model.ProdutoModel;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
