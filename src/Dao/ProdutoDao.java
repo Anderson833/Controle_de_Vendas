@@ -22,7 +22,7 @@ import javax.swing.JOptionPane;
 public class ProdutoDao {
     
        //Método para visualizar todos Produtos;
-     public List<ProdutoModel> visualizarClientes(){
+     public List<ProdutoModel> visualizarProduto(){
         //Criando uma Connection com Classe Conexao_BD; 
         Connection conn=Conexao_BD.getConnection();
      

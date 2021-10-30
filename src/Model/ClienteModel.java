@@ -67,6 +67,11 @@ public class ClienteModel {
     public void setIdsu(String Idsu) {
         this.Idsu = Idsu;
     }
+
+    @Override
+    public String toString() {
+        return getCodCli();
+    }
     
     
 }

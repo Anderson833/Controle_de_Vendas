@@ -52,7 +52,7 @@ public class Cliente extends javax.swing.JFrame {
         setTitle("Clientes");
         setFont(new java.awt.Font("Agency FB", 1, 12)); // NOI18N
 
-        jPanel1.setBackground(new java.awt.Color(224, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(153, 153, 255));
 
         jLabel1.setText("Código Cliente:");
 

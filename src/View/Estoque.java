@@ -18,6 +18,8 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Estoque extends javax.swing.JFrame {
 
+    String date="";
+    
     public Estoque() {
         initComponents();
         
@@ -352,6 +354,7 @@ public class Estoque extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
      
+        
         //Método para visualizar todo estoque;
         visualizarEstoque();
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -480,7 +483,7 @@ public class Estoque extends javax.swing.JFrame {
                 estoque.getEntrada(),
                 estoque.getSaida(),
                 estoque.getQtdEstoq(),
-                estoque.getData()
+               estoque.getData()
             
             
             
@@ -577,6 +580,10 @@ public class Estoque extends javax.swing.JFrame {
             dm.removeRow(0);
         }
     }
+    
+    
+   
+    
     
     public static void main(String args[]) {
         

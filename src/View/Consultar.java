@@ -6,11 +6,15 @@
 package View;
 
 import Conexao.Conexao_BD;
+import Dao.UsuarioDao;
+import Model.UsuarioModel;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -20,14 +24,25 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Consultar extends javax.swing.JFrame {
 
+   
+            
+            
+            
     /**
      * Creates new form Consultar
      */
     public Consultar() {
         initComponents();
         setLocationRelativeTo(this);
+        
+       
+        seta();
+        
     }
 
+     
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -39,13 +54,13 @@ public class Consultar extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        txtID = new javax.swing.JTextField();
         btcst = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         deletaUsu = new javax.swing.JButton();
         btver = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         TbUsuario = new javax.swing.JTable();
+        jCombo = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Consultar");
@@ -53,13 +68,6 @@ public class Consultar extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(51, 255, 204));
 
         jLabel1.setText("Digite ID do Usuário:");
-
-        txtID.setText("11");
-        txtID.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtIDActionPerformed(evt);
-            }
-        });
 
         btcst.setText("Consultar");
         btcst.addActionListener(new java.awt.event.ActionListener() {
@@ -94,16 +102,9 @@ public class Consultar extends javax.swing.JFrame {
                 "idUsuario", "Nome", "Endereço", "Telefone", "Login", "Senha"
             }
         ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class
-            };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false
             };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
@@ -111,20 +112,17 @@ public class Consultar extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(TbUsuario);
 
+        jCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Opção" }));
+        jCombo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(81, 81, 81)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
-                .addComponent(txtID)
-                .addGap(122, 122, 122))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(118, 118, 118)
                 .addComponent(btcst, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -137,24 +135,35 @@ public class Consultar extends javax.swing.JFrame {
                 .addGap(56, 56, 56)
                 .addComponent(jScrollPane1)
                 .addGap(42, 42, 42))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(81, 81, 81)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 463, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(374, 374, 374)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(39, 39, 39)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(43, 43, 43)
+                .addGap(47, 47, 47)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(44, 44, 44)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(48, 48, 48)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(42, 42, 42)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btver, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(deletaUsu, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btcst, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(47, Short.MAX_VALUE))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -171,9 +180,13 @@ public class Consultar extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    
+    
+    
+    
     private void btcstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btcstActionPerformed
 
-             Integer n=Integer.parseInt(txtID.getText());
 
         try {
 
@@ -181,11 +194,11 @@ public class Consultar extends javax.swing.JFrame {
 
             Connection Conn = Conexao_BD.getConnection();
 
-            String sql="select idUsu,nome,endereco,telefone,login,senha from usuario where idUsu= "+n+"";
+         String sql="select idUsu,nome,endereco,telefone,login,senha from usuario where idUsu like "+jCombo.getSelectedItem()+"";
 
             PreparedStatement Patm = Conn.prepareStatement(sql);
 
-            ResultSet Rst = Patm.executeQuery();
+           ResultSet Rst = Patm.executeQuery();
 
             DefaultTableModel modelo = (DefaultTableModel) TbUsuario.getModel();
 
@@ -193,9 +206,10 @@ public class Consultar extends javax.swing.JFrame {
 
                 String [] lista = new String[]{Rst.getString("idUsu"),Rst.getString("nome"),Rst.getString("endereco")
                     ,Rst.getString("telefone"),Rst.getString("login") ,Rst.getString("senha")};
-
+               
                 modelo.addRow(lista);
-
+            
+               
             }
 
             Rst.close();
@@ -204,7 +218,7 @@ public class Consultar extends javax.swing.JFrame {
 
         } catch (Exception e) {
         }
-   
+    
     }//GEN-LAST:event_btcstActionPerformed
 
     private void deletaUsuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deletaUsuActionPerformed
@@ -215,11 +229,11 @@ public class Consultar extends javax.swing.JFrame {
 
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/estoque_venda","root","");
 
-            String sql="delete from usuario where idUsu=?";
+            String sql="delete from usuario where idUsu="+jCombo.getSelectedItem()+"";
 
             PreparedStatement patm = conn.prepareStatement(sql);
 
-            patm.setInt(1,Integer.parseInt(txtID.getText()));
+     
 
             int res= patm.executeUpdate();
 
@@ -252,7 +266,7 @@ public class Consultar extends javax.swing.JFrame {
             ResultSet Rst = Patm.executeQuery();
 
             DefaultTableModel md = (DefaultTableModel) TbUsuario.getModel();
-
+           md.setNumRows(0);
             while(Rst.next()){
 
                 String [] lista = new String[]{Rst.getString("idUsu"),Rst.getString("nome"),Rst.getString("endereco")
@@ -270,10 +284,62 @@ public class Consultar extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_btverActionPerformed
+     public void seta(){
+        UsuarioDao dao= new UsuarioDao();
+        
+        jCombo.removeAll();
+        
+        for (UsuarioModel v :dao.visualizarUsuario()) {
+            
+          jCombo.addItem(v);
+       
+         
+   }
+         
+  }     
+    private void jComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboActionPerformed
+      
+   //  UsuarioModel usu = (UsuarioModel) jCombo.getSelectedItem();
+      
+     // JOptionPane.showMessageDialog(null,"id  "+usu.getIdUsu()+" nome  "+usu.getNome());
+      
+      setaDados();
+       
+    }//GEN-LAST:event_jComboActionPerformed
+    
+    public void setaDados(){
+          try {
 
-    private void txtIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIDActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtIDActionPerformed
+           
+
+            Connection Conn = Conexao_BD.getConnection();
+
+         String sql="select idUsu,nome,endereco,telefone,login,senha from usuario where idUsu like "+jCombo.getSelectedItem()+"";
+
+            PreparedStatement Patm = Conn.prepareStatement(sql);
+
+           ResultSet Rst = Patm.executeQuery();
+
+            DefaultTableModel modelo = (DefaultTableModel) TbUsuario.getModel();
+
+            while(Rst.next()){
+
+                String [] lista = new String[]{Rst.getString("idUsu"),Rst.getString("nome"),Rst.getString("endereco")
+                    ,Rst.getString("telefone"),Rst.getString("login") ,Rst.getString("senha")};
+               
+                modelo.addRow(lista);
+             
+               
+            }
+
+            Rst.close();
+            Patm.close();
+            Conn.close();
+
+        } catch (Exception e) {
+        }
+    
+    }
 
     /**
      * @param args the command line arguments
@@ -310,15 +376,17 @@ public class Consultar extends javax.swing.JFrame {
         });
     }
 
+     
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TbUsuario;
     private javax.swing.JButton btcst;
     private javax.swing.JButton btver;
     private javax.swing.JButton deletaUsu;
+    private javax.swing.JComboBox<Object> jCombo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField txtID;
     // End of variables declaration//GEN-END:variables
 }
