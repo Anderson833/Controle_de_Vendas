@@ -3,6 +3,7 @@
 package Dao;
 
 import Conexao.Conexao_BD;
+import Model.ComprovanteModel;
 import Model.VendaModel;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -29,7 +30,7 @@ public class VendaDao {
          try {
              
              //Selecionando toda tabela venda;
-             String sql="SELECT * FROM venda";
+             String sql="SELECT * FROM vendas";
              
              PreparedStatement patm = conn.prepareStatement(sql);
              
@@ -40,13 +41,17 @@ public class VendaDao {
                  //Instânciando  classe VendaModel;
                  VendaModel venda = new VendaModel();
                  //Setando os Valores;
-                venda.setCodVenda(rst.getString("codVend"));
-                venda.setCodCli(rst.getString("codCli"));
-                venda.setCodProd(rst.getString("codProd"));
-               venda.setQtdProd(rst.getInt("Qtd_Prod"));
-               venda.setValorUnit(rst.getDouble("valorUnit"));  
-               venda.setValorTotal(rst.getDouble("ValorTotal"));
-              
+               venda.setIdDeleta(rst.getInt("codExcluir"));
+               venda.setCodVenda(rst.getString("codVenda"));
+               venda.setCodCli(rst.getString("codCli")); 
+               venda.setCodProd(rst.getString("codProd"));
+               venda.setQtdProd(rst.getInt("Qtd"));
+               venda.setCompleto(rst.getInt("Completo"));
+               venda.setVz(rst.getInt("Vz"));
+               venda.setValorUnit(rst.getDouble("valorUnit"));
+               venda.setValorTotal(rst.getDouble("total"));
+               venda.setData(rst.getString("data"));
+             
                listVenda.add(venda);
                  //Adicionado na Lista;
              
@@ -80,16 +85,20 @@ public class VendaDao {
        
         try {
             //Inserindo os dados das vendas no banco de dados;
-            String sql="INSERT INTO venda(codVend,codCli,codProd,Qtd_Prod,valorUnit,ValorTotal) VALUES(?,?,?,?,?,?)";
+            String sql="INSERT INTO vendas(codExcluir,codVenda,codCli,codProd,Qtd,Completo,Vz,valorUnit,total,data) VALUES(?,?,?,?,?,?,?,?,?,?)";
              
             PreparedStatement patm = conn.prepareStatement(sql);
             //Passando como paramentros os atributos da classe VendaModel;
-            patm.setString(1, venda.getCodVenda());
-            patm.setString(2, venda.getCodCli());
-            patm.setString(3, venda.getCodProd());
-            patm.setInt(4, venda.getQtdProd());
-            patm.setDouble(5, venda.getValorUnit());
-            patm.setDouble(6, venda.getValorTotal());
+            patm.setInt(1, venda.getIdDeleta());
+            patm.setString(2, venda.getCodVenda());
+            patm.setString(3, venda.getCodCli());
+            patm.setString(4, venda.getCodProd());
+            patm.setInt(5, venda.getQtdProd());
+            patm.setInt(6, venda.getCompleto());
+            patm.setInt(7, venda.getVz());
+            patm.setDouble(8, venda.getValorUnit());
+            patm.setDouble(9, venda.getValorTotal());
+            patm.setString(10, venda.getData());
             
             //Executar;
             int upd=patm.executeUpdate();
@@ -124,12 +133,12 @@ public class VendaDao {
         try {
 
           // Comando que  Deletar a venda pelo código;
-            String sql = "DELETE FROM venda WHERE codVend=?";
+            String sql = "DELETE FROM vendas WHERE codExcluir=?";
 
             PreparedStatement patm = conn.prepareStatement(sql);
              
             //Passando em paramentros código da venda;
-            patm.setString(1, vd.getCodVenda());
+            patm.setInt(1, vd.getIdDeleta());
             
             //Executar;
             int res = patm.executeUpdate();
@@ -194,4 +203,169 @@ public class VendaDao {
         }
         
       }
+      
+      
+        //Método para visualizar todos os dados da vendas pela data;
+     public ArrayList<VendaModel> visualizarPelaData(String dat){
+        //Criando uma Connection com Classe Conexao_BD; 
+        Connection conn=Conexao_BD.getConnection();
+     
+        //ArrayList de comprovante;
+         ArrayList<VendaModel> listComprov = new ArrayList<>();
+        
+         try {
+             
+             //Selecionando toda tabela vendas pela data;
+             String sql="SELECT * FROM vendas WHERE data='"+dat+"'";
+             
+             PreparedStatement patm = conn.prepareStatement(sql);
+             
+             ResultSet rst=patm.executeQuery();
+             
+             while (rst.next()) {
+                 //Instânciando  classe VendaModel;
+                 VendaModel venda = new VendaModel();
+                 //Setando os Valores;
+               venda.setIdDeleta(rst.getInt("codExcluir"));
+               venda.setCodVenda(rst.getString("codVenda"));
+               venda.setCodCli(rst.getString("codCli")); 
+               venda.setCodProd(rst.getString("codProd"));
+               venda.setQtdProd(rst.getInt("Qtd"));
+               venda.setCompleto(rst.getInt("Completo"));
+               venda.setVz(rst.getInt("Vz"));
+               venda.setValorUnit(rst.getDouble("valorUnit"));
+               venda.setValorTotal(rst.getDouble("total"));
+               venda.setData(rst.getString("data"));
+              listComprov.add(venda);
+             
+             }
+             
+             //Fechando conexão ResultSet;
+             rst.close();
+             
+             //Fechando conexão PreparedStatement;
+            patm.close();
+            
+            //Fechando conexão Connection;
+            conn.close();
+             
+         } catch (Exception e) {
+             //Algo de error, mostrar essa mensagem;
+             JOptionPane.showMessageDialog(null, "Error ao Visualizar Todas compras pela data!");
+         }
+         //Retornando uma Lista;
+        return listComprov;
+         
+     }
+     
+     //Método para visualizar todos os dados da vendas pela data;
+     public ArrayList<VendaModel> visualizarPeloCodVenda(String vd){
+        //Criando uma Connection com Classe Conexao_BD; 
+        Connection conn=Conexao_BD.getConnection();
+     
+        //ArrayList de comprovante;
+         ArrayList<VendaModel> listComprov = new ArrayList<>();
+        
+         try {
+             
+             //Selecionando toda tabela vendas pela data;
+             String sql="SELECT * FROM vendas WHERE codVenda='"+vd+"'";
+             
+             PreparedStatement patm = conn.prepareStatement(sql);
+             
+             ResultSet rst=patm.executeQuery();
+             
+             while (rst.next()) {
+                 //Instânciando  classe VendaModel;
+                 VendaModel venda = new VendaModel();
+                 //Setando os Valores;
+               venda.setIdDeleta(rst.getInt("codExcluir"));
+               venda.setCodVenda(rst.getString("codVenda"));
+               venda.setCodCli(rst.getString("codCli")); 
+               venda.setCodProd(rst.getString("codProd"));
+               venda.setQtdProd(rst.getInt("Qtd"));
+               venda.setCompleto(rst.getInt("Completo"));
+               venda.setVz(rst.getInt("Vz"));
+               venda.setValorUnit(rst.getDouble("valorUnit"));
+               venda.setValorTotal(rst.getDouble("total"));
+               venda.setData(rst.getString("data"));
+              listComprov.add(venda);
+             
+             }
+             
+             //Fechando conexão ResultSet;
+             rst.close();
+             
+             //Fechando conexão PreparedStatement;
+            patm.close();
+            
+            //Fechando conexão Connection;
+            conn.close();
+             
+         } catch (Exception e) {
+             //Algo de error, mostrar essa mensagem;
+             JOptionPane.showMessageDialog(null, "Error ao Visualizar Todas compras pela data!");
+         }
+         //Retornando uma Lista;
+        return listComprov;
+         
+     }
+     
+     
+     
+       //Método para visualizar todos os dados da vendas pela data;
+     public List<VendaModel> visualizarDataComecoFim(String dataInicio,String dataFinal){
+        //Criando uma Connection com Classe Conexao_BD; 
+        Connection conn=Conexao_BD.getConnection();
+     
+        //ArrayList de comprovante;
+         ArrayList<VendaModel> listComprov = new ArrayList<>();
+        
+         try {
+             
+             //Selecionando toda tabela vendas;
+             String sql="select * from vendas where data >'"+dataInicio+"' and data<'"+dataFinal+"'";
+             
+             PreparedStatement patm = conn.prepareStatement(sql);
+             
+             ResultSet rst=patm.executeQuery();
+             
+             while (rst.next()) {
+               
+                  //Instânciando  classe VendaModel;
+                 VendaModel venda = new VendaModel();
+                 //Setando os Valores;
+               venda.setIdDeleta(rst.getInt("codExcluir"));
+               venda.setCodVenda(rst.getString("codVenda"));
+               venda.setCodCli(rst.getString("codCli")); 
+               venda.setCodProd(rst.getString("codProd"));
+               venda.setQtdProd(rst.getInt("Qtd"));
+               venda.setCompleto(rst.getInt("Completo"));
+               venda.setVz(rst.getInt("Vz"));
+               venda.setValorUnit(rst.getDouble("valorUnit"));
+               venda.setValorTotal(rst.getDouble("total"));
+               venda.setData(rst.getString("data"));
+              listComprov.add(venda);
+             
+             }
+             
+             //Fechando conexão ResultSet;
+             rst.close();
+             
+             //Fechando conexão PreparedStatement;
+            patm.close();
+            
+            //Fechando conexão Connection;
+            conn.close();
+             
+         } catch (Exception e) {
+             //Algo de error, mostrar essa mensagem;
+             JOptionPane.showMessageDialog(null, "Error ao Visualizar Todas compras entre as datas desejadas!");
+         }
+         //Retornando uma Lista;
+        return listComprov;
+         
+     }
+     
+     
 }

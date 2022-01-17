@@ -7,7 +7,9 @@ package View;
 
 import Conexao.Conexao_BD;
 import Dao.ComprovanteDao;
+import Dao.VendaDao;
 import Model.ComprovanteModel;
+import Model.VendaModel;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -28,7 +30,7 @@ public class Comprovante extends javax.swing.JFrame {
     public Comprovante() {
         initComponents();
         
-       visualizarItens();
+       visualizarVendas();
         
        setaValorTotalDosItens();
          setLocationRelativeTo(null);
@@ -44,7 +46,7 @@ public class Comprovante extends javax.swing.JFrame {
         try {
             Connection Conn = Conexao_BD.getConnection();
             //Comando para fazer a soma de toda coluna Valor Total no banco de dados;
-            String sql = "SELECT round(sum(ValorTotal),2) FROM Comprar ";
+            String sql = "SELECT round(sum(total),2) FROM vendas ";
    
             
             PreparedStatement Patm = Conn.prepareStatement(sql);
@@ -57,13 +59,11 @@ public class Comprovante extends javax.swing.JFrame {
             while (Rst.next()) {
 
                      //Pegando o valor da soma
-               double total= Rst.getDouble("round(sum(ValorTotal),2)");
+               double total= Rst.getDouble("round(sum(total),2)");
                     //setando o valor no campo de texto e na label; 
                      Valortt.setText(formater.format(total));
                  
-               //   int qt= Rst.getInt("sum(Qtd_Prod)");
-                   
-               //   txtQtd.setText(""+qt);
+           
 
             }
               //Fechando conexão ResultSet;
@@ -108,6 +108,7 @@ public class Comprovante extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Visualiza Detalhe da comprar");
@@ -122,11 +123,11 @@ public class Comprovante extends javax.swing.JFrame {
 
             },
             new String [] {
-                "IdComprov", "CodVend", "CodCli", "CodProd", "Qtd_Prod", "ValorUnit", "ValorTotal", "data"
+                "IdComprov", "CodVend", "CodCli", "CodProd", "Qtd_Prod", "Completo", "Vazio", "ValorUnit", "ValorTotal", "data"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -174,10 +175,17 @@ public class Comprovante extends javax.swing.JFrame {
 
         jLabel4.setText("Data Final:");
 
-        jButton1.setText("jButton1");
+        jButton1.setText("DataIF");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("delet");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
             }
         });
 
@@ -202,10 +210,15 @@ public class Comprovante extends javax.swing.JFrame {
                                         .addComponent(jButton1))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(dat, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 138, Short.MAX_VALUE)
                                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(Valortt, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(Valortt, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(57, 57, 57)
+                                        .addComponent(jButton2)))
                                 .addGap(157, 157, 157))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -243,13 +256,18 @@ public class Comprovante extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtdataInicio, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtdataFinal)
-                        .addComponent(jButton1)))
-                .addGap(20, 20, 20))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtdataInicio, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
+                            .addComponent(jButton1)
+                            .addComponent(txtdataFinal))
+                        .addGap(20, 20, 20))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton2)
+                        .addContainerGap(19, Short.MAX_VALUE))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -303,27 +321,51 @@ public class Comprovante extends javax.swing.JFrame {
        visualizarDataInicioDataFinal();
        setaValorTotalpelaDataComecEfinal();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+      
+        deletarVendaPeloCodigo();
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
    
+    
+    //Método para  deletar vendas;
+    public void deletarVendaPeloCodigo() {
+        //Instânciando a classe VendaDao;
+        VendaDao dao = new VendaDao();
+      
+        
+        //Instânciando a classe VendaModel;
+        VendaModel cp = new VendaModel();
+        cp.setIdDeleta(Integer.parseInt(dat.getText()));
+        // colocando objeto cp no método deletar Itens da classe ComprovanteDao ;
+        dao.deletaVendaPeloCodigo(cp);
+
+    }
+    
     /**
      * @param args the command line arguments
      */
     
  
     // Visualizar os Detalhes da compra;
-     public void visualizarItens(){
+     public void visualizarVendas(){
           DefaultTableModel modelo = (DefaultTableModel) tabelaVend.getModel();
             //Método para não repetir os dados na tabela de comprar;
             modelo.setNumRows(0);
             //Instânciando a classe ComprovanteDao;
-            ComprovanteDao dao = new ComprovanteDao();
+            VendaDao dao = new VendaDao();
             //Um Laço de repetição para lista todas compras na tabela comprar no banco de dados; 
-            for (ComprovanteModel item : dao.visualizarComprovante()) {
+            for (VendaModel item : dao.visualizarVenda()) {
                 modelo.addRow(new Object[]{
-                item.getIdComprar(),
+                    
+                item.getIdDeleta(),
                 item.getCodVenda(),
                 item.getCodCli(),
                 item.getCodProd(),
                 item.getQtdProd(),
+                item.getCompleto(),
+                item.getVz(),
                 item.getValorUnit(),
                 item.getValorTotal(),
                 item.getData()
@@ -341,15 +383,17 @@ public class Comprovante extends javax.swing.JFrame {
             //Método para não repetir os dados na tabela de comprar;
             modelo.setNumRows(0);
             //Instânciando a classe ComprovanteDao;
-            ComprovanteDao dao = new ComprovanteDao();
+            VendaDao dao = new VendaDao();
             //Um Laço de repetição para lista todas compras na tabela comprar no banco de dados; 
-            for (ComprovanteModel item : dao.visualizarPelaData(dat.getText())) {
+            for (VendaModel item : dao.visualizarPelaData(dat.getText())) {
                 modelo.addRow(new Object[]{
-                item.getIdComprar(),
+                 item.getIdDeleta(),
                 item.getCodVenda(),
                 item.getCodCli(),
                 item.getCodProd(),
                 item.getQtdProd(),
+                item.getCompleto(),
+                item.getVz(),
                 item.getValorUnit(),
                 item.getValorTotal(),
                 item.getData()
@@ -367,18 +411,21 @@ public class Comprovante extends javax.swing.JFrame {
             //Método para não repetir os dados na tabela de comprar;
             modelo.setNumRows(0);
             //Instânciando a classe ComprovanteDao;
-            ComprovanteDao dao = new ComprovanteDao();
+            VendaDao dao = new VendaDao();
             //Um Laço de repetição para lista todas compras na tabela comprar no banco de dados; 
-            for (ComprovanteModel item : dao.visualizarDataComecoFim(txtdataInicio.getText(),txtdataFinal.getText())) {
+            for (VendaModel item : dao.visualizarDataComecoFim(txtdataInicio.getText(),txtdataFinal.getText())) {
                 modelo.addRow(new Object[]{
-                item.getIdComprar(),
+                item.getIdDeleta(),
                 item.getCodVenda(),
                 item.getCodCli(),
                 item.getCodProd(),
                 item.getQtdProd(),
+                item.getCompleto(),
+                item.getVz(),
                 item.getValorUnit(),
                 item.getValorTotal(),
                 item.getData()
+                
                 
                 });
            }
@@ -400,7 +447,7 @@ public class Comprovante extends javax.swing.JFrame {
         try {
             Connection Conn = Conexao_BD.getConnection();
             //Comando para fazer a soma de toda coluna Valor Total no banco de dados;
-            String sql = "select round(sum(valorTotal),2) from comprar where data='"+dat.getText()+"'";
+            String sql = "select round(sum(total),2) from vendas where data='"+dat.getText()+"'";
    
             
             PreparedStatement Patm = Conn.prepareStatement(sql);
@@ -413,7 +460,7 @@ public class Comprovante extends javax.swing.JFrame {
             while (Rst.next()) {
 
                      //Pegando o valor da soma
-               double total= Rst.getDouble("round(sum(ValorTotal),2)");
+               double total= Rst.getDouble("round(sum(total),2)");
                     //setando o valor no campo de texto e na label; 
                      Valortt.setText(formater.format(total));
             
@@ -491,7 +538,7 @@ public class Comprovante extends javax.swing.JFrame {
         try {
             Connection Conn = Conexao_BD.getConnection();
             //Comando para fazer a soma de toda coluna Valor Total no banco de dados;
-            String sql = "select round(sum(valorTotal),2) from comprar where data>'"+txtdataInicio.getText()+"' and data <'"+txtdataFinal.getText()+"'";
+            String sql = "select round(sum(total),2) from vendas where data>'"+txtdataInicio.getText()+"' and data <'"+txtdataFinal.getText()+"'";
    
             
             PreparedStatement Patm = Conn.prepareStatement(sql);
@@ -504,7 +551,7 @@ public class Comprovante extends javax.swing.JFrame {
             while (Rst.next()) {
 
                      //Pegando o valor da soma
-               double total= Rst.getDouble("round(sum(ValorTotal),2)");
+               double total= Rst.getDouble("round(sum(total),2)");
                     //setando o valor no campo de texto e na label; 
                      Valortt.setText(formater.format(total));
             
@@ -527,6 +574,9 @@ public class Comprovante extends javax.swing.JFrame {
         
         
      }
+    
+     
+   
     
     
     public static void main(String args[]) {
@@ -565,6 +615,7 @@ public class Comprovante extends javax.swing.JFrame {
     private javax.swing.JTextField Valortt;
     private javax.swing.JTextField dat;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

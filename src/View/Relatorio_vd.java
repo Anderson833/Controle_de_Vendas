@@ -12,7 +12,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -522,7 +521,7 @@ public class Relatorio_vd extends javax.swing.JFrame {
     
     
     private void txtDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDataActionPerformed
-      
+     setaDados();
     }//GEN-LAST:event_txtDataActionPerformed
 
     private void codEstoqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_codEstoqueActionPerformed
@@ -610,9 +609,9 @@ public class Relatorio_vd extends javax.swing.JFrame {
            try {
             Connection Conn = Conexao_BD.getConnection();
             
-            int v=Integer.parseInt(txtCodVend.getText());
+       
             
-            String sql = "SELECT valorTotal FROM venda where codVend='"+v+"'";
+            String sql = "SELECT round(sum(ValorTotal),2) FROM vendar where dhata='"+txtData.getText()+"'";
 
             PreparedStatement Patm = Conn.prepareStatement(sql);
             
@@ -623,8 +622,8 @@ public class Relatorio_vd extends javax.swing.JFrame {
 
             
             while (Rst.next()) {
-                 String nome= Rst.getString("ValorTotal");
-                TOTALvendas.setText(nome+""); 
+                 String valorTotal= Rst.getString("round(sum(ValorTotal),2)");
+                TOTALvendas.setText(""+Double.parseDouble(valorTotal)); 
                 
                
             

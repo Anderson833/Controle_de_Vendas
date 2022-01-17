@@ -7,8 +7,6 @@ package Conexao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 
 /**
@@ -16,12 +14,13 @@ import javax.swing.JOptionPane;
  * @author ander
  */
 public class Conexao_BD {
-
+ 
+    
     //Método de Conexão com Banco De Dados ;
     public static Connection getConnection() {
 
         //Criando uma Connection;
-        Connection conexao = null;
+       Connection conexao = null;
 
         try {
 
@@ -42,5 +41,10 @@ public class Conexao_BD {
     }
 
    
-
+ 
+  
+   
 }
+
+ 
+  

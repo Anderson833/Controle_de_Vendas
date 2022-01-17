@@ -1,9 +1,9 @@
-
 // View Estoque
 package View;
 
 import Conexao.Conexao_BD;
 import Dao.EstoqueDao;
+import Model.ComprovanteModel;
 import Model.EstoqueModel;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,16 +18,15 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Estoque extends javax.swing.JFrame {
 
-    String date="";
-    
+    String date = "";
+
     public Estoque() {
         initComponents();
-        
+
         //Abrir no centro da tela;
-         setLocationRelativeTo(null);
+        setLocationRelativeTo(null);
     }
 
-   
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -345,53 +344,53 @@ public class Estoque extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvarActionPerformed
-       
+
         //Método para realizar entra e saida do estoque;
         addDadoEstoque();
-         //Método para limpar os campos de textos depois que salvar estoque;
+        //Método para limpar os campos de textos depois que salvar estoque;
         limparCampos();
     }//GEN-LAST:event_salvarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-     
-        
+
         //Método para visualizar todo estoque;
         visualizarEstoque();
+   
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-     
+
         //Método para seta Qtd em estoquedo produto;
         setaDadosProduto();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-      
+
         //Método para realizar entra e saida no estoque;
         realizarEntradaSaida();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-       
+
         //Método para limpar os campos de textos;
         limparCampos();
         //Método para limpar as linhas da tabela;
         limpalinha();
-        
+
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void deletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deletarActionPerformed
-   
+
         //Metodo para deletar todo estoque no banco de dados;
-         deletarEstoque();
-          //Método para limpar os campos de textos depois que deletar;
+        deletarEstoque();
+        //Método para limpar os campos de textos depois que deletar;
         limparCampos();
-        
+
     }//GEN-LAST:event_deletarActionPerformed
 
     private void tabelaestoqueMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaestoqueMouseClicked
-     
-          //Seta os dados nos campos de textos ao clicar na linha da tabela;
+
+        //Seta os dados nos campos de textos ao clicar na linha da tabela;
         if (tabelaestoque.getSelectedRow() != -1) {
 
             codESTOQUE.setText(tabelaestoque.getValueAt(tabelaestoque.getSelectedRow(), 0).toString());
@@ -400,62 +399,56 @@ public class Estoque extends javax.swing.JFrame {
             SAIDA.setText(tabelaestoque.getValueAt(tabelaestoque.getSelectedRow(), 3).toString());
             QTDprod.setText(tabelaestoque.getValueAt(tabelaestoque.getSelectedRow(), 4).toString());
             data.setText(tabelaestoque.getValueAt(tabelaestoque.getSelectedRow(), 5).toString());
-            
-         
 
         }
-        
-        
+
+
     }//GEN-LAST:event_tabelaestoqueMouseClicked
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-      
-          //Método para atualizar os dados do estoque;
-            atualizarEstoque();
-             //Método para limpar os campos de textos depois que atualizar os dados do estoque;
-              limparCampos();
+
+        //Método para atualizar os dados do estoque;
+        atualizarEstoque();
+        //Método para limpar os campos de textos depois que atualizar os dados do estoque;
+        limparCampos();
     }//GEN-LAST:event_jButton5ActionPerformed
-       
+
     //Método para atualizar os dados do estoque;
-    public void atualizarEstoque(){
-        
-        if(tabelaestoque.getSelectedRow() != -1){
-             //Instânciando EstoqueDao;
-        EstoqueDao dao = new EstoqueDao();
-        //Instânciando EstoqueModel;
-        EstoqueModel estoq = new EstoqueModel();
-        //setando os valores;
-            
-        estoq.setCodEstoq(codESTOQUE.getText());
-        estoq.setCodProd(codPROD.getText());
-        estoq.setEntrada(Integer.parseInt(ENTRADA.getText()));
-        estoq.setSaida(Integer.parseInt(SAIDA.getText()));
-        estoq.setQtdEstoq(Integer.parseInt(QTDprod.getText()));
-        estoq.setData(data.getText());
-        dao.atualizarEstoque(estoq);
-            
+    public void atualizarEstoque() {
+
+        if (tabelaestoque.getSelectedRow() != -1) {
+            //Instânciando EstoqueDao;
+            EstoqueDao dao = new EstoqueDao();
+            //Instânciando EstoqueModel;
+            EstoqueModel estoq = new EstoqueModel();
+            //setando os valores;
+
+            estoq.setCodEstoq(codESTOQUE.getText());
+            estoq.setCodProd(codPROD.getText());
+            estoq.setEntrada(Integer.parseInt(ENTRADA.getText()));
+            estoq.setSaida(Integer.parseInt(SAIDA.getText()));
+            estoq.setQtdEstoq(Integer.parseInt(QTDprod.getText()));
+            estoq.setData(data.getText());
+            dao.atualizarEstoque(estoq);
+
         }
     }
-    
-
-
 
 //Método para deletar os dados de todo estoque;
-    public void deletarEstoque(){
-         //Instânciando EstoqueDao;
+    public void deletarEstoque() {
+        //Instânciando EstoqueDao;
         EstoqueDao dao = new EstoqueDao();
         //Instânciando EstoqueModel;
         EstoqueModel estoq = new EstoqueModel();
         //setando os valores;
-        
+
         estoq.setCodEstoq(codESTOQUE.getText());
         dao.deletatoque(estoq);
     }
-    
-    
+
     //Método para adicionar entrada e saida no estoque;
-    public void addDadoEstoque(){
-     
+    public void addDadoEstoque() {
+
         //Instânciando EstoqueDao;
         EstoqueDao dao = new EstoqueDao();
         //Instânciando EstoqueModel;
@@ -470,129 +463,119 @@ public class Estoque extends javax.swing.JFrame {
         //Passando os valores para objeto da classe EstoqueDao;
         dao.adicionarAoEstoque(estoq);
     }
-    
+
     //Método para visualizar todo estoque no banco de dados;
-    public void visualizarEstoque(){
-         DefaultTableModel md = (DefaultTableModel) tabelaestoque.getModel();
-         md.setNumRows(0);
-         EstoqueDao dao = new EstoqueDao();
-         for (EstoqueModel estoque : dao.visualizarEstoque()) {
-            md.addRow(new Object []{
-            estoque.getCodEstoq(),
+    public void visualizarEstoque() {
+        DefaultTableModel md = (DefaultTableModel) tabelaestoque.getModel();
+        md.setNumRows(0);
+        EstoqueDao dao = new EstoqueDao();
+        for (EstoqueModel estoque : dao.visualizarEstoque()) {
+            md.addRow(new Object[]{
+                estoque.getCodEstoq(),
                 estoque.getCodProd(),
                 estoque.getEntrada(),
                 estoque.getSaida(),
                 estoque.getQtdEstoq(),
-               estoque.getData()
-            
-            
-            
+                estoque.getData()
+
             });
-            
-            
+
         }
     }
-    
+
     //Método para seta quantidade de produto em estoque;
-        public  void setaDadosProduto(){
-         
-           try {
+    public void setaDadosProduto() {
+
+        try {
             Connection Conn = Conexao_BD.getConnection();
-            
+
             //Passando para inteiro;
-            int v=Integer.parseInt(codPROD.getText());
-            
+            int v = Integer.parseInt(codPROD.getText());
+
             //Comado para visualizar o estoque do produto pelo código do produto;
-            String sql = "SELECT estoque FROM produto WHERE codProd='"+v+"'";
+            String sql = "SELECT estoque FROM produto WHERE codProd='" + v + "'";
 
             PreparedStatement Patm = Conn.prepareStatement(sql);
-            
-            ResultSet Rst = Patm.executeQuery();
-            
-             
-        
 
-            
+            ResultSet Rst = Patm.executeQuery();
+
             while (Rst.next()) {
                 //seta valor no campo de texto;
-                String estoque= Rst.getString("estoque");
-                QTDprod.setText(estoque+"");
-             
-                 //seta valor no campo de texto;
-                ENTRADA.setText(estoque+"");
-                
+                String estoque = Rst.getString("estoque");
+                QTDprod.setText(estoque + "");
+
+                //seta valor no campo de texto;
+                ENTRADA.setText(estoque + "");
+
             }
 
             //Fechando conexão ResultSet;
             Rst.close();
-           //Fechando conexão PreparedStatement;
+            //Fechando conexão PreparedStatement;
             Patm.close();
-           //Fechando conexão Conncetion;
+            //Fechando conexão Conncetion;
             Conn.close();
 
         } catch (SQLException e) {
-        
-         
+
             //Caso de error mostrar essa mensagem;
             JOptionPane.showMessageDialog(null, "Produto não Encontrado !");
         }
-        
-     }
-    
-        //Método para realizar entrada e saida;
-        public void realizarEntradaSaida(){
-              //Passando para inteiro;
-            int entrada=Integer.parseInt(ENTRADA.getText());
-              //Passando para inteiro;
-            int saida=Integer.parseInt(SAIDA.getText());
-              //Passando para inteiro;
-           int estoque =Integer.parseInt(QTDprod.getText());
-            
-            estoque=entrada-saida;
-            
-            //realizando se a entrada é maior do que a saida;
-            if(entrada>saida){
-                //seta o resultado ;
-                 QTDprod.setText(estoque+"");
-            
-            }else{
-                //caso a entrada seja inferior a saida mostrar essa mensagem ;
-                JOptionPane.showMessageDialog(null, "Saída Superior a Entrada !");
-            }
-            
-           
+
+    }
+
+    //Método para realizar entrada e saida;
+    public void realizarEntradaSaida() {
+        //Passando para inteiro;
+        int entrada = Integer.parseInt(ENTRADA.getText());
+        //Passando para inteiro;
+        int saida = Integer.parseInt(SAIDA.getText());
+        //Passando para inteiro;
+        int estoque = Integer.parseInt(QTDprod.getText());
+
+        estoque = entrada - saida;
+
+        //realizando se a entrada é maior do que a saida;
+        if (entrada > saida) {
+            //seta o resultado ;
+            QTDprod.setText(estoque + "");
+
+        } else {
+            //caso a entrada seja inferior a saida mostrar essa mensagem ;
+            JOptionPane.showMessageDialog(null, "Saída Superior a Entrada !");
         }
-        
-        //Método para limpar os campos de textos;
-        public void limparCampos(){
-            ENTRADA.setText("");
-             QTDprod.setText("");
-             SAIDA.setText("");
-             codPROD.setText("");
-             data.setText("");
-             codESTOQUE.setText("");
-        }
-        
-        //Método para limpar as linhas da tabelas
+
+    }
+
+    //Método para limpar os campos de textos;
+    public void limparCampos() {
+        ENTRADA.setText("");
+        QTDprod.setText("");
+        SAIDA.setText("");
+        codPROD.setText("");
+        data.setText("");
+        codESTOQUE.setText("");
+    }
+
+    //Método para limpar as linhas da tabelas
     public void limpalinha() {
         DefaultTableModel dm = (DefaultTableModel) tabelaestoque.getModel();
         while (dm.getRowCount() > 0) {
             dm.removeRow(0);
         }
     }
-    
-    
-   
-    
-    
+
     public static void main(String args[]) {
-        
+
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Estoque().setVisible(true);
             }
         });
     }
+
+   
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField ENTRADA;

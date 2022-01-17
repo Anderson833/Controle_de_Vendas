@@ -2,7 +2,6 @@
 package Dao;
 
 import Conexao.Conexao_BD;
-import Model.ProdutoModel;
 import Model.RelatorioModel;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -82,18 +81,17 @@ public class RelatorioDao {
        
         try {
             //Comando para inserir os dados do relatório no banco de dados;/,
-            String sql="INSERT INTO relatorio(codRel,codVend,data,valorTtvd,codProd,entrada,saida,qtd_Estoque) VALUES(?,?,?,?,?,?,?,?)";
+            String sql="INSERT INTO relatorior(codRela,dhata,valorTtvd,codProd,entrada,saida,qtd_Estoque) VALUES(?,?,?,?,?,?,?)";
              
             PreparedStatement patm = conn.prepareStatement(sql);
             //Passando como paramentros os atributos do relatório da classe RelatorioModel;
             patm.setString(1, relat.getCodRelatorio());
-            patm.setString(2, relat.getCodVendas());
-            patm.setString(3, relat.getData());
-            patm.setDouble(4, relat.getValorTtlvendas());
-            patm.setString(5, relat.getCodProd());
-            patm.setInt(6, relat.getEntrada());
-            patm.setInt(7, relat.getSaida());
-            patm.setInt(8, relat.getQtd_Estoque());
+            patm.setString(2, relat.getData());
+            patm.setDouble(3, relat.getValorTtlvendas());
+            patm.setString(4, relat.getCodProd());
+            patm.setInt(5, relat.getEntrada());
+            patm.setInt(6, relat.getSaida());
+            patm.setInt(7, relat.getQtd_Estoque());
             
             //Executar;
             int upd=patm.executeUpdate();
