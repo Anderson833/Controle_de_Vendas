@@ -19,6 +19,9 @@ public class VendaModel {
     private String data;
     private int Completo;
     private int vz;
+    private double valorGanhor;
+    private double precoDeComprar;
+    
     
     // Os métodos getts e setts
     
@@ -118,6 +121,34 @@ public class VendaModel {
    
     public void setVz(int vz) {
         this.vz = vz;
+    }
+
+    /**
+     * @return the valorGanhor
+     */
+    public double getValorGanhor() {
+        return valorGanhor;
+    }
+
+    /**
+     * @param valorGanhor the valorGanhor to set
+     */
+    public void setValorGanhor(double valorGanhor) {
+        this.valorGanhor = valorGanhor;
+    }
+
+    /**
+     * @return the precoDeComprar
+     */
+    public double getPrecoDeComprar() {
+        return precoDeComprar;
+    }
+
+    /**
+     * @param precoDeComprar the precoDeComprar to set
+     */
+    public void setPrecoDeComprar(double precoDeComprar) {
+        this.precoDeComprar = precoDeComprar;
     }
 
    

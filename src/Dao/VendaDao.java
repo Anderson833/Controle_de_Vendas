@@ -3,7 +3,7 @@
 package Dao;
 
 import Conexao.Conexao_BD;
-import Model.ComprovanteModel;
+import Model.IDvenda;
 import Model.VendaModel;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -42,7 +42,7 @@ public class VendaDao {
                  VendaModel venda = new VendaModel();
                  //Setando os Valores;
                venda.setIdDeleta(rst.getInt("codExcluir"));
-               venda.setCodVenda(rst.getString("codVenda"));
+               venda.setCodVenda(rst.getString("codVendar"));
                venda.setCodCli(rst.getString("codCli")); 
                venda.setCodProd(rst.getString("codProd"));
                venda.setQtdProd(rst.getInt("Qtd"));
@@ -76,16 +76,16 @@ public class VendaDao {
      }
     
      
-      //Método para adicionar venda ao banco de dados;
+   //Método para adicionar venda ao banco de dados;
     public void adicionaVenda(VendaModel venda){
         
         //Criando uma Connection com Classe Conexao_BD; 
         Connection conn=Conexao_BD.getConnection();
-        
+           
        
         try {
             //Inserindo os dados das vendas no banco de dados;
-            String sql="INSERT INTO vendas(codExcluir,codVenda,codCli,codProd,Qtd,Completo,Vz,valorUnit,total,data) VALUES(?,?,?,?,?,?,?,?,?,?)";
+            String sql="INSERT INTO vendas(codExcluir,codVendar,codCli,codProd,Qtd,Completo,Vz,valorUnit,total,data) VALUES(?,?,?,?,?,?,?,?,?,?)";
              
             PreparedStatement patm = conn.prepareStatement(sql);
             //Passando como paramentros os atributos da classe VendaModel;
@@ -227,7 +227,7 @@ public class VendaDao {
                  VendaModel venda = new VendaModel();
                  //Setando os Valores;
                venda.setIdDeleta(rst.getInt("codExcluir"));
-               venda.setCodVenda(rst.getString("codVenda"));
+               venda.setCodVenda(rst.getString("codVendar"));
                venda.setCodCli(rst.getString("codCli")); 
                venda.setCodProd(rst.getString("codProd"));
                venda.setQtdProd(rst.getInt("Qtd"));
@@ -280,7 +280,7 @@ public class VendaDao {
                  VendaModel venda = new VendaModel();
                  //Setando os Valores;
                venda.setIdDeleta(rst.getInt("codExcluir"));
-               venda.setCodVenda(rst.getString("codVenda"));
+               venda.setCodVenda(rst.getString("codVendar"));
                venda.setCodCli(rst.getString("codCli")); 
                venda.setCodProd(rst.getString("codProd"));
                venda.setQtdProd(rst.getInt("Qtd"));
@@ -336,7 +336,7 @@ public class VendaDao {
                  VendaModel venda = new VendaModel();
                  //Setando os Valores;
                venda.setIdDeleta(rst.getInt("codExcluir"));
-               venda.setCodVenda(rst.getString("codVenda"));
+               venda.setCodVenda(rst.getString("codVendar"));
                venda.setCodCli(rst.getString("codCli")); 
                venda.setCodProd(rst.getString("codProd"));
                venda.setQtdProd(rst.getInt("Qtd"));
@@ -367,5 +367,88 @@ public class VendaDao {
          
      }
      
-     
+       //Método para adicionar venda ao banco de dados;
+    public void adicionaCodVENDA(IDvenda venda){
+        
+        //Criando uma Connection com Classe Conexao_BD; 
+        Connection conn=Conexao_BD.getConnection();
+        
+       
+        try {
+            //Inserindo os dados das vendas no banco de dados;
+            String sql="INSERT INTO codVendar(codVendar) VALUES(?)";
+             
+            PreparedStatement patm = conn.prepareStatement(sql);
+            //Passando como paramentros os atributos da classe VendaModel;
+            patm.setString(1, venda.getIdVendar());
+          
+            //Executar;
+            int upd=patm.executeUpdate();
+            
+            if(upd>0){
+                //Caso de tudo certo exibir essa mensagem;
+                JOptionPane.showMessageDialog(null, "ID Adicionado Com Sucesso");
+            }else{
+                //Caso de error  exibir essa mensagem;
+                JOptionPane.showMessageDialog(null, "ID Não Adicionado !","Error ",JOptionPane.ERROR_MESSAGE);
+            }
+            
+             //Fechando conexão PreparedStatement;
+            patm.close();
+            
+            //Fechando conexão Connection;
+            conn.close();
+            
+        } catch (SQLException ex) {
+            //Caso aconteça algum error mostrar essa mensagem;
+           JOptionPane.showMessageDialog(null, "Error ao Adicionar Venda !");
+        }
+        
+    }
+      //Método para adicionar o lucro ao banco de dados;
+    public void adicionaValorDComprar(VendaModel venda){
+        
+        //Criando uma Connection com Classe Conexao_BD; 
+        Connection conn=Conexao_BD.getConnection();
+           
+       
+        try {
+            //Inserindo os dados na tabela lucro no banco de dados;
+            String sql="INSERT INTO lucro(codLuc,codProd,Qtd,Vvend,total,VLcompra,Ganhor,data) VALUES(?,?,?,?,?,?,?,?)";
+             
+            PreparedStatement patm = conn.prepareStatement(sql);
+            //Passando como paramentros os atributos da classe VendaModel;
+           
+            patm.setString(1, venda.getCodProd());
+            patm.setString(2, venda.getCodProd());
+            patm.setInt(3, venda.getQtdProd());
+            patm.setDouble(4, venda.getValorUnit());
+            patm.setDouble(5, venda.getValorTotal());
+            patm.setDouble(6, venda.getPrecoDeComprar());
+            patm.setDouble(7, venda.getValorGanhor());
+            patm.setString(8, venda.getData());
+            
+            //Executar;
+            int upd=patm.executeUpdate();
+            
+            if(upd>0){
+                //Caso de tudo certo exibir essa mensagem;
+                JOptionPane.showMessageDialog(null, "lucro Adicionado Com Sucesso");
+            }else{
+                //Caso de error  exibir essa mensagem;
+                JOptionPane.showMessageDialog(null, "lucro Não Adicionado !","Error ",JOptionPane.ERROR_MESSAGE);
+            }
+            
+             //Fechando conexão PreparedStatement;
+            patm.close();
+            
+            //Fechando conexão Connection;
+            conn.close();
+            
+        } catch (SQLException ex) {
+            //Caso aconteça algum error mostrar essa mensagem;
+           JOptionPane.showMessageDialog(null, "Error ao Adicionar Venda !");
+        }
+        
+    }
 }

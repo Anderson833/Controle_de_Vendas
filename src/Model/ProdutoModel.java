@@ -16,6 +16,8 @@ public class ProdutoModel {
     private String nome;
     private String descricao;
     private double valorUnit;
+    private double valorDeComprar;
+    
     private int estoque;
 
   
@@ -71,6 +73,20 @@ public class ProdutoModel {
     @Override
     public String toString() {
         return getCodProd();
+    }
+
+    /**
+     * @return the valorDeComprar
+     */
+    public double getValorDeComprar() {
+        return valorDeComprar;
+    }
+
+    /**
+     * @param valorDeComprar the valorDeComprar to set
+     */
+    public void setValorDeComprar(double valorDeComprar) {
+        this.valorDeComprar = valorDeComprar;
     }
     
 }

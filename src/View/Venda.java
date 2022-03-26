@@ -4,16 +4,20 @@ import Conexao.Conexao_BD;
 import Dao.ClienteDao;
 import Dao.ComprovanteDao;
 import Dao.DataDao;
+import Dao.LucroDao;
 import Dao.ProdutoDao;
 import Dao.VendaDao;
 import Model.ApenasNumeros;
 import Model.ClienteModel;
 import Model.ComprovanteModel;
 import Model.Data;
+import Model.IDvenda;
+import Model.LucroModel;
 import Model.ProdutoModel;
 import Model.VendaModel;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -22,7 +26,6 @@ import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.print.event.PrintJobEvent;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
@@ -32,40 +35,55 @@ import javax.swing.table.DefaultTableModel;
  * @author ander
  */
 public class Venda extends javax.swing.JFrame {
-  
-    
-    
+
     //Para fazer guarda o resultado da subtração da quantidade em estoque com a quantida pedido pelo cliente;
     int contador = 0;
 
-    int cont=0;
+    int cont = 0;
 
     //VALOR TOTAL DE TODA TABELA COMPRAR
     double valorTotalBD = 0;
-  
-    
-    double valorTotalCodBD=0;
-  
+
+    double valorTotalCodBD = 0;
+   
+    //pega o valor do produto que o vendedor comprou;
+     double valorDoVendedor=0;
+    //método para pega o valor de lucro
+     double valorLucro=0;
+     
+     //Variável soma Quantidade de produto
+     int QTDProduto=0;
+     //Variável soma tota de produto
+     double somaTotal=0;
+     
+     
     public Venda() {
         initComponents();
         //centralizando ao centro da tela
         setLocationRelativeTo(null);
 
-         //Método para seta os nomes dos produtos;
+        //Método para seta os nomes dos produtos;
         setaDadosJcomboxClientes();
-        
+
         setaDadosJcomboxProd();
-       
 
         //método para armazenar o valor total de toda comprar ao abrir não zera;
         totalValorBd();
 
         //Método para exibir a data ao abrir 
-         DataDoDia();
-         
-         //método para digita somente números
-         soNumeros();
+        DataDoDia();
+
+        //método para digita somente números
+        soNumeros();
+
+        veriguar();
     }
+
+    //Para armazenar o id da venda
+    String nom = "";
+
+    //Para pegar o id do cliente
+    String idCli = "";
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -140,9 +158,46 @@ public class Venda extends javax.swing.JFrame {
         jLabel1.setText("Código venda:");
 
         codVenda.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
+        codVenda.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                codVendaAncestorAdded(evt);
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+        codVenda.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                codVendaMouseMoved(evt);
+            }
+        });
+        codVenda.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                codVendaFocusLost(evt);
+            }
+        });
+        codVenda.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+                codVendaInputMethodTextChanged(evt);
+            }
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+            }
+        });
         codVenda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 codVendaActionPerformed(evt);
+            }
+        });
+        codVenda.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                codVendaKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                codVendaKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                codVendaKeyTyped(evt);
             }
         });
 
@@ -164,10 +219,10 @@ public class Venda extends javax.swing.JFrame {
         jLabel4.setText("Valor Unitário:");
 
         ValorUnit.addInputMethodListener(new java.awt.event.InputMethodListener() {
-            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
-            }
             public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
                 ValorUnitInputMethodTextChanged(evt);
+            }
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
             }
         });
 
@@ -535,6 +590,10 @@ public class Venda extends javax.swing.JFrame {
                                         .addGap(0, 280, Short.MAX_VALUE)))
                                 .addGap(127, 127, 127)))))
                 .addGroup(digitanomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, digitanomeLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(lbHora, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(45, 45, 45))
                     .addGroup(digitanomeLayout.createSequentialGroup()
                         .addGroup(digitanomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(labelTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -542,7 +601,6 @@ public class Venda extends javax.swing.JFrame {
                                 .addGap(24, 24, 24)
                                 .addComponent(somaItens, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(label, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jcombProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(digitanomeLayout.createSequentialGroup()
                                 .addGroup(digitanomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -559,11 +617,11 @@ public class Venda extends javax.swing.JFrame {
                                             .addComponent(txtVZ, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                     .addComponent(txtvalorCompleto)
-                                    .addComponent(jLabel20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                        .addContainerGap(20, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, digitanomeLayout.createSequentialGroup()
-                        .addComponent(lbHora, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(45, 45, 45))))
+                                    .addComponent(jLabel20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(digitanomeLayout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(jcombProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(20, Short.MAX_VALUE))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, digitanomeLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(deleatarVd, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -603,9 +661,10 @@ public class Venda extends javax.swing.JFrame {
                         .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(digitanomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(codVenda, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-                    .addComponent(jcombProdutos)
-                    .addComponent(txtNcli)
+                    .addComponent(codVenda)
+                    .addGroup(digitanomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtNcli, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jcombProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jComboBoxCliente))
                 .addGap(27, 27, 27)
                 .addGroup(digitanomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -703,39 +762,37 @@ public class Venda extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-     
 
     private void AdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AdicionarActionPerformed
-   
-               //método para ver se tem so letras no campo do código da venda
-             
-             
-                
-                  
-                       if(checkLetters(codVenda.getText())){
-                           codVenda.setBackground(Color.BLUE);
-                    JOptionPane.showMessageDialog(null, "Nesse Campo em Azul não poder digita só Letras! ");
-                      codVenda.setBackground(Color.WHITE);
-                         codVenda.setText("");
-                     codVenda.requestFocus();
-                 
-                   }else{
-                          //Método para saber ser tem algo campo nulo
-                     valorNulo();
-                        
-                   //MÉTODO PARA ADICIONAR A VENDA NO BANCO DE DADOS
-                   adicionarVendas();
-                   //assim que salvar mostrar todos produtos vendidos
-                   visualizarVENDAS();
-                   }
-                         
-                         
-            
-                  
-           
-                 
-            
-     
+        
+       
+        adicionarCodVenda();
+        tempo();
+        setaDadosDaQtdESoma();
+        tempo();
+        fazerCalculo();
+        tempo();
+        addValores();
+       
+        //método para ver se tem so letras no campo do código da venda
+        if (checkLetters(codVenda.getText())) {
+            codVenda.setBackground(Color.BLUE);
+            JOptionPane.showMessageDialog(null, "Nesse Campo em Azul não poder digita só Letras! ");
+            codVenda.setBackground(Color.WHITE);
+            codVenda.setText("");
+            codVenda.requestFocus();
+
+        } else {
+            //Método para saber ser tem algo campo nulo
+            valorNulo();
+
+            //MÉTODO PARA ADICIONAR A VENDA NO BANCO DE DADOS
+            adicionarVendas();
+            //assim que salvar mostrar todos produtos vendidos
+            visualizarVENDAS();
+        }
+
+
     }//GEN-LAST:event_AdicionarActionPerformed
 
     //Metodo para adicionar vendas
@@ -765,33 +822,47 @@ public class Venda extends javax.swing.JFrame {
     private void calcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calcularActionPerformed
 
         permitirNumerosFlutuantes();
-      
-         // condição para  poder calcular a venda
-            if (txtQtd.getText().equals("")) {
-                txtQtd.requestFocus();
-            }else{
-                
-           int estoq=Integer.parseInt(TXTestoque.getText());
+           //soma valores dos produtos
+            somaValores();
+            //Mostrando o valor comprado pelo vendedor;
+          setaDadosProdutoValorDeCompra();
           
-          int qtd=Integer.parseInt(txtQtd.getText());
-            
-            
-            if(estoq>qtd){
-                
-
-           //Método para calcular Pre venda;
-            calcularPreVenda();
-         
+          //método para calcula a soma de todo  
+          fazerCalculoAntesdSalvar();
+        //  setaDadosDaQtdESoma();
+          //fazendo o calculo do lucro
+        // fazerCalculo();
+          //salvando no banco de dados na tabela lucro
+         // addValores();
     
-            }else{
-                
-                    // se essa condição for realizada será mostrado essa mensagem;
-                JOptionPane.showMessageDialog(null, "Quantidade insuficiente !", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-              
-         }
     }//GEN-LAST:event_calcularActionPerformed
 
+    //método para soma os valores
+    public void somaValores(){
+          // condição para  poder calcular a venda
+        if (txtQtd.getText().equals("")) {
+            txtQtd.requestFocus();
+        } else {
+
+            int estoq = Integer.parseInt(TXTestoque.getText());
+
+            int qtd = Integer.parseInt(txtQtd.getText());
+
+            if (estoq > qtd) {
+                
+               
+                //Método para calcular Pre venda;
+                calcularPreVenda();
+
+            } else {
+
+                // se essa condição for realizada será mostrado essa mensagem;
+                JOptionPane.showMessageDialog(null, "Quantidade insuficiente !", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+        }
+    }
+    
     private void tabelaVendMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaVendMouseClicked
 
         //Seta os valores nos campos de textos ao clicar na inha da tabela;
@@ -803,34 +874,30 @@ public class Venda extends javax.swing.JFrame {
             txtQtd.setText(tabelaVend.getValueAt(tabelaVend.getSelectedRow(), 3).toString());
             ValorUnit.setText(tabelaVend.getValueAt(tabelaVend.getSelectedRow(), 4).toString());
             Valortotal.setText(tabelaVend.getValueAt(tabelaVend.getSelectedRow(), 5).toString());
-      
+
         }
 
-        
-    
-         
-        
-        
+
     }//GEN-LAST:event_tabelaVendMouseClicked
-   
-    
+
+
     private void visualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_visualizarActionPerformed
 
-      //Método para visualizarr vendas;
-         visualizarVENDAS();
+        //Método para visualizarr vendas;
+        visualizarVENDAS();
     }//GEN-LAST:event_visualizarActionPerformed
-    
+
     private void RealizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RealizarActionPerformed
 
         //condição para saber se o campo de texto de recebimento está vazio; 
         if (txtValorReceb.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Digite valor recebido ? ", "Preenchar campo !", JOptionPane.WARNING_MESSAGE);
         } else {
-             
-           //método para verificar se tem algun campo vario
-                valorNulo();
-               //método para adicionar a venda no banco de dados  
-                adicionarVendas();
+
+            //método para verificar se tem algun campo vario
+            valorNulo();
+            //método para adicionar a venda no banco de dados  
+            adicionarVendas();
             //Método para realizar venda;
             realizarVenda();
         }
@@ -842,15 +909,10 @@ public class Venda extends javax.swing.JFrame {
     }//GEN-LAST:event_ValorUnitInputMethodTextChanged
 
     private void txtQtdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtQtdActionPerformed
-       
-        
-        if(codVenda.getText().isEmpty()){ 
-          JOptionPane.showMessageDialog(null, "Preenchar o campo do código venda !","Obrigatório",JOptionPane.WARNING_MESSAGE);
-          codVenda.requestFocus();
-        }
-        
+
+
     }//GEN-LAST:event_txtQtdActionPerformed
-  
+
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         //Método para limpar os campos de textos;
@@ -870,14 +932,14 @@ public class Venda extends javax.swing.JFrame {
                 // condiçao para valida o campo de texto de código venda 
                 if (codVenda.getText().equals("")) {
                     //caso seja verdade mostrar essa mensagem
-                 JOptionPane.showMessageDialog(null, "Preenchar Campo do código Venda Com Código Deleta!", "Obrigatório!", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Preenchar Campo do código Venda Com Código Deleta!", "Obrigatório!", JOptionPane.WARNING_MESSAGE);
                 } else {
                     //Método para deletar venda pelo código da venda;
                     deletarVendasPeloCodigo();
-                      //Método para visualizarr vendas apos a exclusão;
-                       visualizarVENDAS();
-                       codVenda.setText("");
-                       
+                    //Método para visualizarr vendas apos a exclusão;
+                    visualizarVENDAS();
+                    codVenda.setText("");
+
                 }
                 break;
             //opção não
@@ -891,8 +953,7 @@ public class Venda extends javax.swing.JFrame {
             case JOptionPane.CANCEL_OPTION:
                 //mostrar ess mensagem caso cancelar a opção
                 JOptionPane.showMessageDialog(null, "Opção Cancelada!", "", JOptionPane.INFORMATION_MESSAGE);
-                
-                
+
                 break;
             default:
                 //caso não for nenhuma dessa a cima será exibida essa mensagem;
@@ -904,11 +965,31 @@ public class Venda extends javax.swing.JFrame {
     }//GEN-LAST:event_deleatarVdActionPerformed
 
     private void addItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addItemActionPerformed
+        //adicionarCodVenda();
+
+        addItem();
 
     }//GEN-LAST:event_addItemActionPerformed
 
+    public void addItem() {
+        ComprovanteDao DAO = new ComprovanteDao();
+        ComprovanteModel modelo = new ComprovanteModel();
+
+        modelo.setCodDetalhe(codVenda.getText());
+        modelo.setIdVenda(codVenda.getText());
+        modelo.setCodCli(String.valueOf(jComboBoxCliente.getSelectedItem()));
+        modelo.setValorTotal(Double.parseDouble(Valortotal.getText()));
+        modelo.setData(txtdata.getText());
+        DAO.adicionaItem(modelo);
+
+    }
+
     private void visualizaItensActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_visualizaItensActionPerformed
-    
+
+        Detalhe dt = new Detalhe();
+        dt.setVisible(true);
+
+        /*
         //Verificar se campo está vázio;
         if(codVenda.getText().isEmpty()){
              JOptionPane.showMessageDialog(null, "Preenchar código da venda !","Por favor:",JOptionPane.WARNING_MESSAGE);
@@ -920,7 +1001,7 @@ public class Venda extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "Visualizando a venda pelo código "+codVenda.getText());
         visualizarPeloCodigoVenda();
         }
-        
+         */
     }//GEN-LAST:event_visualizaItensActionPerformed
 
 
@@ -935,7 +1016,7 @@ public class Venda extends javax.swing.JFrame {
 
     private void deletarItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deletarItemActionPerformed
 
-         /*
+        /*
         //Opcão de confirmação
         int item = JOptionPane.showConfirmDialog(null, "Deseja deletar todos Itens?", "Escolha Opção:", JOptionPane.YES_NO_CANCEL_OPTION);
 
@@ -968,47 +1049,41 @@ public class Venda extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Nenhuma Opção não desejada!", "", JOptionPane.INFORMATION_MESSAGE);
                 break;
         }
-  */
+         */
     }//GEN-LAST:event_deletarItemActionPerformed
-   
+
     private void somaItensActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_somaItensActionPerformed
 
-         
-        
-        
         // opcão para escolhe qual maneira que somar a venda
         int confirmacao = JOptionPane.showConfirmDialog(null, "Deseja Fazer A somar ", "Escolha Opção:", JOptionPane.YES_NO_CANCEL_OPTION);
-       
-        if(confirmacao==JOptionPane.YES_OPTION){
-            
-         int opcao = JOptionPane.showConfirmDialog(null, "Deseja fazer pelo código do Cliente ? ", "Escolha Opção:", JOptionPane.YES_NO_CANCEL_OPTION);
 
-            if(opcao==JOptionPane.YES_OPTION){
-                  JOptionPane.showMessageDialog(null, "Valor á ser mostrado será pelo código do cliente do Nome "+txtNcli.getText(), "Informações: ", JOptionPane.INFORMATION_MESSAGE);
-                      //método para soma todas vendas
-                    setaValorTotalDaVendaPeloCodigoCliente();
-            }else{
-                
-               if(opcao==JOptionPane.NO_OPTION){
-          JOptionPane.showMessageDialog(null, "Nesse caso vai fazer a somar pelo código da venda !");
+        if (confirmacao == JOptionPane.YES_OPTION) {
 
-                      if (codVenda.getText().equals("")) {
-                    JOptionPane.showMessageDialog(null, "Preenchar Campo do código Venda,tente novamente!", "Obrigatório!", JOptionPane.WARNING_MESSAGE);
-                       codVenda.requestFocus();
-                } else {
-                    //Método para seta os valores da VENDA;
-                    setaValorTotalDaVENDAPelocod();
-                  
+            int opcao = JOptionPane.showConfirmDialog(null, "Deseja fazer pelo código do Cliente ? ", "Escolha Opção:", JOptionPane.YES_NO_CANCEL_OPTION);
+
+            if (opcao == JOptionPane.YES_OPTION) {
+                JOptionPane.showMessageDialog(null, "Valor á ser mostrado será pelo código do cliente do Nome " + txtNcli.getText(), "Informações: ", JOptionPane.INFORMATION_MESSAGE);
+                //método para soma todas vendas
+                setaValorTotalDaVendaPeloCodigoCliente();
+            } else {
+
+                if (opcao == JOptionPane.NO_OPTION) {
+                    JOptionPane.showMessageDialog(null, "Nesse caso vai fazer a somar pelo código da venda !");
+
+                    if (codVenda.getText().equals("")) {
+                        JOptionPane.showMessageDialog(null, "Preenchar Campo do código Venda,tente novamente!", "Obrigatório!", JOptionPane.WARNING_MESSAGE);
+                        codVenda.requestFocus();
+                    } else {
+                        //Método para seta os valores da VENDA;
+                        setaValorTotalDaVENDAPelocod();
+
+                    }
+                } else if (opcao == JOptionPane.CANCEL_OPTION) {
+                    JOptionPane.showMessageDialog(null, "Opção Invalida !");
                 }
-               }else if(opcao==JOptionPane.CANCEL_OPTION){
-                   JOptionPane.showMessageDialog(null, "Opção Invalida !");
-               }
             }
         }
-        
-        
-        
-    
+
 
     }//GEN-LAST:event_somaItensActionPerformed
 
@@ -1026,16 +1101,16 @@ public class Venda extends javax.swing.JFrame {
 
             //método para seta os dados do produto
             setaDadosProduto();
-           txtQtd.setText("");
+            txtQtd.setText("");
             if (txtQtd.getText().equals("")) {
                 txtQtd.requestFocus();
-            }else{
-                
+            } else {
+
                 //método para calcular a venda
-            calcularPreVenda();
-          
+                calcularPreVenda();
+
             }
- 
+
         }
 
 
@@ -1053,16 +1128,22 @@ public class Venda extends javax.swing.JFrame {
 
     private void codVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_codVendaActionPerformed
 
-        //Método para deleta o idComprar da tabela idvenda
-      deletaridComprar();
-       
-         if(codVenda.getText().isEmpty()){
-             codVenda.requestFocus();
-         }else{
-              //Para muda opcão 
-        jComboBoxCliente.requestFocus();
-         }
-        
+        //método para ver se contém o mesmo id digitado
+        veriguar();
+
+        if (codVenda.getText().equals(nom)) {
+            JOptionPane.showMessageDialog(null, "jÁ TEM ESSE ID");
+        } else {
+            JOptionPane.showMessageDialog(null, "NAO TEM ");
+        }
+
+        if (codVenda.getText().isEmpty()) {
+            codVenda.requestFocus();
+        } else {
+            //Para muda opcão 
+            jComboBoxCliente.requestFocus();
+        }
+
     }//GEN-LAST:event_codVendaActionPerformed
 
     private void jComboBoxClienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jComboBoxClienteKeyPressed
@@ -1087,8 +1168,8 @@ public class Venda extends javax.swing.JFrame {
 
     private void txtValorRecebActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtValorRecebActionPerformed
 
-        double resultado=0;
-        
+        double resultado = 0;
+
         // VALIDAÇÃO DO CAMPO DE TEXTO DO VALOR RECEBIDO;
         if (txtValorReceb.getText().equals("")) {
             //MOSTRA ESSA MENSAGEM CASO ESSA CONDIÇÃO SEJA REALIZADA;
@@ -1096,26 +1177,23 @@ public class Venda extends javax.swing.JFrame {
         } else {
             //CASO CONTRÁRIO REALIZA ESSA MÉTODO;
 
-              //Passando valor recebido de String para double;
-        double valorReb=Double.parseDouble(txtValorReceb.getText());
-        
-        
-          //Passando valor total de String para double;
-        double valorTotal=Double.parseDouble(Valortotal.getText());
-        
-            if(valorReb<valorTotal){
-             JOptionPane.showMessageDialog(null,"Valor a Baixo do SubTotal !");
-            txtValorReceb.requestFocus();  
-            }else{
-             realizarVenda();
-            resultado=valorReb-valorTotal;
-            txtTroco.setText(""+resultado);
-            
-        }
-            
-            
+            //Passando valor recebido de String para double;
+            double valorReb = Double.parseDouble(txtValorReceb.getText());
 
-      }
+            //Passando valor total de String para double;
+            double valorTotal = Double.parseDouble(Valortotal.getText());
+
+            if (valorReb < valorTotal) {
+                JOptionPane.showMessageDialog(null, "Valor a Baixo do SubTotal !");
+                txtValorReceb.requestFocus();
+            } else {
+                realizarVenda();
+                resultado = valorReb - valorTotal;
+                txtTroco.setText("" + resultado);
+
+            }
+
+        }
     }//GEN-LAST:event_txtValorRecebActionPerformed
 
     private void visualizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_visualizarMouseClicked
@@ -1123,58 +1201,150 @@ public class Venda extends javax.swing.JFrame {
     }//GEN-LAST:event_visualizarMouseClicked
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-       this.setExtendedState(MAXIMIZED_BOTH);
-        
-        Timer t  =new Timer(1000,new hora());
+        this.setExtendedState(MAXIMIZED_BOTH);
+
+        Timer t = new Timer(1000, new hora());
         t.start();
-        
+
     }//GEN-LAST:event_formWindowOpened
 
     private void TXTestoqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TXTestoqueActionPerformed
-      
+
         //método para atualizar a quantidade de produtos
         setaAtualizacaoProduto();
-        
+
     }//GEN-LAST:event_TXTestoqueActionPerformed
 
     private void AdicionarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_AdicionarKeyPressed
-      
+
         valorNulo();
     }//GEN-LAST:event_AdicionarKeyPressed
 
     private void txtdataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtdataActionPerformed
-        
-    
-       
-       int opcao =JOptionPane.showConfirmDialog(null,"Deseja Deleta a Data","", JOptionPane.YES_NO_CANCEL_OPTION);
-       
-       if(opcao==JOptionPane.YES_OPTION){
-               
-          deletadat();
-       }else if(opcao==JOptionPane.NO_OPTION){
+
+        int opcao = JOptionPane.showConfirmDialog(null, "Deseja adicionar a Data", "", JOptionPane.YES_NO_CANCEL_OPTION);
+
+        if (opcao == JOptionPane.YES_OPTION) {
             salvarData();
-       }
-       
+
+        } else if (opcao == JOptionPane.NO_OPTION) {
+
+            int opcaoo = JOptionPane.showConfirmDialog(null, "Tem Certeza que deseja excluir a data?", "Confimar:", JOptionPane.YES_NO_CANCEL_OPTION);
+
+            if (opcaoo == JOptionPane.YES_OPTION) {
+                deletadat();
+            }
+
+        }
+
     }//GEN-LAST:event_txtdataActionPerformed
 
     private void txtdataKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtdataKeyPressed
-   
+
     }//GEN-LAST:event_txtdataKeyPressed
 
     private void txtvalorCompletoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtvalorCompletoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtvalorCompletoActionPerformed
 
-    public void deletadat(){
+    private void codVendaInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_codVendaInputMethodTextChanged
+
+    }//GEN-LAST:event_codVendaInputMethodTextChanged
+
+    private void codVendaAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_codVendaAncestorAdded
+
+
+    }//GEN-LAST:event_codVendaAncestorAdded
+
+    private void codVendaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_codVendaFocusLost
+
+
+    }//GEN-LAST:event_codVendaFocusLost
+
+    private void codVendaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_codVendaKeyTyped
+
+
+    }//GEN-LAST:event_codVendaKeyTyped
+
+    private void codVendaMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_codVendaMouseMoved
+
+
+    }//GEN-LAST:event_codVendaMouseMoved
+
+    private void codVendaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_codVendaKeyPressed
+
+    }//GEN-LAST:event_codVendaKeyPressed
+
+    private void codVendaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_codVendaKeyReleased
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_codVendaKeyReleased
+
+    public void verificar() {
+        boolean clik;
+
+        //método para ver se contém o mesmo id digitado
+        veriguar();
+        clik = (codVenda.getText().equals(nom));
+
+        if (clik) {
+            JOptionPane.showMessageDialog(null, "Já contém esse código salvor!", "Tenter outro código diferente:", JOptionPane.INFORMATION_MESSAGE);
+            codVenda.setText("");
+        } else if (!clik) {
+            //  JOptionPane.showMessageDialog(null,"NAO TEM ");
+        } else if (codVenda.getText().isEmpty()) {
+            codVenda.requestFocus();
+        } else {
+            //Para muda opcão 
+            jComboBoxCliente.requestFocus();
+        }
+
+    }
+
+    // ver se tem cliente distinto
+    public void verificarClienteDiferente() {
+        
+
+        //método para ver se contém o mesmo id digitado
+        veriguar();
+       
+        
+        
+        if (idCli!=idCli) {
+           //caso seja diferente o sistema zera os dados e limpa
+            JOptionPane.showMessageDialog(null, "O Sistema vai zera os valores,  ", "Nesse caso contém cliente diferente", JOptionPane.INFORMATION_MESSAGE);
+            Limpar();
+
+        } else {
+        
+           
+        }
+
+    }
+
+    public void semClisoDigitando() {
+        if (codVenda.getText().equalsIgnoreCase("JAVA")) {
+            //  JOptionPane.showMessageDialog(null, "legal");
+            Valortotal.setText("olá Mundo, JAVA");
+            txtvalorCompleto.setVisible(true);
+            ValorUnit.setBackground(Color.red);
+        } else {
+            // JOptionPane.showMessageDialog(null, "Dados Errados tente novamente!");
+            Valortotal.setText("");
+            ValorUnit.setBackground(Color.WHITE);
+        }
+    }
+
+    public void deletadat() {
         DataDao dt = new DataDao();
-        
+
         Data data = new Data();
-        
+
         data.setData(txtdata.getText());
-        
+
         dt.deletaData(data);
     }
-    
+
 //Método para  deletar idComprar da tabela idvenda;
     public void deletaridComprar() {
         //Instânciando a classe ComprovanteDao;
@@ -1184,7 +1354,7 @@ public class Venda extends javax.swing.JFrame {
         ComprovanteModel cp = new ComprovanteModel();
         cp.setIdVenda(codVenda.getText());
         // colocando objeto cp no método deletar Itens da classe ComprovanteDao ;
-       dao.deletaIdComprar(cp);
+        dao.deletaIdComprar(cp);
 
     }
 
@@ -1192,16 +1362,15 @@ public class Venda extends javax.swing.JFrame {
     public void deletarItem() {
         //Instânciando a classe ComprovanteDao;
         ComprovanteDao dao = new ComprovanteDao();
-      
-        
+
         //Instânciando a classe ComprovanteModel;
         ComprovanteModel cp = new ComprovanteModel();
-       cp.setIdExcluir(Integer.parseInt(codVenda.getText()));
+        cp.setIdExcluir(Integer.parseInt(codVenda.getText()));
         // colocando objeto cp no método deletar Itens da classe ComprovanteDao ;
         dao.ExcluirItem(cp);
 
     }
-    
+
     //Método para visualizar todas Vendas;
     public void visualizarVENDAS() {
         DefaultTableModel modelo = (DefaultTableModel) tabelaVend.getModel();
@@ -1228,9 +1397,8 @@ public class Venda extends javax.swing.JFrame {
         }
 
     }
-  
-     
-  //Método para visualizar todas Vendas;
+
+    //Método para visualizar todas Vendas;
     public void visualizarPeloCodigoVenda() {
         DefaultTableModel modelo = (DefaultTableModel) tabelaVend.getModel();
         //Método para não repetir os dados na tabela de comprar;
@@ -1256,9 +1424,7 @@ public class Venda extends javax.swing.JFrame {
         }
 
     }
-  
-     
-    
+
     //Método para deletar venda 
     public void deletarVendasPeloCodigo() {
         //Instânciando a classe VendaDao;
@@ -1275,7 +1441,6 @@ public class Venda extends javax.swing.JFrame {
     //Método para seta os dados dos Produtos nos campos de textos pelo código do cliente;
     public void setaDadosProduto() {
 
-        
         try {
             Connection Conn = Conexao_BD.getConnection();
 
@@ -1291,8 +1456,6 @@ public class Venda extends javax.swing.JFrame {
                 txtNpro.setText(Rst.getString("nome"));
                 TXTestoque.setText(String.valueOf(Rst.getInt("estoque")));
                 ValorUnit.setText(String.valueOf(Rst.getDouble("valorUnit")));
-                
-             
 
             } else {
                 //  JOptionPane.showMessageDialog(null,"Produto não existe !");
@@ -1317,10 +1480,9 @@ public class Venda extends javax.swing.JFrame {
 
     }
 
-     //Método para atualizar  os dados dos Produtos nos campos de textos pelo código do produto;
+    //Método para atualizar  os dados dos Produtos nos campos de textos pelo código do produto;
     public void setaAtualizacaoProduto() {
 
-        
         try {
             Connection Conn = Conexao_BD.getConnection();
 
@@ -1330,7 +1492,7 @@ public class Venda extends javax.swing.JFrame {
             PreparedStatement Patm = Conn.prepareStatement(sql);
             Patm.setString(1, TXTestoque.getText());
             //executar
-           Patm.executeUpdate();
+            Patm.executeUpdate();
 
             //Fechando conexão PreparedStatement;
             Patm.close();
@@ -1345,7 +1507,6 @@ public class Venda extends javax.swing.JFrame {
 
     }
 
-    
     //Método para seta nome dos clientes;
     public void setaNomeClientes() {
 
@@ -1385,112 +1546,169 @@ public class Venda extends javax.swing.JFrame {
         }
 
     }
-    //Método para calcular a quantidade pedido pelo cliente;
 
-    public void calcularPreVenda() {      
-        
-      
-              
+    // método para  ver se tem omesmo id digitado 
+    public boolean veriguar() {
+
+        try {
+            Connection Conn = Conexao_BD.getConnection();
+
+            //Comando para selecionar  nome do cliente pelo código do cliente em um campo de texto;
+            String sql = "SELECT codVendar FROM vendas where codVendar like '" + codVenda.getText() + "'";
+
+            PreparedStatement Patm = Conn.prepareStatement(sql);
+
+            //Executar
+            ResultSet Rst = Patm.executeQuery();
+
+            if (Rst.next()) {
+                //setando codigo venda
+
+                nom = Rst.getString("codVendar");
+            } else {
+                //SETA CAMPO VAZIO
+                txtNcli.setText("");
+
+            }
+
+            //Fechando conexão ResultSet;
+            Rst.close();
+
+            //Fechando conexão PreparedStatement;
+            Patm.close();
+
+            //Fechando conexão Connection;
+            Conn.close();
+
+        } catch (SQLException e) {
+            //caso de algo errado exiber essa mensagem;
+            JOptionPane.showMessageDialog(null, "Cliente não encontrado ! ");
+        }
+        return true;
+
+    }
+
+    // método para  ver se tem o mesmo id do cliente ao continua adicionando os itens;
+    public boolean verDiferenca() {
+
+        try {
+            Connection Conn = Conexao_BD.getConnection();
+
+            //Comando para selecionar  nome do cliente pelo código do cliente em um campo de texto;
+            String sql = "SELECT codCli FROM vendas where codCli like '" + jComboBoxCliente.getSelectedItem() + "'";
+
+            PreparedStatement Patm = Conn.prepareStatement(sql);
+
+            //Executar
+            ResultSet Rst = Patm.executeQuery();
+
+            if (Rst.next()) {
+                //setando codigo do cliente
+
+                idCli = Rst.getString("codCli");
+            } else {
+                //SETA CAMPO VAZIO
+                txtNcli.setText("");
+
+            }
+
+            //Fechando conexão ResultSet;
+            Rst.close();
+
+            //Fechando conexão PreparedStatement;
+            Patm.close();
+
+            //Fechando conexão Connection;
+            Conn.close();
+
+        } catch (SQLException e) {
+            //caso de algo errado exiber essa mensagem;
+            JOptionPane.showMessageDialog(null, "Cliente não encontrado ! ");
+        }
+        return true;
+
+    }
+
+    //Método para calcular a quantidade pedido pelo cliente
+    public void calcularPreVenda() {
+
         //Passando o campo de texto Qtd de String para Inteiro;
         Integer QTD = Integer.parseInt(txtQtd.getText());
 
         //Passando o campo de texto Estoque de String para Inteiro;
         Integer ESTOQUE = Integer.parseInt(TXTestoque.getText());
 
-      
-        
-     
         //laço de repetição para fazer a subtração;
         for (int i = 0; i <= ESTOQUE; i++) {
-             
+
             //guardando o resultado
             contador = i - QTD;
-           
+
             String cvt = String.valueOf(contador);
             //setando no campo de texto estoque;
-           TXTestoque.setText(cvt.replace("-", ""));
-          
+            TXTestoque.setText(cvt.replace("-", ""));
+
             // condição para saber se o estoque é maior do que a Quantidade ou estoque é igual a quantidade;
             if (ESTOQUE > QTD || ESTOQUE == QTD) {
 
                 //setando no campo de texto estoque;
-               TXTestoque.setText(String.valueOf(contador));
+                TXTestoque.setText(String.valueOf(contador));
                 TXTestoque.setText(cvt.replace("-", ""));
-              TXTestoque.setText(""+contador);
+                TXTestoque.setText("" + contador);
                 //condição para saber ser a quantidade é maior do que o estoque; 
-            }
-            
-            //condição para saber se a quantidade é maior do que o estoque de produtos
-             else  if (QTD > ESTOQUE) {
-                 
+            } //condição para saber se a quantidade é maior do que o estoque de produtos
+            else if (QTD > ESTOQUE) {
 
                 // se essa condição for realizada será mostrado essa mensagem;
                 JOptionPane.showMessageDialog(null, "Quantidade indisponível !", "Error", JOptionPane.ERROR_MESSAGE);
 
-              
                 //setano o valor na label Total;
                 labelTotal.setText("");
                 break;
- 
+
             }
         }
 
-        
-     
-       
-            
-               
-        
-        
         //guarda o resultado
         double multiplicar = 0;
         //Passando valor Unitário String para Double;
         double valorUnit = Double.parseDouble(ValorUnit.getText());
-        
-           //guarda o valor completo do produto e passando de String para double;
-        double valorCompleto=Double.parseDouble(txtvalorCompleto.getText());
 
-        
-        
+        //guarda o valor completo do produto e passando de String para double;
+        double valorCompleto = Double.parseDouble(txtvalorCompleto.getText());
+
         if (true) {
 
             //guardando o resultado da multiplicação
             multiplicar = valorUnit * QTD;
-            valorTotalBD = valorTotalBD + multiplicar+valorCompleto;
+            valorTotalBD = valorTotalBD + multiplicar + valorCompleto;
 
             //setando o resultado na labelTotal;
             labelTotal.setText(String.valueOf(valorTotalBD));
-            Valortotal.setText("" +valorTotalBD);
+            Valortotal.setText("" + valorTotalBD);
 
-            
-        
         }
-        
-        
-        
 
-        
     }
 
     //Método para realizar a venda;
     public void realizarVenda() {
 
         double valorNegativoBD = 0;
-       
-          //Passando valor total de String para double;
-        double valorTotal=Double.parseDouble(Valortotal.getText());
-        
+
+        //Passando valor total de String para double;
+        double valorTotal = Double.parseDouble(Valortotal.getText());
+
         // Passando o valor recebido de String para double; 
         double valorReceb = Double.parseDouble(txtValorReceb.getText());
 
         //Fazendo a condição para sabe se o valor recebido é menor  do que o resultado da multiplicação da QTD vezes o valor Unitário;
-        if (valorReceb < valorTotal ) {
+        if (valorReceb < valorTotal) {
             //Exibindo a mensagem se caso essa condição seja verdadeira;
             JOptionPane.showMessageDialog(null, "Valor a baixo do Total !", "Error", JOptionPane.ERROR_MESSAGE);
 
             valorNegativoBD = valorReceb - valorTotal;
-          
-            
+
             txtTroco.setText(String.valueOf("" + valorNegativoBD));
             //Fazendo a condição para sabe se o valor recebido é igual o resultado da multiplicação da QTD vezes o valor Unitário;   
         } else if (valorReceb == valorTotal) {
@@ -1514,22 +1732,21 @@ public class Venda extends javax.swing.JFrame {
 
     }
 
-     //Método para realizar  a venda pelo código;
+    //Método para realizar  a venda pelo código;
     public void realizarPeloCodVenda() {
 
         double valorNegativoBD = 0;
-       
+
         // Passando o valor recebido de String para double; 
         double valorReceb = Double.parseDouble(txtValorReceb.getText());
 
         //Fazendo a condição para sabe se o valor recebido é menor  do que o resultado da multiplicação da QTD vezes o valor Unitário;
-        if (valorReceb < valorTotalCodBD ) {
+        if (valorReceb < valorTotalCodBD) {
             //Exibindo a mensagem se caso essa condição seja verdadeira;
             JOptionPane.showMessageDialog(null, "Valor a baixo do Total !", "Error", JOptionPane.ERROR_MESSAGE);
 
             valorNegativoBD = valorReceb - valorTotalCodBD;
-          
-            
+
             txtTroco.setText(String.valueOf("" + valorNegativoBD));
             //Fazendo a condição para sabe se o valor recebido é igual o resultado da multiplicação da QTD vezes o valor Unitário;   
         } else if (valorReceb == valorTotalCodBD) {
@@ -1552,8 +1769,7 @@ public class Venda extends javax.swing.JFrame {
         }
 
     }
-    
-    
+
     //Método para limpar os campos de textos e uma Jlabel;
     public void Limpar() {
         codVenda.setText("");
@@ -1571,13 +1787,10 @@ public class Venda extends javax.swing.JFrame {
         txtVZ.setText("");
         txtvalorCompleto.setText("");
         txtComplet.setText("");
-        valorTotalBD=0;
+        valorTotalBD = 0;
         jcombProdutos.setSelectedIndex(0);
-      
-        
-    }
 
-  
+    }
 
     //Método para limpar as linhas da tabela
     public void limpalinha() {
@@ -1590,12 +1803,11 @@ public class Venda extends javax.swing.JFrame {
     //Método para seta os valor total  dos itens no campo de texto e na label;
     public void setaValorTotalDaVENDAPelocod() {
 
-       //int codvd = Integer.parseInt(codVenda.getText());
-
+        //int codvd = Integer.parseInt(codVenda.getText());
         try {
             Connection Conn = Conexao_BD.getConnection();
             //Comando para fazer a soma de toda coluna Valor Total no banco de dados;
-            String sql = "SELECT round(sum(total),2) FROM vendas where codVenda=" +codVenda.getText() + " and data='"+txtdata.getText()+"'";
+            String sql = "SELECT round(sum(total),2) FROM vendas where codVenda=" + codVenda.getText() + " and data='" + txtdata.getText() + "'";
 
             PreparedStatement Patm = Conn.prepareStatement(sql);
 
@@ -1608,7 +1820,7 @@ public class Venda extends javax.swing.JFrame {
                 //setando o valor no campo de texto e na label; 
                 labelTotal.setText("" + total);
                 Valortotal.setText("" + total);
-                valorTotalCodBD=total;
+                valorTotalCodBD = total;
             }
             //Fechando conexão ResultSet;
             Rst.close();
@@ -1632,10 +1844,10 @@ public class Venda extends javax.swing.JFrame {
         try {
             Connection Conn = Conexao_BD.getConnection();
             //Comando para fazer a soma de toda coluna Valor Total no banco de dados;
-            String sql = "SELECT round(sum(total),2) FROM vendas WHERE codCli="+jComboBoxCliente.getSelectedItem()+" and data='"+txtdata.getText()+"'";
+            String sql = "SELECT round(sum(total),2) FROM vendas WHERE codCli=" + jComboBoxCliente.getSelectedItem() + " and data='" + txtdata.getText() + "'";
 
             PreparedStatement Patm = Conn.prepareStatement(sql);
-        //    Patm.setString(1,(String)jComboBoxCliente.getSelectedItem());
+            //    Patm.setString(1,(String)jComboBoxCliente.getSelectedItem());
             ResultSet Rst = Patm.executeQuery();
 
             while (Rst.next()) {
@@ -1662,8 +1874,6 @@ public class Venda extends javax.swing.JFrame {
         }
 
     }
-
-  
 
     //Método para adiciona os produtos no jcombox;
     public void setaDadosJcomboxProd() {
@@ -1765,8 +1975,6 @@ public class Venda extends javax.swing.JFrame {
         labelTotal.setText("0,00");
     }
 
-
-
     //MÉTODO PARA EXECUTAR QUALQUEI AÇÃO EM UM  DETERMINADO TEMPO;
     public void tempo() {
         try {
@@ -1783,115 +1991,264 @@ public class Venda extends javax.swing.JFrame {
         return valorTotalBD;
     }
 
-  
     //Método para mostrar a data ao abrir essa jFRAME venda;
-    public void DataDoDia(){
-        Data dt = new  Data();
-       txtdata.setText(dt.setaData());
-       codVenda.requestFocus();
-      
- 
-  }
-// class para implemena a hora;
-     class hora implements ActionListener {
+    public void DataDoDia() {
+        Data dt = new Data();
+        txtdata.setText(dt.setaData());
+        codVenda.requestFocus();
 
+    }
+// class para implemena a hora;
+
+    class hora implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-              Calendar cl = Calendar.getInstance();
-       
-       
-         lbHora.setText(String.format("%1$tH:%1$tM:%1$tS", cl));
+            Calendar cl = Calendar.getInstance();
+
+            lbHora.setText(String.format("%1$tH:%1$tM:%1$tS", cl));
         }
+    }
+
+    //Método para repor a quantidade de produtos caso excluar
+    public void reporProd() {
+
+        int estoq = Integer.parseInt(TXTestoque.getText());
+        int qtd = Integer.parseInt(txtQtd.getText());
+
+        int rest = estoq + qtd;
+
+        TXTestoque.setText("" + rest);
+
+    }
+
+    //método para preencher os campos obrigatóriamente;
+    public void valorNulo() {
+
+        try {
+            if (codVenda.getText().isEmpty() && codVenda.getText().length() == 0 || jComboBoxCliente.getSelectedItem().toString().trim().length() == 0 || jcombProdutos.getSelectedItem().toString().trim().length() == 0 || txtQtd.getText() == null && txtQtd.getText().length() < 1
+                    || ValorUnit.getText().isEmpty() && ValorUnit.getText().length() == 0 || Valortotal.getText().isEmpty() && Valortotal.getText().length() == 0) {
+                JOptionPane.showMessageDialog(null, "Preenchar os campos corretamente!", "", JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (Exception e) {
+            System.out.println("" + e);
+        }
+
+    }
+    //método para salvar a data 
+
+    public void salvarData() {
+
+        Data dt = new Data();
+
+        // fazendo a instância da classe dataDao para passar  objeto da classe data;
+        DataDao d = new DataDao();
+        // setando a data no objeto da classe data;
+        dt.setData(dt.setaData());
+        //passando objeto para a classe dataDao
+        d.adicionaData(dt);
+
+    }
+
+    //metodo para digita só nomes
+    public boolean checkLetters(String str) {
+
+        return str.matches("[a-zA-Z]+");
+    }
+
+    //metodo para digita só números
+    public void soNumeros() {
+
+        //  codVenda.setDocument(new ApenasNumeros());
+        TXTestoque.setDocument(new ApenasNumeros());
+        //  txtComplet.setDocument(new ApenasNumeros());
+        txtQtd.setDocument(new ApenasNumeros());
+        //  txtValorReceb.setDocument(new ApenasNumeros());
+        //   txtvalorCompleto.setDocument(new ApenasNumeros());
+        txtVZ.setDocument(new ApenasNumeros());
+        txtTroco.setDocument(new ApenasNumeros());
+        //   ValorUnit.setDocument(new ApenasNumeros());
+        //   Valortotal.setDocument(new ApenasNumeros());
+
+        // Para deixa esses campos abaixo em 0 
+        txtComplet.setText("0");
+        txtVZ.setText("0");
+        txtvalorCompleto.setText("0");
+    }
+
+    //MÉTODO PARRA EVITA LETRAS
+    public void permitirNumerosFlutuantes() {
+
+        if (checkLetters(ValorUnit.getText()) || checkLetters(Valortotal.getText()) || checkLetters(txtvalorCompleto.getText())) {
+            ValorUnit.setBackground(Color.red);
+            Valortotal.setBackground(Color.red);
+            txtvalorCompleto.setBackground(Color.red);
+            JOptionPane.showMessageDialog(null, "Não Poder digita letras nesse campos em vermelhos !");
+
+            ValorUnit.setBackground(Color.WHITE);
+            Valortotal.setBackground(Color.WHITE);
+            txtvalorCompleto.setBackground(Color.WHITE);
+
+        }
+
+    }
+
+    public void adicionarCodVenda() {
+
+        VendaDao d = new VendaDao();
+
+        IDvenda idvd = new IDvenda();
+        idvd.setIdVendar(codVenda.getText());
+        d.adicionaCodVENDA(idvd);
+    }
+    
+     //Método para seta os dados dos Produtos os valores de comprar do vendedor;
+    public void setaDadosProdutoValorDeCompra() {
+
+        try {
+            Connection Conn = Conexao_BD.getConnection();
+
+            //comando para seta os valores de comprar do produto que o vendedor investiu
+            String sql = "select ValorDComprar from produto where codProd='" + jcombProdutos.getSelectedItem() + "'";
+
+            PreparedStatement Patm = Conn.prepareStatement(sql);
+            //executar
+            ResultSet Rst = Patm.executeQuery();
+
+            if (Rst.next()) {
+                //Seando os valores no campos de textos;
+                valorDoVendedor=Rst.getDouble("ValorDComprar");
+              
+                txtValorReceb.setText(valorDoVendedor+"");
+
+            } else {
+                //  JOptionPane.showMessageDialog(null,"Produto não existe !");
+              
+            }
+
+            //Fechando conexão ResultSet;
+            Rst.close();
+
+            //Fechando conexão PreparedStatement;
+            Patm.close();
+
+            //Fechando conexão Connection;
+            Conn.close();
+
+        } catch (SQLException e) {
+            //caso de error exiber essa mensagem
+            JOptionPane.showMessageDialog(null, "Produto não Encontrado !");
+        }
+
+    }
+    
+    //Método para seta a soma e a quantidade dos produtos;
+    public void setaDadosDaQtdESoma() {
+
+        try {
+            Connection Conn = Conexao_BD.getConnection();
+
+            //comando para seta os valores de soma e quantidade
+            String sql = "SELECT codProd,sum(Qtd)as Quantidade,sum(total)as total from vendas where codProd='" + jcombProdutos.getSelectedItem() + "' and data='"+txtdata.getText()+"'";
+
+            PreparedStatement Patm = Conn.prepareStatement(sql);
+            //executar
+            ResultSet Rst = Patm.executeQuery();
+
+            if (Rst.next()) {
+                
+                
+                
+                //Setando os valores no campos de textos;ou variáveis
+              QTDProduto=Rst.getInt("Quantidade");
+                
+                somaTotal= Rst.getDouble("total");
+              
+                txtComplet.setText(QTDProduto+"");
+                txtVZ.setText(somaTotal+"");
+
+            } else {
+                //  JOptionPane.showMessageDialog(null,"Produto não existe !");
+              
+            }
+
+            //Fechando conexão ResultSet;
+            Rst.close();
+
+            //Fechando conexão PreparedStatement;
+            Patm.close();
+
+            //Fechando conexão Connection;
+            Conn.close();
+
+        } catch (SQLException e) {
+            //caso de error exiber essa mensagem
+            JOptionPane.showMessageDialog(null, "Produto não Encontrado !");
+        }
+
+    }
+    
+     //Método para faze o calculor do ganho
+    public double fazerCalculo(){
+          
+          //Passando valor Unitário String para Double;
+        double valorUnit = Double.parseDouble(ValorUnit.getText());
+        
+        double   multiplicacao1=QTDProduto*valorUnit;
+        
+        double  multiplicacao2=QTDProduto*valorDoVendedor;
+        
+        double subtracao=multiplicacao1-multiplicacao2;
+         
+        valorLucro=subtracao;
+        txtComplet.setText(valorLucro+"");
+        return subtracao;
+      
+    }
+     //Método para faze o calculor do ganho
+    public double fazerCalculoAntesdSalvar(){
+          
+        int quantidad=Integer.parseInt(txtQtd.getText());
+          //Passando valor Unitário String para Double;
+        double valorUnit = Double.parseDouble(ValorUnit.getText());
+        
+        double   multiplicacao1=quantidad*valorUnit;
+        
+        double  multiplicacao2=quantidad*valorDoVendedor;
+        
+        double subtracao=multiplicacao1-multiplicacao2;
+         
+        
+        txtvalorCompleto.setText(subtracao+"");
+        return subtracao;
+     
     }
     
     
     
-        
-      
-   //Método para repor a quantidade de produtos caso excluar
-      public void reporProd(){
-          
-          int estoq=Integer.parseInt(TXTestoque.getText());
-          int qtd=Integer.parseInt(txtQtd.getText());
-          
-          int rest= estoq+qtd;
-          
-          TXTestoque.setText(""+rest);
-          
-          
-      }
-      
-      //método para preencher os campos obrigatóriamente;
-      public void valorNulo(){
-         
-          
-          try {
-                if(codVenda.getText().isEmpty() && codVenda.getText().length()==0 || jComboBoxCliente.getSelectedItem().toString().trim().length()==0 || jcombProdutos.getSelectedItem().toString().trim().length()==0  || txtQtd.getText()==null && txtQtd.getText().length()<1
-                 || ValorUnit.getText().isEmpty()&& ValorUnit.getText().length()==0 || Valortotal.getText().isEmpty()&& Valortotal.getText().length()==0){
-             JOptionPane.showMessageDialog(null, "Preenchar os campos corretamente!","",JOptionPane.WARNING_MESSAGE);
-          }
-          } catch (Exception e) {
-              System.out.println(""+e);
-          }
-          
-     
-          
-      }
-      //método para salvar a data 
-      public void salvarData(){
-          
-           Data dt = new  Data();  
-          
+    
+  //Método para adicionar os valores para saber o lucro de toda venda
+    public void addValores(){
+         Data dt = new Data();
+
         // fazendo a instância da classe dataDao para passar  objeto da classe data;
-       DataDao d = new DataDao();
+        DataDao d = new DataDao();
         // setando a data no objeto da classe data;
-       dt.setData(dt.setaData());
-        //passando objeto para a classe dataDao
-       d.adicionaData(dt);
-   
-      }
-      
-      //metodo para digita só nomes
-      public boolean checkLetters(String str) {
-   
-         return str.matches("[a-zA-Z]+");
-   }
-   
-    
-       //metodo para digita só números
-      public void soNumeros() {
-    
-     //  codVenda.setDocument(new ApenasNumeros());
-       TXTestoque.setDocument(new ApenasNumeros());
-     //  txtComplet.setDocument(new ApenasNumeros());
-       txtQtd.setDocument(new ApenasNumeros());
-     //  txtValorReceb.setDocument(new ApenasNumeros());
-    //   txtvalorCompleto.setDocument(new ApenasNumeros());
-       txtVZ.setDocument(new ApenasNumeros());
-       txtTroco.setDocument(new ApenasNumeros());
-    //   ValorUnit.setDocument(new ApenasNumeros());
-    //   Valortotal.setDocument(new ApenasNumeros());
-       
-       // Para deixa esses campos abaixo em 0 
-        txtComplet.setText("0");
-       txtVZ.setText("0");
-       txtvalorCompleto.setText("0");
-   }
-      
-      public void permitirNumerosFlutuantes(){
-          
-          if(checkLetters(ValorUnit.getText()) || checkLetters(Valortotal.getText()) || checkLetters(txtvalorCompleto.getText())){
-              ValorUnit.setBackground(Color.red);
-              Valortotal.setBackground(Color.red);
-              txtvalorCompleto.setBackground(Color.red);
-              JOptionPane.showMessageDialog(null, "Não Poder digita letras nesse campos em vermelhos !");
-               ValorUnit.setBackground(Color.WHITE);
-               Valortotal.setBackground(Color.WHITE);
-               txtvalorCompleto.setBackground(Color.WHITE);
-             
-          }
-          
-      }
-      
+        dt.setData(dt.setaData());
+        
+        LucroModel md = new LucroModel();
+        
+        
+        md.setCodigoProduto(String.valueOf(jcombProdutos.getSelectedItem()));
+        md.setQuantidade(QTDProduto);
+        md.setValorUnitario(Double.parseDouble(ValorUnit.getText()));
+        md.setValorTotal(somaTotal);
+        md.setValorDcomprar(Double.parseDouble(valorDoVendedor+""));
+        md.setValorGanhor(valorLucro);
+        md.setData(dt.getData());
+        
+        LucroDao vd = new LucroDao();
+        vd.adicionarDadosLucros(md);
+    }
+
 }

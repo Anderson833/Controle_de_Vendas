@@ -5,9 +5,16 @@
  */
 package View;
 
+import Conexao.Conexao_BD;
 import Dao.Daologin;
+import java.awt.Color;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -24,9 +31,18 @@ public class TelaLogin extends javax.swing.JFrame {
         
         //CENTRALIZANDO VIEW AO CENTRO;
         setLocationRelativeTo(this);
+        
+      //  logarSemPressionarBota();
+     
     }
-
     
+       //Variavel para pegar usuario do banco de dados
+        String usuario="";
+        
+        //variavel para pegar a senha do usuario no banco
+        String senha="";
+        
+       
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -37,7 +53,8 @@ public class TelaLogin extends javax.swing.JFrame {
         txtUSUARIO = new javax.swing.JTextField();
         BTLOGIN = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        PASSWORD = new javax.swing.JPasswordField();
+        txtsenha = new javax.swing.JPasswordField();
+        mostra = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Acessar Sistema");
@@ -58,6 +75,11 @@ public class TelaLogin extends javax.swing.JFrame {
                 txtUSUARIOActionPerformed(evt);
             }
         });
+        txtUSUARIO.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtUSUARIOKeyPressed(evt);
+            }
+        });
 
         BTLOGIN.setBackground(new java.awt.Color(255, 255, 255));
         BTLOGIN.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -71,12 +93,27 @@ public class TelaLogin extends javax.swing.JFrame {
         });
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel3.setText("    Estoque De Vendas");
+        jLabel3.setText("    Controle De Vendas");
         jLabel3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        PASSWORD.addActionListener(new java.awt.event.ActionListener() {
+        txtsenha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                PASSWORDActionPerformed(evt);
+                txtsenhaActionPerformed(evt);
+            }
+        });
+        txtsenha.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtsenhaKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtsenhaKeyReleased(evt);
+            }
+        });
+
+        mostra.setText("Mostrar");
+        mostra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mostraActionPerformed(evt);
             }
         });
 
@@ -84,41 +121,46 @@ public class TelaLogin extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(BTLOGIN, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(102, 102, 102)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(27, 27, 27)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtUSUARIO, javax.swing.GroupLayout.DEFAULT_SIZE, 393, Short.MAX_VALUE)
-                    .addComponent(PASSWORD))
-                .addGap(180, 180, 180))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(BTLOGIN, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(264, 264, 264))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(mostra)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtUSUARIO, javax.swing.GroupLayout.DEFAULT_SIZE, 393, Short.MAX_VALUE)
+                            .addComponent(txtsenha))
+                        .addGap(180, 180, 180))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(42, 42, 42)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(49, 49, 49)
+                .addGap(46, 46, 46)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txtUSUARIO, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(38, 38, 38)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(PASSWORD, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtsenha, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
-                .addGap(69, 69, 69)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(mostra)
+                .addGap(39, 39, 39)
                 .addComponent(BTLOGIN)
-                .addContainerGap(52, Short.MAX_VALUE))
+                .addContainerGap(84, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -137,43 +179,158 @@ public class TelaLogin extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void PASSWORDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PASSWORDActionPerformed
-       
-    }//GEN-LAST:event_PASSWORDActionPerformed
-
     private void BTLOGINActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTLOGINActionPerformed
       
+        //depois termino
+         boolean onclik;
+        boolean clik;
         
-        //Criando objeto da Classe DaoLogin;
-        Daologin lg = new Daologin();
-
-        try {
-                 //Pssando objeto para Pegar Usuário é senha dos Campos da View TelaLogin;
-            if (lg.logar(txtUSUARIO.getText(), PASSWORD.getText())) {
-               
-                //Instânciando view  TelaPrincipal;
-                TelaPrincipal tp = new TelaPrincipal();
-                //Passando objeto para abrir TelaPrincipal ao Logar;
-                tp.setVisible(true);
-                //Fechando a  TelaLgin;
-                this.dispose();
-
-            } else {
-                //Caso tenha dados Incorretos mostrar essa mensagem;
-                JOptionPane.showMessageDialog(null, "Usuário ou Senha Incorreta!");
+        boolean cor;
+         onclik=(txtUSUARIO.getText().isEmpty());
+         
+         clik=(txtsenha.getText().isEmpty());
+         
+         cor=(onclik && clik);
+          Daologin lg = new Daologin();
+          
+              if(cor){
+                  txtUSUARIO.setBackground(Color.GREEN);
+                   txtsenha.setBackground(Color.GREEN);
+                   JOptionPane.showMessageDialog(null, "Preenchar os campos!");
+             }
+          
+            else  if(onclik){
+                  JOptionPane.showMessageDialog(null, "Preenchar campo de login!","Por favor:",JOptionPane.WARNING_MESSAGE);
+                  txtUSUARIO.setBackground(Color.red);
+                    txtUSUARIO.requestFocus();
+                  
+             }else if(clik){
+                 JOptionPane.showMessageDialog(null, "Preenchar campo de senha!","Por favor:",JOptionPane.WARNING_MESSAGE);
+                  txtsenha.setBackground(Color.red);
+                    txtsenha.requestFocus();
+             }
+             
+             else if(lg.logar(txtUSUARIO.getText(), txtsenha.getText())){
+                
+                  //Instânciando view  TelaPrincipal;
+            TelaPrincipal tp = new TelaPrincipal();
+            //Passando objeto para abrir TelaPrincipal ao Logar;
+            tp.setVisible(true);
+            //Fechando a  TelaLgin;
+            this.dispose();
+            }else{
+                 JOptionPane.showMessageDialog(null, "Usuário ou Senha Incorreta!");
             }
-        } catch (SQLException ex) {
-             //Caso tenha dados errados mostrar essa mensagem;
-            JOptionPane.showMessageDialog(null, "Error De lohin !");
-        }
-
-
+            
+    
     }//GEN-LAST:event_BTLOGINActionPerformed
 
     private void txtUSUARIOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUSUARIOActionPerformed
 
+  
     }//GEN-LAST:event_txtUSUARIOActionPerformed
 
+    
+    private void txtsenhaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtsenhaKeyReleased
+
+
+    }//GEN-LAST:event_txtsenhaKeyReleased
+
+  
+    
+    private void txtsenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtsenhaActionPerformed
+
+    }//GEN-LAST:event_txtsenhaActionPerformed
+
+    private void mostraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostraActionPerformed
+     
+        
+        
+        // condição para mostrar a senha do usuário digitada
+       
+         if(mostra.isSelected()){
+            
+             if(txtsenha.getText().isEmpty()){
+                  JOptionPane.showMessageDialog(null,"Tenter Novamente: ", "Senha não Digitada: ",JOptionPane.ERROR_MESSAGE);
+                  txtsenha.requestFocus();
+             }else{
+             String senha="USUARIO "+this.txtsenha.getPassword();
+             senha=txtsenha.getText();
+             JOptionPane.showMessageDialog(null, "Senha Digitada:  "+senha);
+              txtsenha.requestFocus();
+            }
+     
+         }
+    }//GEN-LAST:event_mostraActionPerformed
+
+    private void txtUSUARIOKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUSUARIOKeyPressed
+       
+                txtUSUARIO.setBackground(Color.WHITE);
+                      txtUSUARIO.requestFocus();
+    }//GEN-LAST:event_txtUSUARIOKeyPressed
+
+    private void txtsenhaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtsenhaKeyPressed
+        
+        
+          txtsenha.setBackground(Color.WHITE);
+                      txtsenha.requestFocus();
+        
+        
+    }//GEN-LAST:event_txtsenhaKeyPressed
+    
+      //Método para seta usuário e senha  dos usuários para logar;
+    public boolean logarSemPressionarBota() {
+
+         try {
+            Connection Conn = Conexao_BD.getConnection();
+
+            
+            String sql = "SELECT login,senha FROM usuario where login like '"+txtUSUARIO.getText()+"'";
+
+            PreparedStatement Patm = Conn.prepareStatement(sql);
+
+            //Executar
+            ResultSet Rst = Patm.executeQuery();
+
+            if (Rst.next()) {
+                //setando nome
+               // txtNcli.setText(Rst.getString("codVenda"));
+               usuario=  Rst.getString("login");
+               senha=  Rst.getString("senha");
+              
+            } else {
+                //SETA CAMPO VAZIO
+              //  txtNcli.setText("");
+
+            }
+
+            //Fechando conexão ResultSet;
+            Rst.close();
+
+            //Fechando conexão PreparedStatement;
+            Patm.close();
+
+            //Fechando conexão Connection;
+            Conn.close();
+
+        } catch (SQLException e) {
+            //caso de algo errado exiber essa mensagem;
+            JOptionPane.showMessageDialog(null, "login não encontrado ! ");
+        }
+        return true;
+
+ 
+      
+         
+    }
+  
+  
+    
+  
+   
+        
+    
+    
     public static void main(String args[]) {
       
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -185,11 +342,12 @@ public class TelaLogin extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BTLOGIN;
-    private javax.swing.JPasswordField PASSWORD;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JCheckBox mostra;
     private javax.swing.JTextField txtUSUARIO;
+    private javax.swing.JPasswordField txtsenha;
     // End of variables declaration//GEN-END:variables
 }

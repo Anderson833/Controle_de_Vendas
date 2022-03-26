@@ -1,25 +1,15 @@
 
 package Model;
 
-/**
- *
- * @author ander
- */
+
 public class ComprovanteModel extends VendaModel {
     
-    private int idComprar;
+    private String codDetalhe;
     private String data;
     private String idVenda;
     private int idExcluir;
     
-    public int getIdComprar() {
-        return idComprar;
-    }
-
    
-    public void setIdComprar(int idComprar) {
-        this.idComprar = idComprar;
-    }
 
     
     public String getData() {
@@ -49,6 +39,16 @@ public class ComprovanteModel extends VendaModel {
     
     public void setIdExcluir(int idExcluir) {
         this.idExcluir = idExcluir;
+    }
+
+   
+    public String getCodDetalhe() {
+        return codDetalhe;
+    }
+
+   
+    public void setCodDetalhe(String codDetalhe) {
+        this.codDetalhe = codDetalhe;
     }
     
 }

@@ -201,7 +201,7 @@ public class Consultar extends javax.swing.JFrame {
            ResultSet Rst = Patm.executeQuery();
 
             DefaultTableModel modelo = (DefaultTableModel) TbUsuario.getModel();
-
+             modelo.setNumRows(0);
             while(Rst.next()){
 
                 String [] lista = new String[]{Rst.getString("idUsu"),Rst.getString("nome"),Rst.getString("endereco")

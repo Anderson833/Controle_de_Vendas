@@ -47,6 +47,7 @@ public class ProdutoDao {
                 prod.setNome(rst.getString("nome"));
                 prod.setDescricao(rst.getString("descricao"));
                 prod.setValorUnit(rst.getDouble("valorUnit"));
+                prod.setValorDeComprar(rst.getDouble("ValorDComprar"));
                 prod.setEstoque(rst.getInt("estoque"));
                  //Adicionando na Lista;
                 listProduto.add(prod);
@@ -80,7 +81,7 @@ public class ProdutoDao {
        
         try {
             //Comando para inserir os dados dos produtos no banco de dados;
-            String sql="insert into produto(codProd,nome,descricao,valorUnit,estoque)values(?,?,?,?,?)";
+            String sql="insert into produto(codProd,nome,descricao,valorUnit,ValorDComprar,estoque)values(?,?,?,?,?,?)";
              
             PreparedStatement patm = conn.prepareStatement(sql);
             //Passando como paramentros os atributos do produto da classe ProdutoModel;
@@ -88,7 +89,8 @@ public class ProdutoDao {
             patm.setString(2, produto.getNome());
             patm.setString(3, produto.getDescricao());
             patm.setDouble(4, produto.getValorUnit());
-            patm.setInt(5, produto.getEstoque());
+            patm.setDouble(5, produto.getValorDeComprar());
+            patm.setInt(6, produto.getEstoque());
             
             //Executar;
             int upd=patm.executeUpdate();
@@ -121,7 +123,7 @@ public class ProdutoDao {
                try {
            
           //Comando para que realizar atualização no banco de dados;
-            String sql="UPDATE produto SET nome=?,descricao=?, valorUnit=?, estoque=? WHERE codProd=?";
+            String sql="UPDATE produto SET nome=?,descricao=?, valorUnit=?,ValorDComprar=?, estoque=? WHERE codProd=?";
             
             
             
@@ -130,8 +132,9 @@ public class ProdutoDao {
             patm.setString(1,produto.getNome());
             patm.setString(2,produto.getDescricao());
             patm.setDouble(3,produto.getValorUnit());
-            patm.setInt(4,produto.getEstoque());
-            patm.setString(5, produto.getCodProd());
+            patm.setDouble(4,produto.getValorDeComprar());
+            patm.setInt(5,produto.getEstoque());
+            patm.setString(6, produto.getCodProd());
             //Executar;
              int res= patm.executeUpdate();
             

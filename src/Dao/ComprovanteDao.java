@@ -29,7 +29,7 @@ public class ComprovanteDao {
          try {
              
              //Selecionando toda tabela comprar;
-             String sql="SELECT * FROM compras";
+             String sql="SELECT * FROM detalhe";
              
              PreparedStatement patm = conn.prepareStatement(sql);
              
@@ -40,13 +40,10 @@ public class ComprovanteDao {
                  //Instânciando  classe ComprovateModel;
                  ComprovanteModel comp = new ComprovanteModel();
                  //Setando os Valores;
-                 comp.setIdComprar(rst.getInt("codDeleta"));
-                 comp.setCodVenda(rst.getString("idComprar"));
+                 comp.setCodDetalhe(rst.getString("codDetalh"));
+                 comp.setIdVenda(rst.getString("codVendar"));
                 comp.setCodCli(rst.getString("codCli"));
-                comp.setCodProd(rst.getString("codProd"));
-               comp.setQtdProd(rst.getInt("Qtd_Prod"));
-               comp.setValorUnit(rst.getDouble("valorUnit"));  
-               comp.setValorTotal(rst.getDouble("ValorTotal"));
+                comp.setValorTotal(rst.getDouble("total"));
                comp.setData(rst.getString("data"));
                listComprov.add(comp);
                  //Adicionado na Lista;
@@ -82,7 +79,7 @@ public class ComprovanteDao {
          try {
              
              //Selecionando toda tabela comprar;
-             String sql="SELECT * FROM compras WHERE idComprar="+num.getIdComprar()+"";
+             String sql="SELECT * FROM compras WHERE idComprar="+num.getCodDetalhe()+"";
              
              PreparedStatement patm = conn.prepareStatement(sql);
              
@@ -93,7 +90,7 @@ public class ComprovanteDao {
                  //Instânciando  classe ComprovateModel;
                  ComprovanteModel comp = new ComprovanteModel();
                  //Setando os Valores;
-                 comp.setIdComprar(rst.getInt("codDeleta"));
+                 comp.setCodDetalhe(rst.getString("codDeleta"));
                  comp.setCodVenda(rst.getString("idComprar"));
                 comp.setCodCli(rst.getString("codCli"));
                 comp.setCodProd(rst.getString("codProd"));
@@ -135,17 +132,15 @@ public class ComprovanteDao {
        
         try {
             //Inserindo os dados dos itens na tabela comprar no banco de dados;
-            String sql="INSERT INTO compras(idComprar,codCli,codProd,Qtd_Prod,valorUnit,ValorTotal,data) VALUES(?,?,?,?,?,?,?)";
+            String sql="INSERT INTO detalhe(codDetalh,codVendar,codCli,total,data) VALUES(?,?,?,?,?)";
              
             PreparedStatement patm = conn.prepareStatement(sql);
             //Passando como paramentros os atributos da classe ComprovanteModel;
-            patm.setString(1, comprov.getCodVenda());
-            patm.setString(2, comprov.getCodCli());
-            patm.setString(3, comprov.getCodProd());
-            patm.setInt(4, comprov.getQtdProd());
-            patm.setDouble(5, comprov.getValorUnit());
-            patm.setDouble(6, comprov.getValorTotal());
-            patm.setString(7, comprov.getData());
+            patm.setString(1, comprov.getCodDetalhe());
+            patm.setString(2, comprov.getIdVenda());
+            patm.setString(3, comprov.getCodCli());
+            patm.setDouble(4, comprov.getValorTotal());
+            patm.setString(5, comprov.getData());
             //Executar;
             int upd=patm.executeUpdate();
             
@@ -184,7 +179,7 @@ public class ComprovanteDao {
         try {
 
           // Comando que  Deletar a Item pelo código do IdComprar;
-            String sql = "DELETE FROM compras WHERE codDeleta= ?";
+            String sql = "DELETE FROM detalhe WHERE codDetalh= ?";
 
             PreparedStatement patm = conn.prepareStatement(sql);
              
@@ -196,7 +191,7 @@ public class ComprovanteDao {
 
             if (res > 0) {
                 //Caso de tudo certo será exibido essa mensagem para usuário;
-                JOptionPane.showMessageDialog(null, "Item Deletado com Sucesso !", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "item Deletado com Sucesso !", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);
             } else {
                  //Caso de errado será exibido essa mensagem para usuário;
                 JOptionPane.showMessageDialog(null, "Item não Deletado !", "Error", JOptionPane.ERROR_MESSAGE);
@@ -291,7 +286,7 @@ public class ComprovanteDao {
                  //Instânciando  classe ComprovateModel;
                  ComprovanteModel comp = new ComprovanteModel();
                  //Setando os Valores;
-                 comp.setIdComprar(rst.getInt("idComprar"));
+                 comp.setCodDetalhe(rst.getString("idComprar"));
                 comp.setCodCli(rst.getString("codCli"));
                 comp.setCodProd(rst.getString("codProd"));
                comp.setQtdProd(rst.getInt("Qtd_Prod"));
