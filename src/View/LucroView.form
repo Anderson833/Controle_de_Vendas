@@ -58,7 +58,6 @@
                                   <Component id="jLabel4" min="-2" pref="59" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                                   <Component id="jLabel6" min="-2" pref="67" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace min="-2" pref="212" max="-2" attributes="0"/>
@@ -67,9 +66,9 @@
                                   <Component id="txtotal" min="-2" pref="99" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="txttotalLucro" min="-2" pref="85" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
                               </Group>
                           </Group>
+                          <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="txtvalorComprar" min="-2" pref="85" max="-2" attributes="0"/>
                               <Component id="jLabel7" min="-2" pref="75" max="-2" attributes="0"/>
@@ -238,6 +237,9 @@
                   <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tabLucroMouseClicked"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -336,6 +338,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Pesquisa"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

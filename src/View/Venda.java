@@ -56,7 +56,8 @@ public class Venda extends javax.swing.JFrame {
      //Variável soma tota de produto
      double somaTotal=0;
      
-     
+     //variável para armazenar a data salva na tabela vendas;
+     String data ="";
     public Venda() {
         initComponents();
         //centralizando ao centro da tela
@@ -77,6 +78,8 @@ public class Venda extends javax.swing.JFrame {
         soNumeros();
 
         veriguar();
+        //Método para saber se a data já contém salvar na tabela vendas
+       // distinguiData();
     }
 
     //Para armazenar o id da venda
@@ -470,6 +473,9 @@ public class Venda extends javax.swing.JFrame {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtdataKeyPressed(evt);
             }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtdataKeyReleased(evt);
+            }
         });
 
         lbHora.setBackground(new java.awt.Color(0, 0, 0));
@@ -764,16 +770,7 @@ public class Venda extends javax.swing.JFrame {
 
 
     private void AdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AdicionarActionPerformed
-        
-       
-        adicionarCodVenda();
-        tempo();
-        setaDadosDaQtdESoma();
-        tempo();
-        fazerCalculo();
-        tempo();
-        addValores();
-       
+     
         //método para ver se tem so letras no campo do código da venda
         if (checkLetters(codVenda.getText())) {
             codVenda.setBackground(Color.BLUE);
@@ -785,11 +782,22 @@ public class Venda extends javax.swing.JFrame {
         } else {
             //Método para saber ser tem algo campo nulo
             valorNulo();
-
+              //Método para adicionar um código na tabela codVendar depois passar 
+             //para tabela vendas o código armazenador 
+            adicionarCodVenda();
             //MÉTODO PARA ADICIONAR A VENDA NO BANCO DE DADOS
             adicionarVendas();
             //assim que salvar mostrar todos produtos vendidos
             visualizarVENDAS();
+             tempo();
+             //Método para seta os dados da tabela vendas para fazer o calculor do lucro
+         setaDadosDaQtdESoma();
+         tempo();
+         //método para fazer o calculor do lucro 
+         fazerCalculo();
+         tempo();
+         //Método para salvar os dados na tabela lucro
+         addValoresNaTabelaLucro();
         }
 
 
@@ -1225,7 +1233,8 @@ public class Venda extends javax.swing.JFrame {
         int opcao = JOptionPane.showConfirmDialog(null, "Deseja adicionar a Data", "", JOptionPane.YES_NO_CANCEL_OPTION);
 
         if (opcao == JOptionPane.YES_OPTION) {
-            salvarData();
+         //  distinguiData();
+                   salvarData();
 
         } else if (opcao == JOptionPane.NO_OPTION) {
 
@@ -1240,7 +1249,7 @@ public class Venda extends javax.swing.JFrame {
     }//GEN-LAST:event_txtdataActionPerformed
 
     private void txtdataKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtdataKeyPressed
-
+      
     }//GEN-LAST:event_txtdataKeyPressed
 
     private void txtvalorCompletoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtvalorCompletoActionPerformed
@@ -1277,9 +1286,13 @@ public class Venda extends javax.swing.JFrame {
 
     private void codVendaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_codVendaKeyReleased
         // TODO add your handling code here:
-
+  
     }//GEN-LAST:event_codVendaKeyReleased
 
+    private void txtdataKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtdataKeyReleased
+       
+    }//GEN-LAST:event_txtdataKeyReleased
+// VER SE TEM O ID SALVO NA TABELA VENDAS 
     public void verificar() {
         boolean clik;
 
@@ -1300,6 +1313,28 @@ public class Venda extends javax.swing.JFrame {
         }
 
     }
+    
+    //método para ver se existe data salvar no banco de dados vendas
+     public void distinguiData() {
+        boolean clik;
+
+        //método para ver se contém a mesma data
+         verificaData();
+        clik = (txtdata.getText().equals(data));
+
+        if (clik) {
+            JOptionPane.showMessageDialog(null, "Já contém essa data salvar!", "Tenter outra data diferente:", JOptionPane.INFORMATION_MESSAGE);
+            txtdata.setText(""+data);
+        } else if (!clik) {
+              JOptionPane.showMessageDialog(null,"NAO TEM ESSA DATA AINDA SALVAR!");
+              //VAI SALVAR A DATA NO BANCO DE DADOS
+              salvarData();
+        } else if (txtdata.getText().isEmpty()) {
+            txtdata.requestFocus();
+        } 
+
+    }
+
 
     // ver se tem cliente distinto
     public void verificarClienteDiferente() {
@@ -1334,7 +1369,7 @@ public class Venda extends javax.swing.JFrame {
             ValorUnit.setBackground(Color.WHITE);
         }
     }
-
+ //método para deleta a data
     public void deletadat() {
         DataDao dt = new DataDao();
 
@@ -1547,7 +1582,7 @@ public class Venda extends javax.swing.JFrame {
 
     }
 
-    // método para  ver se tem omesmo id digitado 
+    // método para  ver se tem o mesmo id digitado 
     public boolean veriguar() {
 
         try {
@@ -1587,6 +1622,44 @@ public class Venda extends javax.swing.JFrame {
         return true;
 
     }
+    
+    
+    // método para  ver se tem a data salvar;
+    public boolean verificaData() {
+
+        try {
+            Connection Conn = Conexao_BD.getConnection();
+
+            //Comando para seleciona a data salvar na tabela de vendas
+            String sql = "SELECT data FROM vendas ";
+
+            PreparedStatement Patm = Conn.prepareStatement(sql);
+
+            //Executar
+            ResultSet Rst = Patm.executeQuery();
+
+            if (Rst.next()) {
+                //setando a data
+
+                data = Rst.getString("data");
+            } 
+            //Fechando conexão ResultSet;
+            Rst.close();
+
+            //Fechando conexão PreparedStatement;
+            Patm.close();
+
+            //Fechando conexão Connection;
+            Conn.close();
+
+        } catch (SQLException e) {
+            //caso de algo errado exiber essa mensagem;
+            JOptionPane.showMessageDialog(null, "data não encontrada ! ");
+        }
+        return true;
+
+    }
+
 
     // método para  ver se tem o mesmo id do cliente ao continua adicionando os itens;
     public boolean verDiferenca() {
@@ -2201,7 +2274,7 @@ public class Venda extends javax.swing.JFrame {
         double subtracao=multiplicacao1-multiplicacao2;
          
         valorLucro=subtracao;
-        txtComplet.setText(valorLucro+"");
+       JOptionPane.showMessageDialog(null, "lucro "+valorLucro);
         return subtracao;
       
     }
@@ -2219,7 +2292,10 @@ public class Venda extends javax.swing.JFrame {
         double subtracao=multiplicacao1-multiplicacao2;
          
         
-        txtvalorCompleto.setText(subtracao+"");
+      
+        
+        JOptionPane.showMessageDialog(null, "valor do lucro "+subtracao);
+        
         return subtracao;
      
     }
@@ -2228,7 +2304,7 @@ public class Venda extends javax.swing.JFrame {
     
     
   //Método para adicionar os valores para saber o lucro de toda venda
-    public void addValores(){
+    public void addValoresNaTabelaLucro(){
          Data dt = new Data();
 
         // fazendo a instância da classe dataDao para passar  objeto da classe data;
@@ -2238,7 +2314,7 @@ public class Venda extends javax.swing.JFrame {
         
         LucroModel md = new LucroModel();
         
-        
+        md.setCodigoLucro(String.valueOf(jcombProdutos.getSelectedItem()));
         md.setCodigoProduto(String.valueOf(jcombProdutos.getSelectedItem()));
         md.setQuantidade(QTDProduto);
         md.setValorUnitario(Double.parseDouble(ValorUnit.getText()));

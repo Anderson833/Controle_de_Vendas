@@ -3,6 +3,7 @@ package Dao;
 
 import Conexao.Conexao_BD;
 import Model.LucroModel;
+import Model.ProdutoModel;
 import Model.VendaModel;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -22,38 +23,7 @@ public class LucroDao {
     int Quantidade=0;
     double total;
     
-     public void set(){    
-        try {
-            Connection Conn = Conexao_BD.getConnection();
-
-            String sql = "select codProd,sum(Qtd)as Quantidade,valorUnit,total from vendas where data ='2022-03-19' \n" +
-"group by codProd;";
-
-            PreparedStatement Patm = Conn.prepareStatement(sql);
-
-            ResultSet Rst = Patm.executeQuery();
-
-          
-
-            while (Rst.next()) {
-
-                String[] lista = new String[]{Rst.getString("codProd"), Rst.getString("Quantidade"),Rst.getString("valorUnit"),Rst.getString("total")};
-                 
-             codProduto=Rst.getString("codProd");
-             Quantidade=Rst.getInt("Quantidade");
-             total=  Rst.getDouble("total"); 
-            }
-
-            Rst.close();
-            Patm.close();
-            Conn.close();
-
-        } catch (SQLException e) {
-
-            JOptionPane.showMessageDialog(null, " ");
-        }
-     }  
-     
+   
      //Método para adicionar os dados do lucro no banco de dados;
      public void adicionarDadosLucros(LucroModel lucro){
           //Criando uma Connection com Classe Conexao_BD; 
@@ -62,18 +32,19 @@ public class LucroDao {
        
         try {
             //Inserindo os dados das vendas no banco de dados;
-            String sql="INSERT INTO lucro(codProd,Qtd,Vvend,total,Vlcompra,Ganhor,data) VALUES(?,?,?,?,?,?,?)";
+            String sql="INSERT INTO lucro(codLuc,codProd,Qtd,Vvend,total,Vlcompra,Ganhor,data) VALUES(?,?,?,?,?,?,?,?)";
              
             PreparedStatement patm = conn.prepareStatement(sql);
             //Passando como paramentros os atributos da classe VendaModel;
            
-            patm.setString(1, lucro.getCodigoProduto());
-            patm.setInt(2, lucro.getQuantidade());
-            patm.setDouble(3, lucro.getValorUnitario());
-            patm.setDouble(4, lucro.getValorTotal());
-            patm.setDouble(5, lucro.getValorDcomprar());
-            patm.setDouble(6, lucro.getValorGanhor());
-            patm.setString(7, lucro.getData());
+            patm.setString(1, lucro.getCodigoLucro());
+            patm.setString(2, lucro.getCodigoProduto());
+            patm.setInt(3, lucro.getQuantidade());
+            patm.setDouble(4, lucro.getValorUnitario());
+            patm.setDouble(5, lucro.getValorTotal());
+            patm.setDouble(6, lucro.getValorDcomprar());
+            patm.setDouble(7, lucro.getValorGanhor());
+            patm.setString(8, lucro.getData());
            
             
             //Executar;
@@ -100,6 +71,28 @@ public class LucroDao {
         
     }
      
+      //Método para deleta os dados do lucro no banco de dados;
+     public void deletaLucros(String cod){
+          //Criando uma Connection com Classe Conexao_BD; 
+        Connection conn=Conexao_BD.getConnection();
+           
+       
+        try {
+            //deleta os dados lucro no banco de dados;
+            String sql="delete from lucro where codLu='"+cod+"'";
+           
+         
+            //Fechando conexão Connection;
+            conn.close();
+            
+        } catch (SQLException ex) {
+            //Caso aconteça algum error mostrar essa mensagem;
+           JOptionPane.showMessageDialog(null, "Error ao deleta  dados do lucro !");
+        }
+        
+    }
+     
+     
          //Método para visualizar todos os dados do lucro;
      public ArrayList<LucroModel> visualizarLucro(){
         //Criando uma Connection com Classe Conexao_BD; 
@@ -122,20 +115,20 @@ public class LucroDao {
                  //Instânciando  classe VendaModel;
                  LucroModel lucro = new LucroModel();
                  //Setando os Valores;
-            patm.setString(1, lucro.getCodigoLucro());
-            patm.setString(2, lucro.getCodigoProduto());
-            patm.setInt(3, lucro.getQuantidade());
-            patm.setDouble(4, lucro.getValorUnitario());
-            patm.setDouble(5, lucro.getValorTotal());
-            patm.setDouble(6, lucro.getValorDcomprar());
-            patm.setDouble(7, lucro.getValorGanhor());
-            patm.setString(8, lucro.getData());
+            lucro.setCodigoLucro(rst.getString("codLuc"));
+            lucro.setCodigoProduto(rst.getString("codProd"));
+            lucro.setQuantidade(rst.getInt("Qtd"));
+            lucro.setValorUnitario(rst.getDouble("Vvend"));
+            lucro.setValorTotal(rst.getDouble("total"));
+            lucro.setValorDcomprar(rst.getDouble("Vlcompra"));
+            lucro.setValorGanhor(rst.getDouble("ganhor"));
+            lucro.setData(rst.getString("data"));
              
                listDados.add(lucro);
                  //Adicionado na Lista;
              
              }
-             
+         
              //Fechando conexão ResultSet;
              rst.close();
              
@@ -145,7 +138,60 @@ public class LucroDao {
             //Fechando conexão Connection;
             conn.close();
              
-         } catch (Exception e) {
+         } catch (SQLException e) {
+             //Algo de error, mostrar essa mensagem;
+             JOptionPane.showMessageDialog(null, "Error ao Visualizar os dados do lucro!");
+         }
+         //Retornando uma Lista;
+        return listDados;
+         
+     }
+     //Método para visualizar todos os dados do lucro;
+     public ArrayList<LucroModel> visualizarLucroPeloCodigo(String cod){
+        //Criando uma Connection com Classe Conexao_BD; 
+        Connection conn=Conexao_BD.getConnection();
+     
+        //ArrayList de dados;
+         ArrayList<LucroModel> listDados = new ArrayList<>();
+        
+         try {
+             
+             //Selecionando toda tabela lucro;
+             String sql="SELECT * FROM lucro  where codLuc='"+cod+"'";
+             
+             PreparedStatement patm = conn.prepareStatement(sql);
+             
+             ResultSet rst=patm.executeQuery();
+             
+             while (rst.next()) {
+               
+                 //Instânciando  classe VendaModel;
+                 LucroModel lucro = new LucroModel();
+                 //Setando os Valores;
+            lucro.setCodigoLucro(rst.getString("codLuc"));
+            lucro.setCodigoProduto(rst.getString("codProd"));
+            lucro.setQuantidade(rst.getInt("Qtd"));
+            lucro.setValorUnitario(rst.getDouble("Vvend"));
+            lucro.setValorTotal(rst.getDouble("total"));
+            lucro.setValorDcomprar(rst.getDouble("Vlcompra"));
+            lucro.setValorGanhor(rst.getDouble("ganhor"));
+            lucro.setData(rst.getString("data"));
+             
+               listDados.add(lucro);
+                 //Adicionado na Lista;
+             
+             }
+         
+             //Fechando conexão ResultSet;
+             rst.close();
+             
+             //Fechando conexão PreparedStatement;
+            patm.close();
+            
+            //Fechando conexão Connection;
+            conn.close();
+             
+         } catch (SQLException e) {
              //Algo de error, mostrar essa mensagem;
              JOptionPane.showMessageDialog(null, "Error ao Visualizar os dados do lucro!");
          }
@@ -154,7 +200,49 @@ public class LucroDao {
          
      }
     
+     //Método para fazer atualização dos dados dos lucros;
+       public void atualizarLucro(LucroModel lucro){  
+           //Criando uma Connection com Classe Conexao_BD; 
+        Connection conn=Conexao_BD.getConnection();
+               try {
+           
+          //Comando para que realizar atualização no banco de dados;
+            String sql="UPDATE lucro SET Qtd=?,Vvend=?,total=?,Vlcompra=? WHERE codLuc=?";
+            
+            
+            
+            PreparedStatement patm = conn.prepareStatement(sql);
+            //Passandoos valores nos paramentros;
+            patm.setInt(1, lucro.getQuantidade());
+            patm.setDouble(2, lucro.getValorUnitario());
+            patm.setDouble(3, lucro.getValorTotal());
+            patm.setDouble(4, lucro.getValorDcomprar());
+            patm.setString(5, lucro.getCodigoLucro());
+            //Executar;
+             int res= patm.executeUpdate();
+            
+            if(res>0){
+                //Mensagem para mostrar para usuário caso esteja tudo correto!;
+                JOptionPane.showMessageDialog(null,"Lucro Atualizador com Sucesso !","Sucesso!",JOptionPane.INFORMATION_MESSAGE);
+            }else{
+                //Mensagem oara exibir para usuário caso tenha informações incorretas;
+                JOptionPane.showMessageDialog(null,"Lucro não Atualizador !","Error",JOptionPane.ERROR_MESSAGE);
+            }
+            
+            //Fechando conexão PreparedStatement;
+            patm.close();
+            
+            //Fechando conexão Connection;
+            conn.close();
+            
+        } catch (Exception e) {
+            //Mensagem caso de error;
+              JOptionPane.showMessageDialog(null,"Error ao Atualizar Lucro !","Error",JOptionPane.ERROR_MESSAGE);
+        }
      
+       }
+    
+       
          
      }
 

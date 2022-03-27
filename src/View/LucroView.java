@@ -7,13 +7,16 @@ package View;
 
 import Conexao.Conexao_BD;
 import Dao.LucroDao;
+import Dao.ProdutoDao;
 import Dao.VendaDao;
 import Model.LucroModel;
+import Model.ProdutoModel;
 import Model.VendaModel;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javafx.scene.control.Tab;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.TableView;
@@ -22,13 +25,14 @@ import javax.swing.text.TableView;
  *
  * @author ander
  */
-public class contador extends javax.swing.JFrame {
+public class LucroView extends javax.swing.JFrame {
 
     /**
      * Creates new form contador
      */
-    public contador() {
+    public LucroView() {
         initComponents();
+         visualizarLucro();
     }
 
     
@@ -98,6 +102,11 @@ public class contador extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tabLucro.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabLucroMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tabLucro);
 
         jLabel1.setText("código");
@@ -150,6 +159,11 @@ public class contador extends javax.swing.JFrame {
         jLabel8.setText("Total Lucrado:");
 
         jButton2.setText("Pesquisa");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -169,16 +183,15 @@ public class contador extends javax.swing.JFrame {
                                 .addGap(59, 59, 59)
                                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(31, 31, 31)
-                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(56, 56, 56))
+                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(212, 212, 212)
                                 .addComponent(txtQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(33, 33, 33)
                                 .addComponent(txtotal, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(txttotalLucro, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(37, 37, 37)))
+                                .addComponent(txttotalLucro, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(37, 37, 37)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtvalorComprar, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -275,7 +288,7 @@ public class contador extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botCalcularActionPerformed
-      fazerCalculoDoLucro();
+     // fazerCalculoDoLucro();
     }//GEN-LAST:event_botCalcularActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -284,9 +297,33 @@ public class contador extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    
-        visualizarLucro();
+       // visualizarLucroComCodigo();
+       
+      
+       atualizarLucro();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+       //Instânciando a classe ComprovanteDao;
+        LucroDao dao = new LucroDao();
+        dao.deletaLucros(txtCodigo.getText());
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void tabLucroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabLucroMouseClicked
+       
+             if (tabLucro.getSelectedRow() != -1) {
+            //Seta os dados de cada linha a ser clicadar da tabela;
+            txtCodigo.setText(tabLucro.getValueAt(tabLucro.getSelectedRow(),0).toString());
+            txtQuantidade.setText(tabLucro.getValueAt(tabLucro.getSelectedRow(),1).toString());
+            txtValorUnitario.setText(tabLucro.getValueAt(tabLucro.getSelectedRow(),2).toString());
+            txtvalorComprar.setText(tabLucro.getValueAt(tabLucro.getSelectedRow(),3).toString());
+            txtotal.setText(tabLucro.getValueAt(tabLucro.getSelectedRow(),4).toString());
+            txttotalLucro.setText(tabLucro.getValueAt(tabLucro.getSelectedRow(),5).toString());
+           
+
+        }
+        
+    }//GEN-LAST:event_tabLucroMouseClicked
  
      public void addDadosLucros(){
       
@@ -320,65 +357,48 @@ public class contador extends javax.swing.JFrame {
 
     }
 
+ //Método para visualizar dados do lucro;
+    public void visualizarLucroComCodigo() {
+        DefaultTableModel modelo = (DefaultTableModel) tabLucro.getModel();
+        //Método para não repetir os dados na tabela lucro
+        modelo.setNumRows(0);
+        //Instânciando a classe ComprovanteDao;
+        LucroDao dao = new LucroDao();
+        //Um Laço de repetição para lista todas compras na tabela de lucro no banco de dados; 
+        for (LucroModel lc: dao.visualizarLucroPeloCodigo(txtCodigo.getText())) {
+            modelo.addRow(new Object[]{
+                //Passando os objetos 
+             lc.getCodigoLucro(),
+             lc.getCodigoProduto(),
+             lc.getQuantidade(),
+             lc.getValorUnitario(),
+             lc.getValorTotal(),
+             lc.getValorDcomprar(),
+             lc.getValorGanhor(),
+             lc.getData()
 
-//Método para faze o calculor do ganho
-    public double fazerCalculoDoLucro(){
-          
-        int quantidad=Integer.parseInt(txtQuantidade.getText());
-          //Passando valor Unitário String para Double;
-        double valorUnit = Double.parseDouble(txtValorUnitario.getText());
-        
-        double valordCOMPRAR = Double.parseDouble(txtvalorComprar.getText());
-        
-        double   multiplicacao1=quantidad*valorUnit;
-        
-        double  multiplicacao2=quantidad*valordCOMPRAR;
-        
-        double subtracao=multiplicacao1-multiplicacao2;
-         
-      
-        TOTALLucro.setText(subtracao+"");
-        return subtracao;
-      
-    }
- 
-//Método para seta os dados dos Produtos nos campos de textos pelo código do cliente;
-    public void setaDadosProduto() {
-
-        try {
-            Connection Conn = Conexao_BD.getConnection();
-
-            //comando para seta os valores nos campos de textos pelo código do produto;
-            String sql = "SELECT valorUnit,Qtd,tota FROM produto where codProd like'"+txtCodigo.getText()+"'";
-
-            PreparedStatement Patm = Conn.prepareStatement(sql);
-            //executar
-            ResultSet Rst = Patm.executeQuery();
-
-            if (Rst.next()) {
-                //Seando os valores no campos de textos;
-          String[] lista = new String[]{Rst.getString("codProd"), Rst.getString("Qtd"),Rst.getString("valorUnit"),Rst.getString("total")};
-              
-
-            } else {
-                  JOptionPane.showMessageDialog(null,"Produto não existe !");
-               
-            }
-
-            //Fechando conexão ResultSet;
-            Rst.close();
-
-            //Fechando conexão PreparedStatement;
-            Patm.close();
-
-            //Fechando conexão Connection;
-            Conn.close();
-
-        } catch (SQLException e) {
-            //caso de error exiber essa mensagem
-            JOptionPane.showMessageDialog(null, "Produto não Encontrado !");
+            });
         }
 
+    }
+   public void atualizarLucro(){
+        
+          if (tabLucro.getSelectedRow() != -1) {
+        
+                //Instânciando a classe LucroDao;
+              LucroDao dao= new LucroDao();
+              //Instânciando a classe LucroModel; 
+              LucroModel prod = new LucroModel();
+              prod.setQuantidade(Integer.parseInt(txtQuantidade.getText()));
+              prod.setValorUnitario(Double.parseDouble(txtValorUnitario.getText()));
+              prod.setValorTotal(Double.parseDouble(txtotal.getText()));
+              prod.setValorDcomprar(Double.parseDouble(txtvalorComprar.getText()));
+              prod.setCodigoLucro(txtCodigo.getText());
+             //Passando objeto da classe lucroModel´para objeto da classe lucroDao;
+                dao.atualizarLucro(prod);
+              
+              
+        }
     }
     
     
@@ -453,20 +473,21 @@ public class contador extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(contador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LucroView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(contador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LucroView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(contador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LucroView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(contador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LucroView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new contador().setVisible(true);
+                new LucroView().setVisible(true);
             }
         });
     }
