@@ -17,7 +17,6 @@ import Model.ProdutoModel;
 import Model.VendaModel;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -36,6 +35,8 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Venda extends javax.swing.JFrame {
 
+    
+    
     //Para fazer guarda o resultado da subtração da quantidade em estoque com a quantida pedido pelo cliente;
     int contador = 0;
 
@@ -55,6 +56,9 @@ public class Venda extends javax.swing.JFrame {
      int QTDProduto=0;
      //Variável soma tota de produto
      double somaTotal=0;
+     
+     //Variável para armazenar o código do lucro
+     String codigoLucro="";
      
      //variável para armazenar a data salva na tabela vendas;
      String data ="";
@@ -796,8 +800,22 @@ public class Venda extends javax.swing.JFrame {
          //método para fazer o calculor do lucro 
          fazerCalculo();
          tempo();
-         //Método para salvar os dados na tabela lucro
-         addValoresNaTabelaLucro();
+         
+            //Método para verificar se existe o código na tabela lucro
+         setacodigodoLucro(); 
+         
+          if(String.valueOf(jcombProdutos.getSelectedItem()).equals(codigoLucro)){
+            JOptionPane.showMessageDialog(null,"tem esse código ");
+            setaLucroeAtualizarLucro();
+        }else{
+             JOptionPane.showMessageDialog(null,"Não tem esse código ");
+             JOptionPane.showMessageDialog(null,"Aí vai salvar  ");
+               //Método para salvar os dados na tabela lucro
+           addValoresNaTabelaLucro();
+        }
+        
+         
+       
         }
 
 
@@ -2261,7 +2279,7 @@ public class Venda extends javax.swing.JFrame {
 
     }
     
-     //Método para faze o calculor do ganho
+     //Método para faze o calculor do ganhor
     public double fazerCalculo(){
           
           //Passando valor Unitário String para Double;
@@ -2327,4 +2345,56 @@ public class Venda extends javax.swing.JFrame {
         vd.adicionarDadosLucros(md);
     }
 
+     //Método para seta o código do lucro;
+    public void setacodigodoLucro() {
+
+        try {
+            Connection Conn = Conexao_BD.getConnection();
+
+            //comando para seta o código do lucro
+            String sql = "SELECT codLuc from lucro where codLuc='"+jcombProdutos.getSelectedItem()+"'";
+            PreparedStatement Patm = Conn.prepareStatement(sql);
+            //executar
+            ResultSet Rst = Patm.executeQuery();
+
+            while (Rst.next()) {
+            //Setando o codLud 
+               codigoLucro=Rst.getString("codLuc");
+                
+              JOptionPane.showMessageDialog(null," Código do lucro é "+codigoLucro);
+
+            } 
+
+            //Fechando conexão ResultSet;
+            Rst.close();
+
+            //Fechando conexão PreparedStatement;
+            Patm.close();
+
+            //Fechando conexão Connection;
+            Conn.close();
+
+        } catch (SQLException e) {
+            //caso de error exiber essa mensagem
+            JOptionPane.showMessageDialog(null, "Código não Encontrado !");
+        }
+
+    }
+  
+     
+    //Método para atualizar os dados do lucro
+     public void setaLucroeAtualizarLucro(){
+         //Instânciando a classe LucroDao;
+              LucroDao dao= new LucroDao();
+              //Instânciando a classe LucroModel; 
+              LucroModel prod = new LucroModel();
+              prod.setQuantidade(QTDProduto);
+              prod.setValorUnitario(Double.parseDouble(ValorUnit.getText()));
+              prod.setValorTotal(somaTotal);
+              prod.setValorDcomprar(Double.parseDouble(valorDoVendedor+""));
+              prod.setCodigoLucro(String.valueOf(jcombProdutos.getSelectedItem()));
+              prod.setData(txtdata.getText());
+             //Passando objeto da classe lucroModel´para objeto da classe lucroDao;
+                dao.atualizarLucro(prod);
+   }
 }

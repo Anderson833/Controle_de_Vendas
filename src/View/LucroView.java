@@ -7,19 +7,13 @@ package View;
 
 import Conexao.Conexao_BD;
 import Dao.LucroDao;
-import Dao.ProdutoDao;
-import Dao.VendaDao;
 import Model.LucroModel;
-import Model.ProdutoModel;
-import Model.VendaModel;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import javafx.scene.control.Tab;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.text.TableView;
 
 /**
  *
@@ -33,11 +27,13 @@ public class LucroView extends javax.swing.JFrame {
     public LucroView() {
         initComponents();
          visualizarLucro();
+         //Centralizando a view ao centro da monitor;
+        setLocationRelativeTo(null);
     }
 
     
     
-    
+    String codigoLucro="";
    
    
     /**
@@ -73,6 +69,8 @@ public class LucroView extends javax.swing.JFrame {
         TOTALLucro = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
+        txtdata = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -165,6 +163,8 @@ public class LucroView extends javax.swing.JFrame {
             }
         });
 
+        jLabel9.setText("Data:");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -219,8 +219,13 @@ public class LucroView extends javax.swing.JFrame {
                         .addGap(60, 60, 60)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 684, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(137, 137, 137)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(28, 28, 28)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(48, 48, 48)
+                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtdata, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(63, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
@@ -231,9 +236,17 @@ public class LucroView extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(36, 36, 36)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 112, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(36, 36, 36)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(21, 21, 21))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                .addComponent(txtdata, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(22, 22, 22)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -298,15 +311,26 @@ public class LucroView extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
        // visualizarLucroComCodigo();
-       
-      
-       atualizarLucro();
+     //  visualizarLucro();
+        setacodigodoLucro();
+        
+        if(txtCodigo.getText().equals(codigoLucro)){
+            JOptionPane.showMessageDialog(null,"tem esse código ");
+        }else{
+             JOptionPane.showMessageDialog(null,"Não tem esse código ");
+        }
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
+      
+    
+    
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
        //Instânciando a classe ComprovanteDao;
-        LucroDao dao = new LucroDao();
-        dao.deletaLucros(txtCodigo.getText());
+         //atualizarLucro();
+         setaLucro();
+        //LucroDao dao = new LucroDao();
+        //dao.deletaLucros(txtCodigo.getText());
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void tabLucroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabLucroMouseClicked
@@ -381,6 +405,8 @@ public class LucroView extends javax.swing.JFrame {
         }
 
     }
+    
+    //Método para atualizar os dados da tabela lucro
    public void atualizarLucro(){
         
           if (tabLucro.getSelectedRow() != -1) {
@@ -401,30 +427,41 @@ public class LucroView extends javax.swing.JFrame {
         }
     }
     
+   public void setaLucro(){
+         //Instânciando a classe LucroDao;
+              LucroDao dao= new LucroDao();
+              //Instânciando a classe LucroModel; 
+              LucroModel prod = new LucroModel();
+              prod.setQuantidade(Integer.parseInt(txtQuantidade.getText()));
+              prod.setValorUnitario(Double.parseDouble(txtValorUnitario.getText()));
+              prod.setValorTotal(Double.parseDouble(txtotal.getText()));
+              prod.setValorDcomprar(Double.parseDouble(txtvalorComprar.getText()));
+              prod.setCodigoLucro(txtCodigo.getText());
+              prod.setData(txtdata.getText());
+             //Passando objeto da classe lucroModel´para objeto da classe lucroDao;
+                dao.atualizarLucro(prod);
+   }
     
-         //Método para seta a soma e a quantidade dos produtos;
-    public void setaDadosDaQtdESoma() {
+         //Método para seta o código do lucro;
+    public void setacodigodoLucro() {
 
         try {
             Connection Conn = Conexao_BD.getConnection();
 
-            //comando para seta os valores de soma e quantidade
-            String sql = "SELECT codProd,sum(Qtd)as Quantidade,sum(total)as total from vendas where codProd='";
+            //comando para seta o código do lucro
+            String sql = "SELECT codLuc from lucro where codLuc='"+txtCodigo.getText()+"'";
             PreparedStatement Patm = Conn.prepareStatement(sql);
             //executar
             ResultSet Rst = Patm.executeQuery();
 
             if (Rst.next()) {
-          /*      //Setando os valores no campos de textos;ou variáveis
-              QTDProduto=Rst.getInt("Quantidade");
+            //Setando o codLud 
+               codigoLucro=Rst.getString("codLuc");
                 
-                somaTotal= Rst.getDouble("total");
-              
-                txtComplet.setText(QTDProduto+"");
-                txtVZ.setText(somaTotal+"");
- */
+              JOptionPane.showMessageDialog(null," Código do lucro é "+codigoLucro);
+
             } else {
-                //  JOptionPane.showMessageDialog(null,"Produto não existe !");
+                  JOptionPane.showMessageDialog(null,"codigo não existe !");
               
             }
 
@@ -439,7 +476,7 @@ public class LucroView extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             //caso de error exiber essa mensagem
-            JOptionPane.showMessageDialog(null, "Produto não Encontrado !");
+            JOptionPane.showMessageDialog(null, "Código não Encontrado !");
         }
 
     }
@@ -506,6 +543,7 @@ public class LucroView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
@@ -514,6 +552,7 @@ public class LucroView extends javax.swing.JFrame {
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtQuantidade;
     private javax.swing.JTextField txtValorUnitario;
+    private javax.swing.JTextField txtdata;
     private javax.swing.JTextField txtotal;
     private javax.swing.JTextField txttotalLucro;
     private javax.swing.JTextField txtvalorComprar;

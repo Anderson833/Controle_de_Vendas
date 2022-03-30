@@ -207,7 +207,7 @@ public class LucroDao {
                try {
            
           //Comando para que realizar atualização no banco de dados;
-            String sql="UPDATE lucro SET Qtd=?,Vvend=?,total=?,Vlcompra=? WHERE codLuc=?";
+            String sql="UPDATE lucro SET Qtd=?,Vvend=?,total=?,Vlcompra=? WHERE codLuc=? and data=?";
             
             
             
@@ -218,6 +218,7 @@ public class LucroDao {
             patm.setDouble(3, lucro.getValorTotal());
             patm.setDouble(4, lucro.getValorDcomprar());
             patm.setString(5, lucro.getCodigoLucro());
+            patm.setString(6, lucro.getData());
             //Executar;
              int res= patm.executeUpdate();
             
