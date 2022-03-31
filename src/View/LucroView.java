@@ -328,6 +328,8 @@ public class LucroView extends javax.swing.JFrame {
        // visualizarLucroComCodigo();
        visualizarLucro();
      //   setacodigodoLucro();
+     
+     //testando se tem o código salvo;
        /* 
         if(txtCodigo.getText().equals(codigoLucro)){
             JOptionPane.showMessageDialog(null,"tem esse código ");
@@ -336,11 +338,7 @@ public class LucroView extends javax.swing.JFrame {
         }
        */ 
        
-       if(tabLucro.getSelectionModel().isSelectionEmpty()){
-            JOptionPane.showMessageDialog(null,"Não tem nada");
-       }else{
-            JOptionPane.showMessageDialog(null,"Tem dados salvo! ");
-       }
+    
     }//GEN-LAST:event_jButton1ActionPerformed
 
       
