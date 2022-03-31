@@ -1773,10 +1773,10 @@ public class Venda extends javax.swing.JFrame {
             //guardando o resultado da multiplicação
             multiplicar = valorUnit * QTD;
             valorTotalBD = valorTotalBD + multiplicar + valorCompleto;
-
+           Valortotal.setText(multiplicar+"");
             //setando o resultado na labelTotal;
             labelTotal.setText(String.valueOf(valorTotalBD));
-            Valortotal.setText("" + valorTotalBD);
+        
 
         }
 
@@ -1947,7 +1947,7 @@ public class Venda extends javax.swing.JFrame {
                 double total = Rst.getDouble("round(sum(total),2)");
                 //setando o valor no campo de texto e na label; 
                 labelTotal.setText("" + total);
-                Valortotal.setText("" + total);
+               
                 valorTotalBD = total;
             }
             //Fechando conexão ResultSet;
@@ -2210,7 +2210,7 @@ public class Venda extends javax.swing.JFrame {
                 //Seando os valores no campos de textos;
                 valorDoVendedor=Rst.getDouble("ValorDComprar");
               
-                txtValorReceb.setText(valorDoVendedor+"");
+               // txtValorReceb.setText(valorDoVendedor+"");
 
             } else {
                 //  JOptionPane.showMessageDialog(null,"Produto não existe !");
@@ -2255,8 +2255,8 @@ public class Venda extends javax.swing.JFrame {
                 
                 somaTotal= Rst.getDouble("total");
               
-                txtComplet.setText(QTDProduto+"");
-                txtVZ.setText(somaTotal+"");
+               // txtComplet.setText(QTDProduto+"");
+               // txtVZ.setText(somaTotal+"");
 
             } else {
                 //  JOptionPane.showMessageDialog(null,"Produto não existe !");
@@ -2289,11 +2289,11 @@ public class Venda extends javax.swing.JFrame {
         
         double  multiplicacao2=QTDProduto*valorDoVendedor;
         
-        double subtracao=multiplicacao1-multiplicacao2;
+            valorLucro =multiplicacao1-multiplicacao2;
          
-        valorLucro=subtracao;
+        
        JOptionPane.showMessageDialog(null, "lucro "+valorLucro);
-        return subtracao;
+        return valorLucro;
       
     }
      //Método para faze o calculor do ganho
@@ -2337,7 +2337,7 @@ public class Venda extends javax.swing.JFrame {
         md.setQuantidade(QTDProduto);
         md.setValorUnitario(Double.parseDouble(ValorUnit.getText()));
         md.setValorTotal(somaTotal);
-        md.setValorDcomprar(Double.parseDouble(valorDoVendedor+""));
+        md.setValorDcomprar(valorDoVendedor);
         md.setValorGanhor(valorLucro);
         md.setData(dt.getData());
         
@@ -2392,6 +2392,7 @@ public class Venda extends javax.swing.JFrame {
               prod.setValorUnitario(Double.parseDouble(ValorUnit.getText()));
               prod.setValorTotal(somaTotal);
               prod.setValorDcomprar(Double.parseDouble(valorDoVendedor+""));
+              prod.setValorGanhor(valorLucro);
               prod.setCodigoLucro(String.valueOf(jcombProdutos.getSelectedItem()));
               prod.setData(txtdata.getText());
              //Passando objeto da classe lucroModel´para objeto da classe lucroDao;

@@ -326,15 +326,21 @@ public class LucroView extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
        // visualizarLucroComCodigo();
-     //  visualizarLucro();
-        setacodigodoLucro();
-        
+       visualizarLucro();
+     //   setacodigodoLucro();
+       /* 
         if(txtCodigo.getText().equals(codigoLucro)){
             JOptionPane.showMessageDialog(null,"tem esse código ");
         }else{
              JOptionPane.showMessageDialog(null,"Não tem esse código ");
         }
-        
+       */ 
+       
+       if(tabLucro.getSelectionModel().isSelectionEmpty()){
+            JOptionPane.showMessageDialog(null,"Não tem nada");
+       }else{
+            JOptionPane.showMessageDialog(null,"Tem dados salvo! ");
+       }
     }//GEN-LAST:event_jButton1ActionPerformed
 
       
