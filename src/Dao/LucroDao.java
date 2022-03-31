@@ -79,7 +79,7 @@ public class LucroDao {
        
         try {
             //deleta os dados lucro no banco de dados;
-            String sql="delete from lucro where codLu='"+cod+"'";
+            String sql="delete from lucro where codLuc='"+cod+"'";
            
          
             //Fechando conexão Connection;
