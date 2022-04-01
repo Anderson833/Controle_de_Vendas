@@ -84,12 +84,15 @@ public class Venda extends javax.swing.JFrame {
         veriguar();
         //Método para saber se a data já contém salvar na tabela vendas
        // distinguiData();
+       
+       //Método para salvar caso não tenha a data salvar
+       setaDataDoBacnoDeDados();
     }
 
-    //Para armazenar o id da venda
+    //Para armazenar o id da venda no banco de dados
     String nom = "";
 
-    //Para pegar o id do cliente
+    //Para pegar o id do cliente no banco de dados
     String idCli = "";
 
     @SuppressWarnings("unchecked")
@@ -2140,6 +2143,23 @@ public class Venda extends javax.swing.JFrame {
         d.adicionaData(dt);
 
     }
+    //Método para cer se contém a data no banco para salvar caso não tenha;
+     public void setaDataDoBacnoDeDados(){
+         
+         DataDao dt = new DataDao();
+         dt.setaDatasDoBncos();
+           
+          if(txtdata.getText().equals(dt.setaDatasDoBncos())){
+                   JOptionPane.showMessageDialog(null, "tem essa data ");
+            }else{
+                   JOptionPane.showMessageDialog(null, "Não tem essa data"); 
+                   //Vai salvar a data
+                   salvarData();
+            }
+            
+     }
+    
+    
 
     //metodo para digita só nomes
     public boolean checkLetters(String str) {
