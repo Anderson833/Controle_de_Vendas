@@ -18,7 +18,7 @@ public class Data {
 
         Date data = new Date();
 
-        SimpleDateFormat formatar = new SimpleDateFormat("YYYY/MM/dd");
+        SimpleDateFormat formatar = new SimpleDateFormat("dd/MM/YYYY");
 
         String dataFormart = formatar.format(data);
 

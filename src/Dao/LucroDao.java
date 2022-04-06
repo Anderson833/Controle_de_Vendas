@@ -79,7 +79,7 @@ public class LucroDao {
        
         try {
             //deleta os dados lucro no banco de dados;
-            String sql="delete from lucro where codLuc=?";
+            String sql="delete from lucro where codProd=?";
              
             PreparedStatement pam=conn.prepareStatement(sql);
             pam.setString(1, cod);
@@ -228,7 +228,7 @@ public class LucroDao {
             patm.setDouble(3, lucro.getValorTotal());
             patm.setDouble(4, lucro.getValorDcomprar());
             patm.setDouble(5, lucro.getValorGanhor());
-            patm.setString(6, lucro.getCodigoLucro());
+            patm.setString(6, lucro.getCodigoProduto());
             patm.setString(7, lucro.getData());
             //Executar;
              int res= patm.executeUpdate();

@@ -55,7 +55,7 @@ public class DataDao {
         
     }
     
-      //Método para adicionar data ao banco de dados;
+      //Método para deletar data no banco de dados;
     public void deletaData(Data dat){
         
         //Criando uma Connection com Classe Conexao_BD; 
@@ -94,9 +94,45 @@ public class DataDao {
         }
         
     }
+     //Método para deleta toda data do banco de dados;
+    public void deletaTodaData(){
+        
+        //Criando uma Connection com Classe Conexao_BD; 
+        Connection conn=Conexao_BD.getConnection();
+        
+       
+        try {
+            //para deletar a data no banco de dados;
+            String sql="DELETE FROM data";
+             
+            PreparedStatement patm = conn.prepareStatement(sql);
+           
+            //Executar;
+            int upd=patm.executeUpdate();
+            
+            if(upd>0){
+                //Caso de tudo certo exibir essa mensagem;
+                JOptionPane.showMessageDialog(null, "Toda Data deletada Com Sucesso");
+            }else{
+                //Caso de error  exibir essa mensagem;
+                JOptionPane.showMessageDialog(null, "As Datas Não foram deletadas !","Error ",JOptionPane.ERROR_MESSAGE);
+            }
+            
+             //Fechando conexão PreparedStatement;
+            patm.close();
+            
+            //Fechando conexão Connection;
+            conn.close();
+            
+        } catch (SQLException ex) {
+            //Caso aconteça algum error mostrar essa mensagem;
+         //  JOptionPane.showMessageDialog(null, "Error ao Adicionar data !");
+        }
+        
+    }
     
     //MÉTODO PARA PEGAR A DATA NO BANCO DE DADOS;
-    public void setaDATA(){
+    public String setaDATA(){
         
         //Criando uma Connection com Classe Conexao_BD; 
         Connection conn=Conexao_BD.getConnection();
@@ -131,17 +167,10 @@ public class DataDao {
             //Caso aconteça algum error mostrar essa mensagem;
          //  JOptionPane.showMessageDialog(null, "Error ao Adicionar data !");
         }
+          return data;
     }
-        //Método para ver se tem a data cadrastrada no banco de dados
-        public String setaDatasDoBncos(){
-            
-            Data dt = new Data();
-            dt.setData(data);
-            dt.getData();
-          return dt.getData();
-          
-        }
-    }
+      
+}
     
 
   

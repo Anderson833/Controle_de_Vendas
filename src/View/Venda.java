@@ -57,8 +57,8 @@ public class Venda extends javax.swing.JFrame {
      //Variável soma tota de produto
      double somaTotal=0;
      
-     //Variável para armazenar o código do lucro
-     String codigoLucro="";
+     //Variável para armazenar O código  lucro
+     String codigoLUCRO="";
      
      //variável para armazenar a data salva na tabela vendas;
      String data ="";
@@ -86,7 +86,7 @@ public class Venda extends javax.swing.JFrame {
        // distinguiData();
        
        //Método para salvar caso não tenha a data salvar
-       setaDataDoBacnoDeDados();
+       setaDataDoBancoDeDados();
     }
 
     //Para armazenar o id da venda no banco de dados
@@ -805,13 +805,13 @@ public class Venda extends javax.swing.JFrame {
          tempo();
          
             //Método para verificar se existe o código na tabela lucro
-         setacodigodoLucro(); 
+         setacodigoDoLucro(); 
          
-          if(String.valueOf(jcombProdutos.getSelectedItem()).equals(codigoLucro)){
+          if(String.valueOf(jcombProdutos.getSelectedItem()).equals(codigoLUCRO)){
             JOptionPane.showMessageDialog(null,"tem esse código ");
             setaLucroeAtualizarLucro();
         }else{
-             JOptionPane.showMessageDialog(null,"Não tem esse código ");
+             JOptionPane.showMessageDialog(null,"Não tem essa data ");
              JOptionPane.showMessageDialog(null,"Aí vai salvar  ");
                //Método para salvar os dados na tabela lucro
            addValoresNaTabelaLucro();
@@ -1262,11 +1262,18 @@ public class Venda extends javax.swing.JFrame {
             int opcaoo = JOptionPane.showConfirmDialog(null, "Tem Certeza que deseja excluir a data?", "Confimar:", JOptionPane.YES_NO_CANCEL_OPTION);
 
             if (opcaoo == JOptionPane.YES_OPTION) {
-                deletadat();
-            }
+              
+                String dat=JOptionPane.showInputDialog(null,"Deseja deletar todas datas");
+                if(dat.equalsIgnoreCase("sim")){
+                   DataDao dt = new DataDao();
+                dt.deletaTodaData();  
+                
+            }else{
+                     deletadat(); 
+                }
 
+          }
         }
-
     }//GEN-LAST:event_txtdataActionPerformed
 
     private void txtdataKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtdataKeyPressed
@@ -1400,6 +1407,8 @@ public class Venda extends javax.swing.JFrame {
 
         dt.deletaData(data);
     }
+  
+
 
 //Método para  deletar idComprar da tabela idvenda;
     public void deletaridComprar() {
@@ -2138,23 +2147,24 @@ public class Venda extends javax.swing.JFrame {
         // fazendo a instância da classe dataDao para passar  objeto da classe data;
         DataDao d = new DataDao();
         // setando a data no objeto da classe data;
-        dt.setData(dt.setaData());
+        dt.setData(txtdata.getText());
+        dt.getData();
         //passando objeto para a classe dataDao
         d.adicionaData(dt);
 
     }
     //Método para cer se contém a data no banco para salvar caso não tenha;
-     public void setaDataDoBacnoDeDados(){
+     public void setaDataDoBancoDeDados(){
          
          DataDao dt = new DataDao();
-         dt.setaDatasDoBncos();
+     
            
-          if(txtdata.getText().equals(dt.setaDatasDoBncos())){
-                   JOptionPane.showMessageDialog(null, "tem essa data ");
+          if(txtdata.getText().equals(dt.setaDATA())){
+                   JOptionPane.showMessageDialog(null, "tem essa data  "+dt.setaDATA());
             }else{
-                   JOptionPane.showMessageDialog(null, "Não tem essa data"); 
+                   JOptionPane.showMessageDialog(null, "Não tem essa data "+dt.setaDATA()); 
                    //Vai salvar a data
-                   salvarData();
+                  salvarData();
             }
             
      }
@@ -2351,7 +2361,6 @@ public class Venda extends javax.swing.JFrame {
         dt.setData(dt.setaData());
         
         LucroModel md = new LucroModel();
-        
         md.setCodigoLucro(String.valueOf(jcombProdutos.getSelectedItem()));
         md.setCodigoProduto(String.valueOf(jcombProdutos.getSelectedItem()));
         md.setQuantidade(QTDProduto);
@@ -2365,23 +2374,23 @@ public class Venda extends javax.swing.JFrame {
         vd.adicionarDadosLucros(md);
     }
 
-     //Método para seta o código do lucro;
-    public void setacodigodoLucro() {
+     //Método para seta a data do lucro;
+    public void setacodigoDoLucro() {
 
         try {
             Connection Conn = Conexao_BD.getConnection();
 
-            //comando para seta o código do lucro
-            String sql = "SELECT codLuc from lucro where codLuc='"+jcombProdutos.getSelectedItem()+"'";
+            //comando para seta a data do lucro
+            String sql = "SELECT codLuc from lucro";
             PreparedStatement Patm = Conn.prepareStatement(sql);
             //executar
             ResultSet Rst = Patm.executeQuery();
 
             while (Rst.next()) {
             //Setando o codLud 
-               codigoLucro=Rst.getString("codLuc");
+               codigoLUCRO=Rst.getString("codLuc");
                 
-              JOptionPane.showMessageDialog(null," Código do lucro é "+codigoLucro);
+              JOptionPane.showMessageDialog(null," Código do lucro é "+codigoLUCRO);
 
             } 
 
@@ -2396,7 +2405,7 @@ public class Venda extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             //caso de error exiber essa mensagem
-            JOptionPane.showMessageDialog(null, "Código não Encontrado !");
+            JOptionPane.showMessageDialog(null, "data não Encontrado !");
         }
 
     }
@@ -2408,12 +2417,13 @@ public class Venda extends javax.swing.JFrame {
               LucroDao dao= new LucroDao();
               //Instânciando a classe LucroModel; 
               LucroModel prod = new LucroModel();
+              prod.setCodigoLucro(String.valueOf(jcombProdutos.getSelectedItem()));
+              prod.setCodigoProduto(String.valueOf(jcombProdutos.getSelectedItem()));
               prod.setQuantidade(QTDProduto);
               prod.setValorUnitario(Double.parseDouble(ValorUnit.getText()));
               prod.setValorTotal(somaTotal);
               prod.setValorDcomprar(Double.parseDouble(valorDoVendedor+""));
               prod.setValorGanhor(valorLucro);
-              prod.setCodigoLucro(String.valueOf(jcombProdutos.getSelectedItem()));
               prod.setData(txtdata.getText());
              //Passando objeto da classe lucroModel´para objeto da classe lucroDao;
                 dao.atualizarLucro(prod);
