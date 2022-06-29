@@ -376,7 +376,7 @@ public class VendaDao {
        
         try {
             //Inserindo os dados das vendas no banco de dados;
-            String sql="INSERT INTO codVendar(codVendar) VALUES(?)";
+            String sql="INSERT INTO codVenda(codVendar) VALUES(?)";
              
             PreparedStatement patm = conn.prepareStatement(sql);
             //Passando como paramentros os atributos da classe VendaModel;

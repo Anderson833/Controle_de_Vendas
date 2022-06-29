@@ -32,7 +32,7 @@ public class ProdutoDao {
          try {
              
              //Comando para selecionar toda tabela Produto;
-             String sql="SELECT * FROM Produto";
+             String sql="SELECT * FROM produto";
              
              PreparedStatement patm = conn.prepareStatement(sql);
              //Executar;
@@ -47,7 +47,7 @@ public class ProdutoDao {
                 prod.setNome(rst.getString("nome"));
                 prod.setDescricao(rst.getString("descricao"));
                 prod.setValorUnit(rst.getDouble("valorUnit"));
-                prod.setValorDeComprar(rst.getDouble("ValorDComprar"));
+                prod.setValorDeComprar(rst.getDouble("ValorDcompra"));
                 prod.setEstoque(rst.getInt("estoque"));
                  //Adicionando na Lista;
                 listProduto.add(prod);
@@ -81,7 +81,7 @@ public class ProdutoDao {
        
         try {
             //Comando para inserir os dados dos produtos no banco de dados;
-            String sql="insert into produto(codProd,nome,descricao,valorUnit,ValorDComprar,estoque)values(?,?,?,?,?,?)";
+            String sql="insert into produto(codProd,nome,descricao,valorUnit,ValorDcompra,estoque)values(?,?,?,?,?,?)";
              
             PreparedStatement patm = conn.prepareStatement(sql);
             //Passando como paramentros os atributos do produto da classe ProdutoModel;
@@ -123,7 +123,7 @@ public class ProdutoDao {
                try {
            
           //Comando para que realizar atualização no banco de dados;
-            String sql="UPDATE produto SET nome=?,descricao=?, valorUnit=?,ValorDComprar=?, estoque=? WHERE codProd=?";
+            String sql="UPDATE produto SET nome=?,descricao=?, valorUnit=?,ValorDcompra=?, estoque=? WHERE codProd=?";
             
             
             

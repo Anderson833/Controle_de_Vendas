@@ -1,0 +1,6 @@
+tree b66c7f59372f62ef89aea929177ae69a254ac071
+parent ace2aa502066a4f5af7fe996c999f81a94487605
+author ander <ander@DESKTOP-2REG98G> 1649275681 -0300
+committer ander <ander@DESKTOP-2REG98G> 1649275681 -0300
+
+Modifiquei a data de date para varchar no banco de dados e na data model o formato
