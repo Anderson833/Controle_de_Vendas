@@ -175,11 +175,13 @@
                               </Group>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="txtValorDeComprar" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
-                              <Component id="txtValorDeRevendar" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="txtCodigoUsuario" alignment="0" min="-2" pref="36" max="-2" attributes="0"/>
-                              <Component id="txtQuantidade" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="txtValorDeComprar" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
+                                  <Component id="txtValorDeRevendar" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
+                                  <Component id="txtQuantidade" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
