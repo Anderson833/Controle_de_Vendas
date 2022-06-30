@@ -114,7 +114,7 @@ public class Cliente extends javax.swing.JFrame {
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icone/comentarios.png"))); // NOI18N
-        jLabel6.setText("Cadrastrar Clientes");
+        jLabel6.setText("Cadastrar Clientes");
         jLabel6.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         tabelaCli.setModel(new javax.swing.table.DefaultTableModel(

@@ -166,7 +166,7 @@ public class Detalhe extends javax.swing.JFrame {
         
         //instânciando comprovante dão; 
           ComprovanteDao dao = new ComprovanteDao();
-          dao.ExcluirItem(cm);
+          dao.ExcluirUmaVenda(cm);
         
     }//GEN-LAST:event_botdeleteActionPerformed
      

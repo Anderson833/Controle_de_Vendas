@@ -260,7 +260,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/icone/comentarios.png"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Cadrastrar Clientes"/>
+            <Property name="text" type="java.lang.String" value="Cadastrar Clientes"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
                 <BevelBorder/>

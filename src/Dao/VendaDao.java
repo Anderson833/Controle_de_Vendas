@@ -76,8 +76,8 @@ public class VendaDao {
      }
     
      
-   //Método para adicionar venda ao banco de dados;
-    public void adicionaVenda(VendaModel venda){
+   //Método para adicionar itens na tabela vendas no banco de dados;
+    public void adicionaItens(VendaModel venda){
         
         //Criando uma Connection com Classe Conexao_BD; 
         Connection conn=Conexao_BD.getConnection();
@@ -105,10 +105,10 @@ public class VendaDao {
             
             if(upd>0){
                 //Caso de tudo certo exibir essa mensagem;
-                JOptionPane.showMessageDialog(null, "Venda Adicionado Com Sucesso");
+                JOptionPane.showMessageDialog(null, "Item Adicionado Com Sucesso");
             }else{
                 //Caso de error  exibir essa mensagem;
-                JOptionPane.showMessageDialog(null, "Venda Não Adicionado !","Error ",JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Item Não Adicionado !","Error ",JOptionPane.ERROR_MESSAGE);
             }
             
              //Fechando conexão PreparedStatement;
@@ -119,12 +119,12 @@ public class VendaDao {
             
         } catch (SQLException ex) {
             //Caso aconteça algum error mostrar essa mensagem;
-           JOptionPane.showMessageDialog(null, "Error ao Adicionar Venda !");
+           JOptionPane.showMessageDialog(null, "Error ao Adicionar itens !");
         }
         
     }
      
-     //Método para deletar venda no banco de dados pelo código do Venda;
+     //Método para deletar item no banco de dados pelo código do Venda;
       public void deletaVendaPeloCodigo(VendaModel vd){
           
            //Criando uma Connection com Classe Conexao_BD; 
@@ -145,10 +145,10 @@ public class VendaDao {
 
             if (res > 0) {
                 //Caso de tudo certo será exibido essa mensagem para usuário;
-                JOptionPane.showMessageDialog(null, "Venda Deletado com Sucesso !", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Item Deletado com Sucesso !", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);
             } else {
                  //Caso de errado será exibido essa mensagem para usuário;
-                JOptionPane.showMessageDialog(null, "Venda não Deletado !", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Item não Deletado !", "Error", JOptionPane.ERROR_MESSAGE);
             }
 
             //Fechando conexão PreparedStatement;
@@ -160,7 +160,8 @@ public class VendaDao {
 
         } catch (Exception e) {
             //Caso de error ao deletar mostrar essa mensagem;
-             JOptionPane.showMessageDialog(null, "Error ao Deletar Venda  !", "Error", JOptionPane.ERROR_MESSAGE);
+             JOptionPane.showMessageDialog(null, "Error ao Deletar Item,  !", "Error", JOptionPane.ERROR_MESSAGE);
+             JOptionPane.showMessageDialog(null,"Se o problema persistir, excluir a venda na tabela detalhe com código da venda  ");
         }
         
       }
@@ -174,7 +175,7 @@ public class VendaDao {
         try {
 
           // Comando que  Deletar toda venda ;
-            String sql = "DELETE FROM venda";
+            String sql = "DELETE FROM vendas";
 
             PreparedStatement patm = conn.prepareStatement(sql);
            
@@ -258,8 +259,8 @@ public class VendaDao {
          
      }
      
-     //Método para visualizar todos os dados da vendas pela data;
-     public ArrayList<VendaModel> visualizarPeloCodVenda(String vd){
+     //Método para visualizar todos os dados da vendas pelo código da venda e do cliente;
+     public ArrayList<VendaModel> visualizarPeloCodVendaEcliente(String vd,String cli){
         //Criando uma Connection com Classe Conexao_BD; 
         Connection conn=Conexao_BD.getConnection();
      
@@ -269,7 +270,7 @@ public class VendaDao {
          try {
              
              //Selecionando toda tabela vendas pela data;
-             String sql="SELECT * FROM vendas WHERE codVenda='"+vd+"'";
+             String sql="SELECT * FROM vendas WHERE codVendar='"+vd+"' and codCli='"+cli+"'";
              
              PreparedStatement patm = conn.prepareStatement(sql);
              
@@ -304,7 +305,7 @@ public class VendaDao {
              
          } catch (Exception e) {
              //Algo de error, mostrar essa mensagem;
-             JOptionPane.showMessageDialog(null, "Error ao Visualizar Todas compras pela data!");
+             JOptionPane.showMessageDialog(null, "Error ao Visualizar as compras do cliente pelo código da vendar e do cliente!");
          }
          //Retornando uma Lista;
         return listComprov;

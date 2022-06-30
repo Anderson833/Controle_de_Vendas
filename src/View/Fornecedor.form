@@ -57,12 +57,12 @@
                       <Group type="102" attributes="0">
                           <EmptySpace min="-2" pref="76" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
                                   <Component id="valorvenda" alignment="0" pref="138" max="32767" attributes="0"/>
                                   <Component id="jLabel1" alignment="0" min="-2" pref="55" max="-2" attributes="0"/>
                                   <Component id="codFornec" alignment="0" max="32767" attributes="0"/>
                               </Group>
-                              <Component id="jLabel5" alignment="0" min="-2" pref="88" max="-2" attributes="0"/>
+                              <Component id="jLabel5" min="-2" pref="114" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -215,7 +215,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel5">
           <Properties>
-            <Property name="text" type="java.lang.String" value="ValorDeVenda:"/>
+            <Property name="text" type="java.lang.String" value="Valor  De Revendar:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="valorvenda">
@@ -284,7 +284,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="36" style="1"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Cadrastrar Fornecedores"/>
+                <Property name="text" type="java.lang.String" value="Cadastrar Fornecedores"/>
               </Properties>
             </Component>
           </SubComponents>
@@ -304,7 +304,7 @@
                     <Column editable="false" title="Nome" type="java.lang.Object"/>
                     <Column editable="false" title="Telefone" type="java.lang.Object"/>
                     <Column editable="false" title="Produto" type="java.lang.Object"/>
-                    <Column editable="false" title="ValordVenda" type="java.lang.Object"/>
+                    <Column editable="false" title="ValordeRevenda" type="java.lang.Object"/>
                     <Column editable="false" title="ValordComprar" type="java.lang.Object"/>
                     <Column editable="false" title="Qtd_Prod" type="java.lang.Object"/>
                     <Column editable="false" title="Endere&#xe7;o" type="java.lang.Object"/>

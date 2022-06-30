@@ -68,7 +68,7 @@ public class Fornecedor extends javax.swing.JFrame {
 
         jLabel4.setText("Produto:");
 
-        jLabel5.setText("ValorDeVenda:");
+        jLabel5.setText("Valor  De Revendar:");
 
         jLabel6.setText("ValorDeComprar:");
 
@@ -82,7 +82,7 @@ public class Fornecedor extends javax.swing.JFrame {
 
         jLabel10.setBackground(new java.awt.Color(0, 0, 0));
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        jLabel10.setText("Cadrastrar Fornecedores");
+        jLabel10.setText("Cadastrar Fornecedores");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -106,7 +106,7 @@ public class Fornecedor extends javax.swing.JFrame {
 
             },
             new String [] {
-                "CodFornec", "Nome", "Telefone", "Produto", "ValordVenda", "ValordComprar", "Qtd_Prod", "Endereço", "Data"
+                "CodFornec", "Nome", "Telefone", "Produto", "ValordeRevenda", "ValordComprar", "Qtd_Prod", "Endereço", "Data"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -186,7 +186,7 @@ public class Fornecedor extends javax.swing.JFrame {
                                 .addComponent(valorvenda, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
                                 .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(codFornec, javax.swing.GroupLayout.Alignment.LEADING))
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(56, 56, 56)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
