@@ -3,14 +3,11 @@ package Dao;
 
 import Conexao.Conexao_BD;
 import Model.LucroModel;
-import Model.ProdutoModel;
-import Model.VendaModel;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -39,7 +36,7 @@ public class LucroDao {
            
             patm.setString(1, lucro.getCodigoLucro());
             patm.setString(2, lucro.getCodigoProduto());
-            patm.setInt(3, lucro.getQuantidade());
+            patm.setDouble(3, lucro.getQuantidade());
             patm.setDouble(4, lucro.getValorUnitario());
             patm.setDouble(5, lucro.getValorTotal());
             patm.setDouble(6, lucro.getValorDcomprar());
@@ -127,7 +124,7 @@ public class LucroDao {
                  //Setando os Valores;
             lucro.setCodigoLucro(rst.getString("codLuc"));
             lucro.setCodigoProduto(rst.getString("codProd"));
-            lucro.setQuantidade(rst.getInt("Qtd"));
+            lucro.setQuantidade(rst.getDouble("Qtd"));
             lucro.setValorUnitario(rst.getDouble("Vvend"));
             lucro.setValorTotal(rst.getDouble("total"));
             lucro.setValorDcomprar(rst.getDouble("Vlcompra"));
@@ -180,7 +177,7 @@ public class LucroDao {
                  //Setando os Valores;
             lucro.setCodigoLucro(rst.getString("codLuc"));
             lucro.setCodigoProduto(rst.getString("codProd"));
-            lucro.setQuantidade(rst.getInt("Qtd"));
+            lucro.setQuantidade(rst.getDouble("Qtd"));
             lucro.setValorUnitario(rst.getDouble("Vvend"));
             lucro.setValorTotal(rst.getDouble("total"));
             lucro.setValorDcomprar(rst.getDouble("Vlcompra"));
@@ -223,7 +220,7 @@ public class LucroDao {
             
             PreparedStatement patm = conn.prepareStatement(sql);
             //Passandoos valores nos paramentros;
-            patm.setInt(1, lucro.getQuantidade());
+            patm.setDouble(1, lucro.getQuantidade());
             patm.setDouble(2, lucro.getValorUnitario());
             patm.setDouble(3, lucro.getValorTotal());
             patm.setDouble(4, lucro.getValorDcomprar());

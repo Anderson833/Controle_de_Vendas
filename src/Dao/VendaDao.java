@@ -46,8 +46,6 @@ public class VendaDao {
                venda.setCodCli(rst.getString("codCli")); 
                venda.setCodProd(rst.getString("codProd"));
                venda.setQtdProd(rst.getInt("Qtd"));
-               venda.setCompleto(rst.getInt("Completo"));
-               venda.setVz(rst.getInt("Vz"));
                venda.setValorUnit(rst.getDouble("valorUnit"));
                venda.setValorTotal(rst.getDouble("total"));
                venda.setData(rst.getString("data"));
@@ -85,7 +83,7 @@ public class VendaDao {
        
         try {
             //Inserindo os dados das vendas no banco de dados;
-            String sql="INSERT INTO vendas(codExcluir,codVendar,codCli,codProd,Qtd,Completo,Vz,valorUnit,total,data) VALUES(?,?,?,?,?,?,?,?,?,?)";
+            String sql="INSERT INTO vendas(codExcluir,codVendar,codCli,codProd,Qtd,valorUnit,total,data) VALUES(?,?,?,?,?,?,?,?)";
              
             PreparedStatement patm = conn.prepareStatement(sql);
             //Passando como paramentros os atributos da classe VendaModel;
@@ -93,12 +91,10 @@ public class VendaDao {
             patm.setString(2, venda.getCodVenda());
             patm.setString(3, venda.getCodCli());
             patm.setString(4, venda.getCodProd());
-            patm.setInt(5, venda.getQtdProd());
-            patm.setInt(6, venda.getCompleto());
-            patm.setInt(7, venda.getVz());
-            patm.setDouble(8, venda.getValorUnit());
-            patm.setDouble(9, venda.getValorTotal());
-            patm.setString(10, venda.getData());
+            patm.setDouble(5, venda.getQtdProd());
+            patm.setDouble(6, venda.getValorUnit());
+            patm.setDouble(7, venda.getValorTotal());
+            patm.setString(8, venda.getData());
             
             //Executar;
             int upd=patm.executeUpdate();
@@ -232,8 +228,6 @@ public class VendaDao {
                venda.setCodCli(rst.getString("codCli")); 
                venda.setCodProd(rst.getString("codProd"));
                venda.setQtdProd(rst.getInt("Qtd"));
-               venda.setCompleto(rst.getInt("Completo"));
-               venda.setVz(rst.getInt("Vz"));
                venda.setValorUnit(rst.getDouble("valorUnit"));
                venda.setValorTotal(rst.getDouble("total"));
                venda.setData(rst.getString("data"));
@@ -285,8 +279,6 @@ public class VendaDao {
                venda.setCodCli(rst.getString("codCli")); 
                venda.setCodProd(rst.getString("codProd"));
                venda.setQtdProd(rst.getInt("Qtd"));
-               venda.setCompleto(rst.getInt("Completo"));
-               venda.setVz(rst.getInt("Vz"));
                venda.setValorUnit(rst.getDouble("valorUnit"));
                venda.setValorTotal(rst.getDouble("total"));
                venda.setData(rst.getString("data"));
@@ -341,8 +333,6 @@ public class VendaDao {
                venda.setCodCli(rst.getString("codCli")); 
                venda.setCodProd(rst.getString("codProd"));
                venda.setQtdProd(rst.getInt("Qtd"));
-               venda.setCompleto(rst.getInt("Completo"));
-               venda.setVz(rst.getInt("Vz"));
                venda.setValorUnit(rst.getDouble("valorUnit"));
                venda.setValorTotal(rst.getDouble("total"));
                venda.setData(rst.getString("data"));
@@ -407,7 +397,7 @@ public class VendaDao {
         
     }
       //Método para adicionar o lucro ao banco de dados;
-    public void adicionaValorDComprar(VendaModel venda){
+    public void adicionaValoresDoLucro(VendaModel venda){
         
         //Criando uma Connection com Classe Conexao_BD; 
         Connection conn=Conexao_BD.getConnection();

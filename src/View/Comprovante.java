@@ -6,9 +6,7 @@
 package View;
 
 import Conexao.Conexao_BD;
-import Dao.ComprovanteDao;
 import Dao.VendaDao;
-import Model.ComprovanteModel;
 import Model.VendaModel;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -111,7 +109,7 @@ public class Comprovante extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Visualiza Detalhe da comprar");
+        setTitle("Visualização de todas vendas");
         setFont(new java.awt.Font("Agency FB", 1, 24)); // NOI18N
 
         jPanel1.setBackground(new java.awt.Color(240, 176, 123));
@@ -123,11 +121,11 @@ public class Comprovante extends javax.swing.JFrame {
 
             },
             new String [] {
-                "IdComprov", "CodVend", "CodCli", "CodProd", "Qtd_Prod", "Completo", "Vazio", "ValorUnit", "ValorTotal", "data"
+                "IdComprov", "CodVend", "CodCli", "CodProd", "Qtd_Prod", "ValorUnit", "ValorTotal", "data"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -210,7 +208,7 @@ public class Comprovante extends javax.swing.JFrame {
                                         .addComponent(jButton1))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(dat, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 138, Short.MAX_VALUE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 148, Short.MAX_VALUE)
                                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -258,7 +256,7 @@ public class Comprovante extends javax.swing.JFrame {
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 14, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtdataInicio, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
                             .addComponent(jButton1)
@@ -267,21 +265,20 @@ public class Comprovante extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(jButton2)
-                        .addContainerGap(19, Short.MAX_VALUE))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -364,8 +361,6 @@ public class Comprovante extends javax.swing.JFrame {
                 item.getCodCli(),
                 item.getCodProd(),
                 item.getQtdProd(),
-                item.getCompleto(),
-                item.getVz(),
                 item.getValorUnit(),
                 item.getValorTotal(),
                 item.getData()
@@ -392,8 +387,6 @@ public class Comprovante extends javax.swing.JFrame {
                 item.getCodCli(),
                 item.getCodProd(),
                 item.getQtdProd(),
-                item.getCompleto(),
-                item.getVz(),
                 item.getValorUnit(),
                 item.getValorTotal(),
                 item.getData()
@@ -420,8 +413,6 @@ public class Comprovante extends javax.swing.JFrame {
                 item.getCodCli(),
                 item.getCodProd(),
                 item.getQtdProd(),
-                item.getCompleto(),
-                item.getVz(),
                 item.getValorUnit(),
                 item.getValorTotal(),
                 item.getData()
@@ -493,7 +484,7 @@ public class Comprovante extends javax.swing.JFrame {
         try {
             Connection Conn = Conexao_BD.getConnection();
             //Comando para fazer a soma de toda coluna Valor Total no banco de dados;
-            String sql = "select codVend,codCli, codProd,Qtd_Prod,valorUnit,ValorTotal,data from comprar where data >'"+txtdataInicio+"' and data<'"+txtdataFinal+"'";
+            String sql = "select codExcluir, codVendar,codCli, codProd,Qtd,valorUnit,total,data from vendas where data >'"+txtdataInicio+"' and data<'"+txtdataFinal+"'";
    
             
             PreparedStatement Patm = Conn.prepareStatement(sql);

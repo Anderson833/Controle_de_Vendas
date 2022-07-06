@@ -10,8 +10,8 @@ public class EstoqueModel {
     //atributos do estoque
     private String codEstoq;
     private String codProd;
-    private int entrada;
-    private int saida;
+    private double entrada;
+    private double saida;
     private int qtdEstoq;
     private String data;
 
@@ -34,21 +34,21 @@ public class EstoqueModel {
     }
 
    
-    public int getEntrada() {
+    public double getEntrada() {
         return entrada;
     }
 
     
-    public void setEntrada(int entrada) {
+    public void setEntrada(double entrada) {
         this.entrada = entrada;
     }
 
-    public int getSaida() {
+    public double getSaida() {
         return saida;
     }
 
    
-    public void setSaida(int saida) {
+    public void setSaida(double saida) {
         this.saida = saida;
     }
 

@@ -3,44 +3,20 @@ package Model;
 
 
 public class ComprovanteModel extends VendaModel {
-    
+    //Atributos
     private String codDetalhe;
-    private String data;
-    private String idVenda;
-    private int idExcluir;
-    
+    private String pagamento;
    
 
-    
-    public String getData() {
-        return data;
+    //Métodos get e set
+    public String getPagamento() {
+        return pagamento;
     }
 
     
-    public void setData(String data) {
-        this.data = data;
+    public void setPagamento(String pagamento) {
+        this.pagamento = pagamento;
     }
-
-    
-    public String getIdVenda() {
-        return idVenda;
-    }
-
-   
-    public void setIdVenda(String idVenda) {
-        this.idVenda = idVenda;
-    }
-
-    
-    public int getIdExcluir() {
-        return idExcluir;
-    }
-
-    
-    public void setIdExcluir(int idExcluir) {
-        this.idExcluir = idExcluir;
-    }
-
    
     public String getCodDetalhe() {
         return codDetalhe;
@@ -49,6 +25,11 @@ public class ComprovanteModel extends VendaModel {
    
     public void setCodDetalhe(String codDetalhe) {
         this.codDetalhe = codDetalhe;
+    }
+
+    @Override
+    public String toString() {
+        return getPagamento();
     }
     
 }

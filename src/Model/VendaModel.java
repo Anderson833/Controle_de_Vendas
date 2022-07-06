@@ -17,13 +17,11 @@ public class VendaModel {
     private double valorUnit;
     private double valorTotal;
     private String data;
-    private int Completo;
-    private int vz;
     private double valorGanhor;
     private double precoDeComprar;
     
     
-    // Os métodos getts e setts
+    // Os métodos get e set
     
     public String getCodVenda() {
         return codVenda;
@@ -102,27 +100,6 @@ public class VendaModel {
     public void setIdDeleta(int idDeleta) {
         this.idDeleta = idDeleta;
     }
-
-   
-    public int getCompleto() {
-        return Completo;
-    }
-
-   
-    public void setCompleto(int Completo) {
-        this.Completo = Completo;
-    }
-
-    
-    public int getVz() {
-        return vz;
-    }
-
-   
-    public void setVz(int vz) {
-        this.vz = vz;
-    }
-
     /**
      * @return the valorGanhor
      */

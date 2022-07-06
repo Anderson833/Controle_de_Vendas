@@ -461,11 +461,11 @@ public class Produto extends javax.swing.JFrame {
               //Instânciando a classe ProdutoModel; 
               ProdutoModel prod = new ProdutoModel();
               prod.setCodProd(txtCodProd.getText());
-              prod.setNome(txtNome.getText());
+              prod.setProduto(txtNome.getText());
               prod.setDescricao(txtDescricao.getText());
-              prod.setValorUnit(Double.parseDouble(txtValorUnt.getText()));
-              prod.setValorDeComprar(Double.parseDouble(valorDcompra.getText()));
-              prod.setEstoque(Integer.parseInt(txtEstoque.getText()));
+              prod.setValorDeRevenda(Double.parseDouble(txtValorUnt.getText()));
+              prod.setValorDcomprar(Double.parseDouble(valorDcompra.getText()));
+              prod.setQtd_estoquer(Integer.parseInt(txtEstoque.getText()));
              //Passando objeto da classe ProdutoModel´para objeto da classe ProdutoDao;
               dao.atualizarProdtuo(prod);
               
@@ -480,11 +480,11 @@ public class Produto extends javax.swing.JFrame {
               //Instânciando a classe ProdutoModel; 
               ProdutoModel prod = new ProdutoModel();
               prod.setCodProd(txtCodProd.getText());
-              prod.setNome(txtNome.getText());
+              prod.setProduto(txtNome.getText());
               prod.setDescricao(txtDescricao.getText());
-              prod.setValorUnit(Double.parseDouble(txtValorUnt.getText()));
-              prod.setValorDeComprar(Double.parseDouble(valorDcompra.getText()));
-              prod.setEstoque(Integer.parseInt(txtEstoque.getText()));
+              prod.setValorDeRevenda(Double.parseDouble(txtValorUnt.getText()));
+              prod.setValorDcomprar(Double.parseDouble(valorDcompra.getText()));
+              prod.setQtd_estoquer(Integer.parseInt(txtEstoque.getText()));
                  //Passando objeto da classe ProdutoModel´para objeto da classe ProdutoDao;
               dao.adicionarProduto(prod);
               
@@ -503,11 +503,11 @@ public class Produto extends javax.swing.JFrame {
            for (ProdutoModel prod : dao.visualizarProduto()) {
                modelo.addRow(new Object[]{
                prod.getCodProd(),
-               prod.getNome(),
+               prod.getProduto(),
                prod.getDescricao(),
-               prod.getValorUnit(),
-               prod.getValorDeComprar(),
-               prod.getEstoque()
+               prod.getValorDeRevenda(),
+               prod.getValorDcomprar(),
+               prod.getQtd_estoquer()
                
                
                

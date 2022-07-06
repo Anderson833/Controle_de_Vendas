@@ -10,7 +10,7 @@ public class LucroModel {
     
     private String codigoLucro;
     private String codigoProduto;
-    private int Quantidade;
+    private double Quantidade;
     private double valorUnitario;
     private double valorTotal;
     private double valorDcomprar;
@@ -65,14 +65,14 @@ public class LucroModel {
     /**
      * @return the Quantidade
      */
-    public int getQuantidade() {
+    public double getQuantidade() {
         return Quantidade;
     }
 
     /**
      * @param Quantidade the Quantidade to set
      */
-    public void setQuantidade(int Quantidade) {
+    public void setQuantidade(double Quantidade) {
         this.Quantidade = Quantidade;
     }
 

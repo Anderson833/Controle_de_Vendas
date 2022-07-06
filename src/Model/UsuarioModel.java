@@ -16,21 +16,12 @@ public class UsuarioModel {
     private String login;
     private String senha;
 
-    public String getIdUsu() {
-        return idUsu;
-    }
-
-    
-    public void setIdUsu(String idUsu) {
-        this.idUsu = idUsu;
-    }
-
-   
+     //Métodos get e set
     public String getNome() {
         return nome;
     }
 
-   
+    
     public void setNome(String nome) {
         this.nome = nome;
     }
@@ -40,12 +31,12 @@ public class UsuarioModel {
         return endereco;
     }
 
-   
+    
     public void setEndereco(String endereco) {
         this.endereco = endereco;
     }
 
-   
+    
     public String getTelefone() {
         return telefone;
     }
@@ -54,7 +45,14 @@ public class UsuarioModel {
     public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
-
+    
+    
+    public String getIdUsu() {
+        return idUsu;
+    }
+    public void setIdUsu(String idUsu) {
+        this.idUsu = idUsu;
+    }
    
     public String getLogin() {
         return login;

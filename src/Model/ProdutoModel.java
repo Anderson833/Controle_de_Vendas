@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Model;
 
 /**
@@ -13,61 +9,88 @@ public class ProdutoModel {
     
     //Atributos do Produto
     private String codProd;
-    private String nome;
     private String descricao;
-    private double valorUnit;
-    private double valorDeComprar;
-    
-    private int estoque;
+    private String produto;
+    private double ValorDeRevenda;
+    private double valorDcomprar;
+    private int Qtd_estoquer;
 
-  
+    /**
+     * @return the codProd
+     */
     public String getCodProd() {
         return codProd;
     }
 
-    
+    /**
+     * @param codProd the codProd to set
+     */
     public void setCodProd(String codProd) {
         this.codProd = codProd;
     }
 
-   
-    public String getNome() {
-        return nome;
-    }
-
-    
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    
+    /**
+     * @return the descricao
+     */
     public String getDescricao() {
         return descricao;
     }
 
-   
+    /**
+     * @param descricao the descricao to set
+     */
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
 
-  
-    public double getValorUnit() {
-        return valorUnit;
+    /**
+     * @return the produto
+     */
+    public String getProduto() {
+        return produto;
     }
 
-   
-    public void setValorUnit(double valorUnit) {
-        this.valorUnit = valorUnit;
+    /**
+     * @param produto the produto to set
+     */
+    public void setProduto(String produto) {
+        this.produto = produto;
     }
 
-   
-    public int getEstoque() {
-        return estoque;
+    /**
+     * @return the ValorDeRevenda
+     */
+    public double getValorDeRevenda() {
+        return ValorDeRevenda;
     }
 
-   
-    public void setEstoque(int estoque) {
-        this.estoque = estoque;
+    /**
+     * @param ValorDeRevenda the ValorDeRevenda to set
+     */
+    public void setValorDeRevenda(double ValorDeRevenda) {
+        this.ValorDeRevenda = ValorDeRevenda;
+    }
+
+    /**
+     * @return the valorDcomprar
+     */
+    public double getValorDcomprar() {
+        return valorDcomprar;
+    }
+
+    
+    public void setValorDcomprar(double valorDcomprar) {
+        this.valorDcomprar = valorDcomprar;
+    }
+
+    
+    public int getQtd_estoquer() {
+        return Qtd_estoquer;
+    }
+
+    
+    public void setQtd_estoquer(int Qtd_estoquer) {
+        this.Qtd_estoquer = Qtd_estoquer;
     }
 
     @Override
@@ -75,18 +98,7 @@ public class ProdutoModel {
         return getCodProd();
     }
 
-    /**
-     * @return the valorDeComprar
-     */
-    public double getValorDeComprar() {
-        return valorDeComprar;
-    }
-
-    /**
-     * @param valorDeComprar the valorDeComprar to set
-     */
-    public void setValorDeComprar(double valorDeComprar) {
-        this.valorDeComprar = valorDeComprar;
-    }
+     
     
+  
 }

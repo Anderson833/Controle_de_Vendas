@@ -13,9 +13,9 @@ public class RelatorioModel {
     private String data;
     private double valorTtlvendas;
     private String codProd;
-    private int entrada;
-    private int saida;
-    private int Qtd_Estoque;
+    private double entrada;
+    private double saida;
+    private double Qtd_Estoque;
 
    
     public String getCodRelatorio() {
@@ -66,30 +66,30 @@ public class RelatorioModel {
     }
 
    
-    public int getEntrada() {
+    public double getEntrada() {
         return entrada;
     }
 
    
-    public void setEntrada(int entrada) {
+    public void setEntrada(double entrada) {
         this.entrada = entrada;
     }
 
     
-    public int getSaida() {
+    public double getSaida() {
         return saida;
     }
 
-    public void setSaida(int saida) {
+    public void setSaida(double saida) {
         this.saida = saida;
     }
 
    
-    public int getQtd_Estoque() {
+    public double getQtd_Estoque() {
         return Qtd_Estoque;
     }
 
-    public void setQtd_Estoque(int Qtd_Estoque) {
+    public void setQtd_Estoque(double Qtd_Estoque) {
         this.Qtd_Estoque = Qtd_Estoque;
     }
     

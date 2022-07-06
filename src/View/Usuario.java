@@ -1,8 +1,14 @@
 // view Usuário;
 package View;
 
+import Conexao.Conexao_BD;
 import Dao.UsuarioDao;
 import Model.UsuarioModel;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class Usuario extends javax.swing.JFrame {
@@ -11,9 +17,12 @@ public class Usuario extends javax.swing.JFrame {
         initComponents();
         //Abrir no centro da tela;
         setLocationRelativeTo(this);
-
+        // Método para buscar o login e ID do usuário
+              buscandoCodigoDosUsuarios();
     }
-
+          //Variável para armazenar o login e o IDusu
+    String login="", IDusu="",senha="";
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -55,10 +64,10 @@ public class Usuario extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Usuário");
 
-        jPanel1.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel1.setBackground(new java.awt.Color(255, 204, 204));
 
         jLabel1.setText("ID Usuário:");
 
@@ -229,7 +238,7 @@ public class Usuario extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -249,7 +258,9 @@ public class Usuario extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -260,11 +271,18 @@ public class Usuario extends javax.swing.JFrame {
     }//GEN-LAST:event_txtenderecoActionPerformed
 
     private void adicionarCliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adicionarCliActionPerformed
-        //MÉTODO PARA ADICIONA USUARIO NO BANCO DE DADOS;
+          
+       if(txtIDusu.getText().equalsIgnoreCase(IDusu)){
+           JOptionPane.showMessageDialog(null, "Já tem usuário com esse ID "+txtIDusu.getText());
+           visualizarUsuario();
+       }else{
+           //MÉTODO PARA ADICIONA USUARIO NO BANCO DE DADOS;
         addUsuario();
-        
         //Limpar os campos depois que adicionar usuário;
           limpar();
+          visualizarUsuario();
+       }
+       
     }//GEN-LAST:event_adicionarCliActionPerformed
 
     //Método para adicionar usuario;
@@ -323,7 +341,44 @@ public class Usuario extends javax.swing.JFrame {
         }
 
     }
+    // método para  ver se tem usuário com meus código é id;
+    public boolean buscandoCodigoDosUsuarios() {
 
+        try {
+            Connection Conn = Conexao_BD.getConnection();
+
+            //Comando para selecionar o código de usuário;
+            String sql = "SELECT IdUsu,login,senha FROM usuario";
+
+            PreparedStatement Patm = Conn.prepareStatement(sql);
+
+            //Executar
+            ResultSet Rst = Patm.executeQuery();
+
+            if (Rst.next()) {
+                //setando codigo 
+                login = Rst.getString("login");
+                IDusu = Rst.getString("IdUsu");
+                senha = Rst.getString("senha");
+            }
+
+            //Fechando conexão ResultSet;
+            Rst.close();
+
+            //Fechando conexão PreparedStatement;
+            Patm.close();
+
+            //Fechando conexão Connection;
+            Conn.close();
+
+        } catch (SQLException e) {
+            //caso de algo errado exiber essa mensagem;
+            JOptionPane.showMessageDialog(null, " código não encontrado ! ");
+        }
+        return true;
+
+    }
+    
 
     private void visualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_visualizarActionPerformed
 

@@ -2,9 +2,7 @@
 package Dao;
 
 import Conexao.Conexao_BD;
-import Model.EstoqueModel;
 import Model.FornecedorModel;
-import Model.ProdutoModel;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -34,13 +32,13 @@ public class FornecedorDao {
             PreparedStatement patm = conn.prepareStatement(sql);
             //Passando como paramentros os atributos do fornecedor da classe FornecedorModel;
             patm.setString(1, fornec.getCodFornec());
-            patm.setString(2, fornec.getNome());
+            patm.setString(2, fornec.getNomeFornec());
             patm.setString(3, fornec.getEndereco());
             patm.setString(4, fornec.getContato());
-            patm.setString(5, fornec.getProduto());
-            patm.setDouble(6, fornec.getValorDvenda());
+            patm.setString(5, fornec.getNomeproduto());
+            patm.setDouble(6, fornec.getValorDeRevenda());
             patm.setDouble(7, fornec.getValorDcomprar());
-            patm.setInt(8, fornec.getQtd_Prod());
+            patm.setInt(8, fornec.getQtd_estoque());
             patm.setString(9, fornec.getData());
            
             
@@ -93,13 +91,13 @@ public class FornecedorDao {
                  FornecedorModel fornec = new FornecedorModel();
                  //Setando os Valores;
                  fornec.setCodFornec(rst.getString("codFornec"));
-                 fornec.setNome(rst.getString("nome"));
+                 fornec.setNomeFornec(rst.getString("nome"));
                  fornec.setEndereco(rst.getString("endereco"));
                  fornec.setContato(rst.getString("contato"));
-                 fornec.setProduto(rst.getString("produto"));
-                 fornec.setValorDvenda(rst.getDouble("valorDvd"));
+                 fornec.setNomeproduto(rst.getString("produto"));
+                 fornec.setValorDeRevenda(rst.getDouble("valorDvd"));
                  fornec.setValorDcomprar(rst.getDouble("valorDcompra"));
-                 fornec.setQtd_Prod(rst.getInt("Qtd_Prod"));
+                 fornec.setQtd_estoque(rst.getInt("Qtd_Prod"));
                  fornec.setData(rst.getString("data"));
               
                
@@ -142,13 +140,13 @@ public class FornecedorDao {
             PreparedStatement patm = conn.prepareStatement(sql);
             //Passandoos valores nos paramentros;
           
-            patm.setString(1,fornec.getNome());
+            patm.setString(1,fornec.getNomeFornec());
             patm.setString(2, fornec.getEndereco());
             patm.setString(3,fornec.getContato());
-            patm.setString(4,fornec.getProduto());
-            patm.setDouble(5,fornec.getValorDvenda());
+            patm.setString(4,fornec.getNomeproduto());
+            patm.setDouble(5,fornec.getValorDeRevenda());
             patm.setDouble(6,fornec.getValorDcomprar());
-            patm.setInt(7,fornec.getQtd_Prod());
+            patm.setInt(7,fornec.getQtd_estoque());
             patm.setString(8, fornec.getData());
             patm.setString(9, fornec.getCodFornec());
             //Executar;

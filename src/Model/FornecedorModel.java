@@ -9,13 +9,13 @@ public class FornecedorModel {
     
   // Os Atributos que contem para fornecedor;
     private String codFornec;
-    private String nome;
+    private String nomeFornec;
     private String endereco;
     private String contato;
-    private String produto;
-    private double valorDvenda;
+    private String Nomeproduto;
+    private double valorDeRevenda;
     private double valorDcomprar;
-    private int Qtd_Prod;
+    private int Qtd_estoque;
     private String data;
    
     public String getCodFornec() {
@@ -28,12 +28,12 @@ public class FornecedorModel {
     }
 
   
-    public String getNome() {
-        return nome;
+    public String getNomeFornec() {
+        return nomeFornec;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setNomeFornec(String nomeFornec) {
+        this.nomeFornec = nomeFornec;
     }
 
     public String getEndereco() {
@@ -55,23 +55,23 @@ public class FornecedorModel {
     }
 
    
-    public String getProduto() {
-        return produto;
+    public String getNomeproduto() {
+        return Nomeproduto;
     }
 
    
-    public void setProduto(String produto) {
-        this.produto = produto;
+    public void setNomeproduto(String Nomeproduto) {
+        this.Nomeproduto = Nomeproduto;
     }
 
   
-    public double getValorDvenda() {
-        return valorDvenda;
+    public double getValorDeRevenda() {
+        return valorDeRevenda;
     }
 
    
-    public void setValorDvenda(double valorDvenda) {
-        this.valorDvenda = valorDvenda;
+    public void setValorDeRevenda(double valorDeRevenda) {
+        this.valorDeRevenda = valorDeRevenda;
     }
 
    
@@ -85,13 +85,13 @@ public class FornecedorModel {
     }
 
   
-    public int getQtd_Prod() {
-        return Qtd_Prod;
+    public int getQtd_estoque() {
+        return Qtd_estoque;
     }
 
    
-    public void setQtd_Prod(int Qtd_Prod) {
-        this.Qtd_Prod = Qtd_Prod;
+    public void setQtd_estoque(int Qtd_estoque) {
+        this.Qtd_estoque = Qtd_estoque;
     }
 
     

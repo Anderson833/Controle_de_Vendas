@@ -36,19 +36,20 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenu3 = new javax.swing.JMenu();
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
+        jMenuItem19 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenuItem10 = new javax.swing.JMenuItem();
         jMenuItem11 = new javax.swing.JMenuItem();
         jMenuItem12 = new javax.swing.JMenuItem();
+        jMenu6 = new javax.swing.JMenu();
+        jMenuItem17 = new javax.swing.JMenuItem();
+        jMenu7 = new javax.swing.JMenu();
+        jMenuItem18 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         jMenuItem13 = new javax.swing.JMenuItem();
         jMenuItem14 = new javax.swing.JMenuItem();
         jMenuItem15 = new javax.swing.JMenuItem();
         jMenuItem9 = new javax.swing.JMenuItem();
-        jMenu6 = new javax.swing.JMenu();
-        jMenuItem17 = new javax.swing.JMenuItem();
-        jMenu7 = new javax.swing.JMenu();
-        jMenuItem18 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Tela Principal Do Sistema");
@@ -120,12 +121,25 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenu3.add(jMenuItem7);
 
         jMenuItem8.setText("Consultar");
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem8ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem8);
+
+        jMenuItem19.setText("Cadastrar tipo de Pagamentos");
+        jMenuItem19.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem19ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem19);
 
         jMenuBar1.add(jMenu3);
 
         jMenu4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jMenu4.setText("Relatório da venda");
+        jMenu4.setText("Relatório ");
 
         jMenuItem10.setText("Verificar");
         jMenu4.add(jMenuItem10);
@@ -142,34 +156,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenu4.add(jMenuItem12);
 
         jMenuBar1.add(jMenu4);
-
-        jMenu5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jMenu5.setText("Usuário");
-
-        jMenuItem13.setText("Registrar");
-        jMenuItem13.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem13ActionPerformed(evt);
-            }
-        });
-        jMenu5.add(jMenuItem13);
-
-        jMenuItem14.setText("Consultar");
-        jMenuItem14.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem14ActionPerformed(evt);
-            }
-        });
-        jMenu5.add(jMenuItem14);
-
-        jMenuItem15.setText("Deletar");
-        jMenu5.add(jMenuItem15);
-
-        jMenuItem9.setText("Atualizar");
-        jMenu5.add(jMenuItem9);
-
-        jMenuBar1.add(jMenu5);
 
         jMenu6.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jMenu6.setText("Investimento");
@@ -201,6 +187,34 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenu7.add(jMenuItem18);
 
         jMenuBar1.add(jMenu7);
+
+        jMenu5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jMenu5.setText("Usuário");
+
+        jMenuItem13.setText("Registrar");
+        jMenuItem13.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem13ActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jMenuItem13);
+
+        jMenuItem14.setText("Consultar");
+        jMenuItem14.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem14ActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jMenuItem14);
+
+        jMenuItem15.setText("Deletar");
+        jMenu5.add(jMenuItem15);
+
+        jMenuItem9.setText("Atualizar");
+        jMenu5.add(jMenuItem9);
+
+        jMenuBar1.add(jMenu5);
 
         setJMenuBar(jMenuBar1);
 
@@ -257,6 +271,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
             //Passando objeto para abrir   TelaLogin ao Logar;
             tp.setVisible(true);
             //Fechando a  TelaPrincipal;
+            
+            TelaPrincipal TL = new TelaPrincipal();
             this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -275,6 +291,20 @@ public class TelaPrincipal extends javax.swing.JFrame {
        Fornecedor fornc =new Fornecedor();
        fornc.setVisible(true);
     }//GEN-LAST:event_jMenuItem18ActionPerformed
+
+    private void jMenuItem19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem19ActionPerformed
+      
+        //método para adicionar pagamentos
+        Pagamento pg = new Pagamento();
+        pg.setVisible(true);
+        
+    }//GEN-LAST:event_jMenuItem19ActionPerformed
+
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+        
+        Detalhe DT = new Detalhe();
+        DT.setVisible(true);
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
 
     public static void main(String args[]) {
       
@@ -306,6 +336,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem16;
     private javax.swing.JMenuItem jMenuItem17;
     private javax.swing.JMenuItem jMenuItem18;
+    private javax.swing.JMenuItem jMenuItem19;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;

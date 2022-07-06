@@ -372,13 +372,13 @@ public class Fornecedor extends javax.swing.JFrame {
        FornecedorModel fornec = new FornecedorModel();
        //setando os valores;
        fornec.setCodFornec(codFornec.getText());
-       fornec.setNome(txtnome.getText());
+       fornec.setNomeFornec(txtnome.getText());
        fornec.setEndereco(endereco.getText());
        fornec.setContato(telefone.getText());
-       fornec.setProduto(prod.getText());
-       fornec.setValorDvenda(Double.parseDouble(valorvenda.getText()));
+       fornec.setNomeproduto(prod.getText());
+       fornec.setValorDeRevenda(Double.parseDouble(valorvenda.getText()));
        fornec.setValorDcomprar(Double.parseDouble(valorcompra.getText()));
-       fornec.setQtd_Prod(Integer.parseInt(qtd.getText()));
+       fornec.setQtd_estoque(Integer.parseInt(qtd.getText()));
        fornec.setData(data.getText());
        // atualizar os dados do fornecedor no objeto dao;
        dao.atualizarFornecedor(fornec);
@@ -399,12 +399,12 @@ public class Fornecedor extends javax.swing.JFrame {
           for (FornecedorModel fornec :dao.visualizarFornecedor() ) {
              modelo.addRow(new Object[] {
              fornec.getCodFornec(),
-             fornec.getNome(),
+             fornec.getNomeFornec(),
              fornec.getContato(),
-             fornec.getProduto(),
-             fornec.getValorDvenda(),
+             fornec.getNomeproduto(),
+             fornec.getValorDeRevenda(),
              fornec.getValorDcomprar(),
-             fornec.getQtd_Prod(),
+             fornec.getQtd_estoque(),
              fornec.getEndereco(),
              fornec.getData()
              
@@ -428,13 +428,13 @@ public class Fornecedor extends javax.swing.JFrame {
        FornecedorModel fornec = new FornecedorModel();
        //setando os valores;
        fornec.setCodFornec(codFornec.getText());
-       fornec.setNome(txtnome.getText());
+       fornec.setNomeFornec(txtnome.getText());
        fornec.setEndereco(endereco.getText());
        fornec.setContato(telefone.getText());
-       fornec.setProduto(prod.getText());
-       fornec.setValorDvenda(Double.parseDouble(valorvenda.getText()));
+       fornec.setNomeFornec(prod.getText());
+       fornec.setValorDeRevenda(Double.parseDouble(valorvenda.getText()));
        fornec.setValorDcomprar(Double.parseDouble(valorcompra.getText()));
-       fornec.setQtd_Prod(Integer.parseInt(qtd.getText()));
+       fornec.setQtd_estoque(Integer.parseInt(qtd.getText()));
        fornec.setData(data.getText());
        // adicionando os valores no objeto dao;
        dao.adicionarFornecedor(fornec);

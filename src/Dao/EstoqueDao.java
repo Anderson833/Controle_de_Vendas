@@ -3,7 +3,6 @@ package Dao;
 
 import Conexao.Conexao_BD;
 import Model.EstoqueModel;
-import Model.ProdutoModel;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -33,9 +32,9 @@ public class EstoqueDao {
             //Passando como paramentros os atributos da tabela estoque da classe EstoqueModel;
             patm.setString(1, estoque.getCodEstoq());
             patm.setString(2, estoque.getCodProd());
-            patm.setInt(3, estoque.getEntrada());
-            patm.setInt(4,estoque.getSaida());
-            patm.setInt(5, estoque.getQtdEstoq());
+            patm.setDouble(3, estoque.getEntrada());
+            patm.setDouble(4,estoque.getSaida());
+            patm.setDouble(5, estoque.getQtdEstoq());
             patm.setString(6, estoque.getData());
             
             
@@ -88,8 +87,8 @@ public class EstoqueDao {
                  //Setando os Valores;
                  estoque.setCodEstoq(rst.getString("codEstoq"));
                  estoque.setCodProd(rst.getString("codProd"));
-                 estoque.setEntrada(rst.getInt("entrada"));
-                 estoque.setSaida(rst.getInt("saida"));
+                 estoque.setEntrada(rst.getDouble("entrada"));
+                 estoque.setSaida(rst.getDouble("saida"));
                  estoque.setQtdEstoq(rst.getInt("qtd_Estoque"));
                  estoque.setData(rst.getString("data"));
                
@@ -176,8 +175,8 @@ public class EstoqueDao {
             //Passandoos valores nos paramentros;
           
             patm.setString(1,estoque.getCodProd());
-            patm.setInt(2,estoque.getEntrada());
-            patm.setInt(3,estoque.getSaida());
+            patm.setDouble(2,estoque.getEntrada());
+            patm.setDouble(3,estoque.getSaida());
             patm.setInt(4,estoque.getQtdEstoq());
             patm.setString(5,estoque.getData());
             patm.setString(6,estoque.getCodEstoq());

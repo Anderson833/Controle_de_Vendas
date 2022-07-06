@@ -3,20 +3,39 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/ander/OneDrive/Documentos/NetBeansProjects/Estoque_vd-master/src/View/Relatorio_vd.java</file>
+            <file>file:/C:/Users/ander/OneDrive/Documentos/NetBeansProjects/Estoque_vd-master/src/Model/VendaModel.java</file>
             <file>file:/C:/Users/ander/OneDrive/Documentos/NetBeansProjects/Estoque_vd-master/src/Dao/VendaDao.java</file>
             <file>file:/C:/Users/ander/OneDrive/Documentos/NetBeansProjects/Estoque_vd-master/src/View/Investimento.java</file>
+            <file>file:/C:/Users/ander/OneDrive/Documentos/NetBeansProjects/Estoque_vd-master/src/Model/ProdutoModel.java</file>
             <file>file:/C:/Users/ander/OneDrive/Documentos/NetBeansProjects/Estoque_vd-master/src/View/TelaPrincipal.java</file>
             <file>file:/C:/Users/ander/OneDrive/Documentos/NetBeansProjects/Estoque_vd-master/src/View/Comprovante.java</file>
+            <file>file:/C:/Users/ander/OneDrive/Documentos/NetBeansProjects/Estoque_vd-master/src/Model/LucroModel.java</file>
+            <file>file:/C:/Users/ander/OneDrive/Documentos/NetBeansProjects/Estoque_vd-master/src/Model/RelatorioModel.java</file>
+            <file>file:/C:/Users/ander/OneDrive/Documentos/NetBeansProjects/Estoque_vd-master/src/View/Pagamento.java</file>
             <file>file:/C:/Users/ander/OneDrive/Documentos/NetBeansProjects/Estoque_vd-master/src/View/Venda.java</file>
-            <file>file:/C:/Users/ander/OneDrive/Documentos/NetBeansProjects/Estoque_vd-master/src/View/Consultar.java</file>
+            <file>file:/C:/Users/ander/OneDrive/Documentos/NetBeansProjects/Estoque_vd-master/src/Model/IDvenda.java</file>
             <file>file:/C:/Users/ander/OneDrive/Documentos/NetBeansProjects/Estoque_vd-master/src/View/Usuario.java</file>
             <file>file:/C:/Users/ander/OneDrive/Documentos/NetBeansProjects/Estoque_vd-master/src/Dao/LucroDao.java</file>
-            <file>file:/C:/Users/ander/OneDrive/Documentos/NetBeansProjects/Estoque_vd-master/src/View/Cliente.java</file>
-            <file>file:/C:/Users/ander/OneDrive/Documentos/NetBeansProjects/Estoque_vd-master/src/View/Produto.java</file>
+            <file>file:/C:/Users/ander/OneDrive/Documentos/NetBeansProjects/Estoque_vd-master/src/Model/EstoqueModel.java</file>
             <file>file:/C:/Users/ander/OneDrive/Documentos/NetBeansProjects/Estoque_vd-master/src/Dao/ClienteDao.java</file>
             <file>file:/C:/Users/ander/OneDrive/Documentos/NetBeansProjects/Estoque_vd-master/src/View/TelaLogin.java</file>
-            <file>file:/C:/Users/ander/OneDrive/Documentos/NetBeansProjects/Estoque_vd-master/src/Dao/ProdutoDao.java</file>
+            <file>file:/C:/Users/ander/OneDrive/Documentos/NetBeansProjects/Estoque_vd-master/src/View/Detalhe.java</file>
             <file>file:/C:/Users/ander/OneDrive/Documentos/NetBeansProjects/Estoque_vd-master/src/Dao/ComprovanteDao.java</file>
+            <file>file:/C:/Users/ander/OneDrive/Documentos/NetBeansProjects/Estoque_vd-master/src/View/Despesas.java</file>
+            <file>file:/C:/Users/ander/OneDrive/Documentos/NetBeansProjects/Estoque_vd-master/src/Model/FornecedorModel.java</file>
+            <file>file:/C:/Users/ander/OneDrive/Documentos/NetBeansProjects/Estoque_vd-master/src/Dao/RelatorioDao.java</file>
+            <file>file:/C:/Users/ander/OneDrive/Documentos/NetBeansProjects/Estoque_vd-master/src/Dao/EstoqueDao.java</file>
+            <file>file:/C:/Users/ander/OneDrive/Documentos/NetBeansProjects/Estoque_vd-master/src/Model/UsuarioModel.java</file>
+            <file>file:/C:/Users/ander/OneDrive/Documentos/NetBeansProjects/Estoque_vd-master/src/View/Consultar.java</file>
+            <file>file:/C:/Users/ander/OneDrive/Documentos/NetBeansProjects/Estoque_vd-master/src/Model/ClienteModel.java</file>
+            <file>file:/C:/Users/ander/OneDrive/Documentos/NetBeansProjects/Estoque_vd-master/src/View/Cliente.java</file>
+            <file>file:/C:/Users/ander/OneDrive/Documentos/NetBeansProjects/Estoque_vd-master/src/Dao/FornecedorDao.java</file>
+            <file>file:/C:/Users/ander/OneDrive/Documentos/NetBeansProjects/Estoque_vd-master/src/View/Produto.java</file>
+            <file>file:/C:/Users/ander/OneDrive/Documentos/NetBeansProjects/Estoque_vd-master/src/Dao/UsuarioDao.java</file>
+            <file>file:/C:/Users/ander/OneDrive/Documentos/NetBeansProjects/Estoque_vd-master/src/Model/ComprovanteModel.java</file>
+            <file>file:/C:/Users/ander/OneDrive/Documentos/NetBeansProjects/Estoque_vd-master/src/View/LucroView.java</file>
+            <file>file:/C:/Users/ander/OneDrive/Documentos/NetBeansProjects/Estoque_vd-master/src/Dao/ProdutoDao.java</file>
             <file>file:/C:/Users/ander/OneDrive/Documentos/NetBeansProjects/Estoque_vd-master/src/View/Fornecedor.java</file>
         </group>
     </open-files>

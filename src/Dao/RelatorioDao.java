@@ -44,9 +44,9 @@ public class RelatorioDao {
                 relat.setData(rst.getString("data"));
                 relat.setValorTtlvendas(rst.getDouble("valorTtvd"));
                 relat.setCodProd(rst.getString("codProd"));
-                relat.setEntrada(rst.getInt("entrada"));
-                relat.setSaida(rst.getInt("saida"));
-                relat.setQtd_Estoque(rst.getInt("qtd_Estoque"));
+                relat.setEntrada(rst.getDouble("entrada"));
+                relat.setSaida(rst.getDouble("saida"));
+                relat.setQtd_Estoque(rst.getDouble("qtd_Estoque"));
                 
                  //Adicionando na Lista;
                listRelatorio.add(relat);
@@ -89,9 +89,9 @@ public class RelatorioDao {
             patm.setString(2, relat.getData());
             patm.setDouble(3, relat.getValorTtlvendas());
             patm.setString(4, relat.getCodProd());
-            patm.setInt(5, relat.getEntrada());
-            patm.setInt(6, relat.getSaida());
-            patm.setInt(7, relat.getQtd_Estoque());
+            patm.setDouble(5, relat.getEntrada());
+            patm.setDouble(6, relat.getSaida());
+            patm.setDouble(7, relat.getQtd_Estoque());
             
             //Executar;
             int upd=patm.executeUpdate();
