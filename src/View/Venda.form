@@ -91,7 +91,7 @@
                                       </Group>
                                   </Group>
                                   <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-                                  <Component id="jScrollPane1" pref="559" max="32767" attributes="0"/>
+                                  <Component id="jScrollPane1" pref="561" max="32767" attributes="0"/>
                                   <EmptySpace min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -193,12 +193,11 @@
                           <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
-                          <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
-                          <Component id="somaItens" min="-2" pref="123" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
-                      </Group>
-                      <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
+                                  <Component id="somaItens" min="-2" pref="123" max="-2" attributes="0"/>
+                              </Group>
                               <Component id="labelTotal" min="-2" pref="177" max="-2" attributes="0"/>
                               <Component id="label" alignment="0" min="-2" pref="156" max="-2" attributes="0"/>
                               <Component id="jLabel2" alignment="0" min="-2" pref="93" max="-2" attributes="0"/>
@@ -216,7 +215,7 @@
                               </Group>
                               <Component id="jLabel18" min="-2" pref="182" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace pref="25" max="32767" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -472,6 +471,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="calcular">
           <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/icone/calculadora-de-impressao.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Calcular"/>
           </Properties>
           <Events>

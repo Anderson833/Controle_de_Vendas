@@ -431,7 +431,7 @@ public class Fornecedor extends javax.swing.JFrame {
        fornec.setNomeFornec(txtnome.getText());
        fornec.setEndereco(endereco.getText());
        fornec.setContato(telefone.getText());
-       fornec.setNomeFornec(prod.getText());
+       fornec.setNomeproduto(prod.getText());
        fornec.setValorDeRevenda(Double.parseDouble(valorvenda.getText()));
        fornec.setValorDcomprar(Double.parseDouble(valorcompra.getText()));
        fornec.setQtd_estoque(Integer.parseInt(qtd.getText()));

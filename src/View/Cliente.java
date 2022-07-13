@@ -5,8 +5,14 @@
  */
 package View;
 
+import Conexao.Conexao_BD;
 import Dao.ClienteDao;
 import Model.ClienteModel;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -19,11 +25,17 @@ public class Cliente extends javax.swing.JFrame {
      * Creates new form Cliente
      */
     public Cliente() {
+       
         initComponents();
         setLocationRelativeTo(null);
+        //Método para saber se tem código salvo
+        buscandoCodigoDosClientes();
+        //Método para ver se tem usuário ou não salvo
+        buscandoCodigoDosUsuarios();
     }
-
-   
+     int c=0;
+     String codCliente="";
+     String IdUsuario="";
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -263,12 +275,48 @@ public class Cliente extends javax.swing.JFrame {
     }//GEN-LAST:event_txtTelefoneActionPerformed
 
     private void AddClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddClienteActionPerformed
-
-        //Método para adicionar clientes no banco de dados;
-        addCliente();
-
+      
+          
+     campos();
+    
+       //  JOptionPane.showMessageDialog(null, "Opa... Já tem esse código salvor, tenter outro novamente! "+CodCli.getText());  JOptionPane.showMessageDialog(null, "Opa... Já tem esse código salvor, tenter outro novamente! ");
+       
+       if(codCliente.equals(CodCli.getText())){
+            JOptionPane.showMessageDialog(null, "Opa... Já tem esse código salvor, tenter outro novamente! "+CodCli.getText());
+           // visualizarClientes();
+              //  CodCli.requestFocus();
+        }
     }//GEN-LAST:event_AddClienteActionPerformed
+    
+     public void campos(){
+        
+       
+             if(txtIdUsuario.getText().isEmpty()||txtEndereco.getText().isEmpty()||txtNome.getText().isEmpty()||txtTelefone.getText().isEmpty()
+                 ||CodCli.getText().isEmpty()){
+             JOptionPane.showMessageDialog(null, "Preenchar os campos corretamente!","Aviso:",JOptionPane.INFORMATION_MESSAGE);
+         }
+            else{
+           
+            if(txtIdUsuario.getText().isEmpty()){
+                
+            }else{
+                 if(txtIdUsuario.getText()!=IdUsuario){
+           JOptionPane.showMessageDialog(null, "Opa... Não tem usuário com esse ID "+txtIdUsuario.getText()+" tenter outro novamente! ");
 
+        }else{
+             //Método para adicionar clientes no banco de dados;
+             addCliente(); 
+        }
+            }
+             
+             
+          }
+        
+        
+             
+        
+     }
+    
     //Método para adicionar cliente;
     public void addCliente() {
 
@@ -410,7 +458,79 @@ public class Cliente extends javax.swing.JFrame {
         }
     }
 
-  
+      // método para  ver se tem código ja  salvo ao adicionar um cliente novo;
+    public boolean buscandoCodigoDosClientes() {
+
+        try {
+            Connection Conn = Conexao_BD.getConnection();
+
+            //Comando para selecionar o código que já tem no banco de dados;
+            String sql = "SELECT codCli FROM cliente";
+
+            PreparedStatement Patm = Conn.prepareStatement(sql);
+
+            //Executar
+            ResultSet Rst = Patm.executeQuery();
+
+            if (Rst.next()) {
+                //setando codigo 
+                codCliente = Rst.getString("codCli");
+                
+            }
+
+            //Fechando conexão ResultSet;
+            Rst.close();
+
+            //Fechando conexão PreparedStatement;
+            Patm.close();
+
+            //Fechando conexão Connection;
+            Conn.close();
+
+        } catch (SQLException e) {
+            //caso de algo errado exiber essa mensagem;
+            JOptionPane.showMessageDialog(null, " código não encontrado ! ");
+        }
+        return true;
+
+    }
+     // método para  ver se tem usuário com o código salvo 
+    public boolean buscandoCodigoDosUsuarios() {
+
+        try {
+            Connection Conn = Conexao_BD.getConnection();
+
+            //Comando para selecionar o código de usuário;
+            String sql = "SELECT IdUsu  FROM usuario";
+
+            PreparedStatement Patm = Conn.prepareStatement(sql);
+
+            //Executar
+            ResultSet Rst = Patm.executeQuery();
+
+            if (Rst.next()) {
+                //setando codigo 
+                IdUsuario = Rst.getString("IdUsu");
+                
+            }
+
+            //Fechando conexão ResultSet;
+            Rst.close();
+
+            //Fechando conexão PreparedStatement;
+            Patm.close();
+
+            //Fechando conexão Connection;
+            Conn.close();
+
+        } catch (SQLException e) {
+            //caso de algo errado exiber essa mensagem;
+            JOptionPane.showMessageDialog(null, " código não encontrado ! ");
+        }
+        return true;
+
+    }
+    
     public static void main(String args[]) {
       
         try {
