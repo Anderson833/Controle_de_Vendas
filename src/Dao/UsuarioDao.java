@@ -27,16 +27,16 @@ public class UsuarioDao {
        
         try {
             //Inserindo os dados do usuario no banco de dados;
-            String sql="insert into usuario(idUsu,nome,endereco,telefone,login,senha) values(?,?,?,?,?,?)";
+            String sql="insert into usuario(nome,endereco,telefone,login,senha) values(?,?,?,?,?)";
              
             PreparedStatement patm = conn.prepareStatement(sql);
             //Passando como paramentros os atributos do USUARIO da classe UsuarioModel;
-            patm.setString(1, usuario.getIdUsu());
-            patm.setString(2, usuario.getNome());
-            patm.setString(3, usuario.getEndereco());
-            patm.setString(4, usuario.getTelefone());
-            patm.setString(5, usuario.getLogin());
-            patm.setString(6, usuario.getSenha());
+           
+            patm.setString(1, usuario.getNome());
+            patm.setString(2, usuario.getEndereco());
+            patm.setString(3, usuario.getTelefone());
+            patm.setString(4, usuario.getLogin());
+            patm.setString(5, usuario.getSenha());
             
             //Executar;
             int upd=patm.executeUpdate();
@@ -86,7 +86,7 @@ public class UsuarioDao {
                  //Instânciando  classe UsuarioModel;
                  UsuarioModel usuario = new UsuarioModel();
                  //Setando os Valores;
-                usuario.setIdUsu(rst.getString("idUsu"));
+                usuario.setIdUsu(rst.getInt("codUsuario"));
                 usuario.setNome(rst.getString("nome"));
                 usuario.setEndereco(rst.getString("endereco"));
                 usuario.setTelefone(rst.getString("telefone"));
@@ -125,12 +125,12 @@ public class UsuarioDao {
         try {
 
           // Comando que  Deletar usuario pelo código;
-            String sql = "DELETE FROM usuario WHERE idUsu=?";
+            String sql = "DELETE FROM usuario WHERE codUsuario=?";
 
             PreparedStatement patm = conn.prepareStatement(sql);
              
             //Passando em paramentros código do usuario;
-            patm.setString(1, model.getIdUsu());
+            patm.setInt(1, model.getIdUsu());
             
             //Executar;
             int res = patm.executeUpdate();
@@ -164,7 +164,7 @@ public class UsuarioDao {
                try {
            
           //Comando para  realizar atualização dos dados do usuario no banco de dados;
-            String sql="UPDATE usuario SET nome=?,endereco=?, telefone=?, login=?,senha=? WHERE idUsu=?";
+            String sql="UPDATE usuario SET nome=?,endereco=?, telefone=?, login=?,senha=? WHERE codUsuario=?";
             
             
             
@@ -175,7 +175,7 @@ public class UsuarioDao {
             patm.setString(3,usuario.getTelefone());
             patm.setString(4,usuario.getLogin());
             patm.setString(5,usuario.getSenha());
-            patm.setString(6,usuario.getIdUsu());
+            patm.setInt(6,usuario.getIdUsu());
             //Executar;
              int res= patm.executeUpdate();
             

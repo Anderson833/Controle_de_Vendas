@@ -28,19 +28,19 @@ public class InvestimentoDao {
        
         try {
             //comando para inserir os dados do investimento;
-            String sql="insert into investimento(codInvestir,nomeProd,QtdProd,ValorDeComprar,ValorDeRevenda,ValorDoInvestimento,ValorTotalDeTodosVendidos,Lucro,data)values(?,?,?,?,?,?,?,?,?)";
+            String sql="insert into investimento(nomeProd,QtdProd,ValorDeComprar,ValorDeRevenda,ValorDoInvestimento,ValorTotalDeTodosVendidos,Lucro,data)values(?,?,?,?,?,?,?,?)";
              
             PreparedStatement patm = conn.prepareStatement(sql);
             //Passando como paramentros os atributos do investimento da classe InvestimentoModel;
-            patm.setString(1, investir.getCodInvestimento());
-            patm.setString(2, investir.getNomeProduto());
-            patm.setInt(3, investir.getQuantidadeProduto());
-            patm.setDouble(4, investir.getValorDeComprar());
-            patm.setDouble(5, investir.getValorDeRevenda());
-            patm.setDouble(6, investir.getValorDoInvestimento());
-            patm.setDouble(7, investir.getValorTotalDeTodasVendas());
-            patm.setDouble(8, investir.getValorDoLucro());
-            patm.setString(9, investir.getData());
+           
+            patm.setString(1, investir.getNomeProduto());
+            patm.setInt(2, investir.getQuantidadeProduto());
+            patm.setDouble(3, investir.getValorDeComprar());
+            patm.setDouble(4, investir.getValorDeRevenda());
+            patm.setDouble(5, investir.getValorDoInvestimento());
+            patm.setDouble(6, investir.getValorTotalDeTodasVendas());
+            patm.setDouble(7, investir.getValorDoLucro());
+            patm.setString(8, investir.getData());
             //Executar;
             int upd=patm.executeUpdate();
             
@@ -87,7 +87,7 @@ public class InvestimentoDao {
                  //Instanciando  classe InvestimentoModel;
                  InvestimentoModel invest = new InvestimentoModel();
                  //setando os Valores ;
-                invest.setCodInvestimento(rst.getString("codInvestir"));
+                invest.setCodInvestimento(rst.getInt("codInvestir"));
                 invest.setNomeProduto(rst.getString("nomeProd"));
                 invest.setQuantidadeProduto(rst.getInt("QtdProd"));
                 invest.setValorDeComprar(rst.getDouble("ValorDeComprar"));
@@ -140,7 +140,7 @@ public class InvestimentoDao {
             patm.setDouble(6, invest.getValorTotalDeTodasVendas());
             patm.setDouble(7, invest.getValorDoLucro());
             patm.setString(8, invest.getData());
-            patm.setString(9, invest.getCodInvestimento());
+            patm.setInt(9, invest.getCodInvestimento());
             //Executar;
              int res= patm.executeUpdate();
             
@@ -178,7 +178,7 @@ public class InvestimentoDao {
             PreparedStatement patm = conn.prepareStatement(sql);
              
             //Passando em paramentros código do investimento;
-            patm.setString(1,invest.getCodInvestimento());
+            patm.setInt(1,invest.getCodInvestimento());
             
             //Executar;
             int res = patm.executeUpdate();

@@ -27,15 +27,15 @@ public class ClienteDao {
        
         try {
             //Inserindo os dados do cliente no banco de dados;
-            String sql="insert into cliente(codCli,nome,endereco,telefone,IdUsu)values(?,?,?,?,?)";
+            String sql="insert into cliente(nome,endereco,telefone)values(?,?,?)";
              
             PreparedStatement patm = conn.prepareStatement(sql);
             //Passando como paramentros os atributos do cliente da classe clienteModel;
-            patm.setString(1, cliente.getCodCli());
-            patm.setString(2, cliente.getNome());
-            patm.setString(3, cliente.getEndereco());
-            patm.setString(4, cliente.getTelefone());
-            patm.setString(5, cliente.getIdsu());
+          
+            patm.setString(1, cliente.getNome());
+            patm.setString(2, cliente.getEndereco());
+            patm.setString(3, cliente.getTelefone());
+          
             
             //Executar;
             int upd=patm.executeUpdate();
@@ -83,11 +83,11 @@ public class ClienteDao {
                  //Instânciando  classe ClienteModel;
                  ClienteModel cli = new ClienteModel();
                  //Setando os Valores;
-                 cli.setCodCli(rst.getString("codCli"));
+                 cli.setCodCli(rst.getInt("codCli"));
                  cli.setNome(rst.getString("nome"));
                  cli.setEndereco(rst.getString("endereco"));
                  cli.setTelefone(rst.getString("telefone"));
-                 cli.setIdsu(rst.getString("IdUsu"));
+               
                  
                  //Adicionado na Lista;
                  listCliente.add(cli);
@@ -126,7 +126,7 @@ public class ClienteDao {
             PreparedStatement patm = conn.prepareStatement(sql);
              
             //Passando em paramentros código do cliente;
-            patm.setString(1, model.getCodCli());
+            patm.setInt(1, model.getCodCli());
             
             //Executar;
             int res = patm.executeUpdate();
@@ -169,7 +169,7 @@ public class ClienteDao {
             patm.setString(1,cliente.getNome());
             patm.setString(2,cliente.getEndereco());
             patm.setString(3,cliente.getTelefone());
-            patm.setString(4,cliente.getCodCli());
+            patm.setInt(4,cliente.getCodCli());
             //Executar;
              int res= patm.executeUpdate();
             

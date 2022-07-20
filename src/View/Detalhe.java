@@ -1,12 +1,8 @@
 
 package View;
 
-import Conexao.Conexao_BD;
 import Dao.ComprovanteDao;
 import Model.ComprovanteModel;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -166,7 +162,7 @@ public class Detalhe extends javax.swing.JFrame {
         //criando um objeto comprovante;
         ComprovanteModel cm = new ComprovanteModel();
         //passando os dados para deleta;
-        cm.setCodDetalhe(deletar.getText());
+        cm.setCodDetalhe(Integer.parseInt(deletar.getText()));
         //recebendo os dados de deleta
       
         

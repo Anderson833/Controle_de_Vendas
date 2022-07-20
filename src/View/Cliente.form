@@ -51,8 +51,6 @@
                   <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jLabel1" min="-2" pref="107" max="-2" attributes="0"/>
-                      <Component id="jLabel3" alignment="0" min="-2" pref="121" max="-2" attributes="0"/>
-                      <Component id="txtIdUsuario" alignment="0" min="-2" pref="192" max="-2" attributes="0"/>
                       <Component id="CodCli" min="-2" pref="202" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="94" max="-2" attributes="0"/>
@@ -121,16 +119,10 @@
                       <Component id="txtNome" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
                       <Component id="txtTelefone" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jLabel3" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
-                      <Component id="jLabel4" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
-                  </Group>
+                  <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
+                  <Component id="jLabel4" min="-2" pref="26" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="txtIdUsuario" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
-                      <Component id="txtEndereco" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="txtEndereco" min="-2" pref="35" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
                   <Component id="jScrollPane1" min="-2" pref="158" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
@@ -149,10 +141,13 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="jLabel1">
           <Properties>
-            <Property name="text" type="java.lang.String" value="C&#xf3;digo Cliente:"/>
+            <Property name="text" type="java.lang.String" value="C&#xf3;digo :"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="CodCli">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>
@@ -160,13 +155,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtNome">
-        </Component>
-        <Component class="javax.swing.JLabel" name="jLabel3">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="ID do Usu&#xe1;rio:"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JTextField" name="txtIdUsuario">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel4">
           <Properties>

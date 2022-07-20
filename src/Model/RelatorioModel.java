@@ -8,7 +8,7 @@ package Model;
 public class RelatorioModel {
     
     //Passsando os atributos
-    private String codRelatorio;
+    private int codRelatorio;
     private double valorDespesa;
     private double valorLucro;
     private double valorInvestido;
@@ -17,12 +17,12 @@ public class RelatorioModel {
     private String data ;
 
     // métodos getters e setters
-    public String getCodRelatorio() {
+    public int getCodRelatorio() {
         return codRelatorio;
     }
 
    
-    public void setCodRelatorio(String codRelatorio) {
+    public void setCodRelatorio(int codRelatorio) {
         this.codRelatorio = codRelatorio;
     }
 

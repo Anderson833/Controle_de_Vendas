@@ -4,7 +4,7 @@ package Model;
 
 public class ComprovanteModel extends VendaModel {
     //Atributos
-    private String codDetalhe;
+    private int codDetalhe;
     private String pagamento;
    
 
@@ -18,12 +18,12 @@ public class ComprovanteModel extends VendaModel {
         this.pagamento = pagamento;
     }
    
-    public String getCodDetalhe() {
+    public int getCodDetalhe() {
         return codDetalhe;
     }
 
    
-    public void setCodDetalhe(String codDetalhe) {
+    public void setCodDetalhe(int codDetalhe) {
         this.codDetalhe = codDetalhe;
     }
 

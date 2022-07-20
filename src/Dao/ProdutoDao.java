@@ -43,12 +43,14 @@ public class ProdutoDao {
                  //Instânciando  classe ProdutoModel;
                  ProdutoModel prod = new ProdutoModel();
                  //Setando os Valores;
-                prod.setCodProd(rst.getString("codProd"));
+                prod.setCodProd(rst.getInt("codProd"));
                 prod.setProduto(rst.getString("nome"));
                 prod.setDescricao(rst.getString("descricao"));
                 prod.setValorDeRevenda(rst.getDouble("valorUnit"));
                 prod.setValorDcomprar(rst.getDouble("ValorDcompra"));
                 prod.setQtd_estoquer(rst.getInt("estoque"));
+                prod.setCodFornec(rst.getInt("codFornec"));
+              
                  //Adicionando na Lista;
                 listProduto.add(prod);
           
@@ -81,16 +83,17 @@ public class ProdutoDao {
        
         try {
             //Comando para inserir os dados dos produtos no banco de dados;
-            String sql="insert into produto(codProd,nome,descricao,valorUnit,ValorDcompra,estoque)values(?,?,?,?,?,?)";
+            String sql="insert into produto(nome,descricao,valorUnit,ValorDcompra,estoque,codFornec)values(?,?,?,?,?,?)";
              
             PreparedStatement patm = conn.prepareStatement(sql);
             //Passando como paramentros os atributos do produto da classe ProdutoModel;
-            patm.setString(1, produto.getCodProd());
-            patm.setString(2, produto.getProduto());
-            patm.setString(3, produto.getDescricao());
-            patm.setDouble(4, produto.getValorDeRevenda());
-            patm.setDouble(5, produto.getValorDcomprar());
-            patm.setDouble(6, produto.getQtd_estoquer());
+          
+            patm.setString(1, produto.getProduto());
+            patm.setString(2, produto.getDescricao());
+            patm.setDouble(3, produto.getValorDeRevenda());
+            patm.setDouble(4, produto.getValorDcomprar());
+            patm.setDouble(5, produto.getQtd_estoquer());
+            patm.setDouble(6, produto.getCodFornec());
             
             //Executar;
             int upd=patm.executeUpdate();
@@ -116,14 +119,14 @@ public class ProdutoDao {
         
     }
     
-     //Método para fazer atualização dos dados dos Prodtos;
+     //Método para fazer atualização dos dados dos Produtos;
        public void atualizarProdtuo(ProdutoModel produto){  
            //Criando uma Connection com Classe Conexao_BD; 
         Connection conn=Conexao_BD.getConnection();
                try {
            
-          //Comando para que realizar atualização no banco de dados;
-            String sql="UPDATE produto SET nome=?,descricao=?, valorUnit=?,ValorDcompra=?, estoque=? WHERE codProd=?";
+          //Comando para realizar atualização da tabela produto no banco de dados;
+            String sql="UPDATE produto SET nome=?,descricao=?, valorUnit=?,ValorDcompra=?, estoque=? ,codFornec=? WHERE codProd=?";
             
             
             
@@ -134,7 +137,8 @@ public class ProdutoDao {
             patm.setDouble(3,produto.getValorDeRevenda());
             patm.setDouble(4,produto.getValorDcomprar());
             patm.setDouble(5,produto.getQtd_estoquer());
-            patm.setString(6, produto.getCodProd());
+            patm.setInt(6,produto.getCodFornec());
+            patm.setInt(7, produto.getCodProd());
             //Executar;
              int res= patm.executeUpdate();
             
@@ -174,7 +178,7 @@ public class ProdutoDao {
             PreparedStatement patm = conn.prepareStatement(sql);
              
             //Passando em paramentros código do Produto;
-            patm.setString(1, model.getCodProd());
+            patm.setInt(1, model.getCodProd());
             
             //Executar;
             int res = patm.executeUpdate();

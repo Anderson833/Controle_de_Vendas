@@ -22,6 +22,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -74,7 +75,7 @@ public class Venda extends javax.swing.JFrame {
         //Método para seta o código dos produtos
         setaDadosJcomboxProd();
         //Método para mostrar opção de pagamentos
-        setaDadosJcomboxPagamentos();
+      //  setaDadosJcomboxPagamentos();
         
         //método para armazenar o valor total de toda comprar ao abrir não zera;
         totalValorBd();
@@ -83,10 +84,10 @@ public class Venda extends javax.swing.JFrame {
         DataDoDia();
 
         //método para digita somente números
-        soNumeros();
+      //  soNumeros();
        
         //Método para seta os códigos da tabela codVenda
-        buscandoCodigoDeVenda();
+      //  buscandoCodigoDeVenda();
         
         //visualizar os códigos da tabela detalhe
         setacodigoDaTabelaDetalhe();
@@ -95,7 +96,7 @@ public class Venda extends javax.swing.JFrame {
        // distinguiData();
        
        //Método para salvar caso não tenha a data salvar
-       setaDataDoBancoDeDados();
+     //  setaDataDoBancoDeDados();
     }
 
     //Para armazenar código da venda da tabela vendas no banco de dados
@@ -119,9 +120,9 @@ public class Venda extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         txtQtd = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        ValorUnit = new javax.swing.JTextField();
+        TXTValorUnit = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        Valortotal = new javax.swing.JTextField();
+        txtValortotal = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         txtValorReceb = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
@@ -140,7 +141,6 @@ public class Venda extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         txtNcli = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
-        Realizar = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         label = new javax.swing.JLabel();
         deleatarVd = new javax.swing.JButton();
@@ -160,8 +160,6 @@ public class Venda extends javax.swing.JFrame {
         txtdata = new javax.swing.JTextField();
         lbHora = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        JcomboxPagamento = new javax.swing.JComboBox<>();
-        jLabel18 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Venda");
@@ -238,17 +236,27 @@ public class Venda extends javax.swing.JFrame {
 
         jLabel4.setText("Valor Unitário:");
 
-        ValorUnit.addInputMethodListener(new java.awt.event.InputMethodListener() {
+        TXTValorUnit.addInputMethodListener(new java.awt.event.InputMethodListener() {
             public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
             }
             public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
-                ValorUnitInputMethodTextChanged(evt);
+                TXTValorUnitInputMethodTextChanged(evt);
+            }
+        });
+        TXTValorUnit.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                TXTValorUnitKeyReleased(evt);
             }
         });
 
         jLabel5.setText("Valor Total:");
 
-        Valortotal.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        txtValortotal.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        txtValortotal.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtValortotalKeyReleased(evt);
+            }
+        });
 
         jLabel6.setText("Valor Recebido:");
 
@@ -297,7 +305,7 @@ public class Venda extends javax.swing.JFrame {
         });
 
         Adicionar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icone/salve-.png"))); // NOI18N
-        Adicionar.setText("Adicionar");
+        Adicionar.setText("Salvar");
         Adicionar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         Adicionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -322,9 +330,9 @@ public class Venda extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(43, Short.MAX_VALUE)
                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -362,6 +370,7 @@ public class Venda extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tabelaVend);
 
+        TXTestoque.setEditable(false);
         TXTestoque.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         TXTestoque.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -378,15 +387,6 @@ public class Venda extends javax.swing.JFrame {
         txtNcli.setEditable(false);
 
         jLabel12.setText("Nome Do Cliente:");
-
-        Realizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icone/venda-rapida.png"))); // NOI18N
-        Realizar.setText("Realizar");
-        Realizar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        Realizar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                RealizarActionPerformed(evt);
-            }
-        });
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icone/limpando-produtos.png"))); // NOI18N
         jButton2.setText("Limpar");
@@ -512,10 +512,6 @@ public class Venda extends javax.swing.JFrame {
             }
         });
 
-        JcomboxPagamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Opção:" }));
-
-        jLabel18.setText("Tipo De Pagamento:");
-
         javax.swing.GroupLayout digitanomeLayout = new javax.swing.GroupLayout(digitanome);
         digitanome.setLayout(digitanomeLayout);
         digitanomeLayout.setHorizontalGroup(
@@ -554,7 +550,7 @@ public class Venda extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jLabel16)))
                                 .addGap(15, 15, 15)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 561, Short.MAX_VALUE)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 553, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))))
                     .addGroup(digitanomeLayout.createSequentialGroup()
                         .addGroup(digitanomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -568,7 +564,7 @@ public class Venda extends javax.swing.JFrame {
                                     .addComponent(txtValorReceb, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, digitanomeLayout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(ValorUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(TXTValorUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(digitanomeLayout.createSequentialGroup()
                                 .addGap(23, 23, 23)
                                 .addGroup(digitanomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -595,7 +591,7 @@ public class Venda extends javax.swing.JFrame {
                                         .addGroup(digitanomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                             .addComponent(jComboBoxCliente, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addComponent(TXTestoque, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
-                                            .addComponent(Valortotal, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(txtValortotal, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGroup(digitanomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(digitanomeLayout.createSequentialGroup()
                                                 .addGap(36, 36, 36)
@@ -625,23 +621,23 @@ public class Venda extends javax.swing.JFrame {
                         .addGap(45, 45, 45))
                     .addGroup(digitanomeLayout.createSequentialGroup()
                         .addGroup(digitanomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(digitanomeLayout.createSequentialGroup()
-                                .addGap(24, 24, 24)
-                                .addComponent(somaItens, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(labelTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(JcomboxPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(digitanomeLayout.createSequentialGroup()
                                 .addGap(10, 10, 10)
                                 .addComponent(jcombProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(digitanomeLayout.createSequentialGroup()
                                 .addGap(38, 38, 38)
-                                .addGroup(digitanomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtQtd, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addGroup(digitanomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(label, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(digitanomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtQtd, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(digitanomeLayout.createSequentialGroup()
+                                .addGap(24, 24, 24)
+                                .addGroup(digitanomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(labelTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(somaItens, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addContainerGap(20, Short.MAX_VALUE))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, digitanomeLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(deleatarVd, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -649,8 +645,6 @@ public class Venda extends javax.swing.JFrame {
                 .addComponent(Adicionar, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(calcular, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(Realizar, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(visualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -702,7 +696,7 @@ public class Venda extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(digitanomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(digitanomeLayout.createSequentialGroup()
-                        .addComponent(ValorUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(TXTValorUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addGroup(digitanomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -741,12 +735,9 @@ public class Venda extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(digitanomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(txtTroco, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(Valortotal, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(txtValortotal, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(digitanomeLayout.createSequentialGroup()
-                                .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(3, 3, 3)
-                                .addComponent(JcomboxPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGap(64, 64, 64)
                                 .addComponent(label, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(digitanomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -757,7 +748,6 @@ public class Venda extends javax.swing.JFrame {
                                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(18, 18, Short.MAX_VALUE)))
                 .addGroup(digitanomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Realizar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(visualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(calcular, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -810,7 +800,7 @@ public class Venda extends javax.swing.JFrame {
             //seta o valor total da comprar do cliente na label total
               setaValorTotalDaVENDAPelocod();
             }else{
-                JOptionPane.showMessageDialog(null, "NÃO TEM ESSE CÓDIGO");
+                //JOptionPane.showMessageDialog(null, "NÃO TEM ESSE CÓDIGO");
                  //Método para adicionar um código na tabela codVendar depois passar 
              //para tabela vendas o código armazenador 
                adicionarCodVenda();
@@ -837,12 +827,12 @@ public class Venda extends javax.swing.JFrame {
         //Instânciando a classe VendaModel;
         VendaModel vd = new VendaModel();
         //Setando os valores ;
-        vd.setCodVenda(codVenda.getText());
-        vd.setCodCli(String.valueOf(jComboBoxCliente.getSelectedItem()));
-        vd.setCodProd(String.valueOf(jcombProdutos.getSelectedItem()));
+        vd.setCodVenda(Integer.parseInt(codVenda.getText()));
+        vd.setCodCli(Integer.parseInt(jComboBoxCliente.getSelectedItem().toString()));
+        vd.setCodProd(Integer.parseInt(jcombProdutos.getSelectedItem().toString()));
         vd.setQtdProd(Integer.parseInt(txtQtd.getText()));
-        vd.setValorUnit(Double.parseDouble(ValorUnit.getText()));
-        vd.setValorTotal(Double.parseDouble(Valortotal.getText()));
+        vd.setValorUnit(Double.parseDouble(TXTValorUnit.getText()));
+        vd.setValorTotal(Double.parseDouble(txtValortotal.getText()));
         vd.setData(txtdata.getText());
 
         //Passando os valores no objeto dao da classe VendaDao;
@@ -915,8 +905,8 @@ public class Venda extends javax.swing.JFrame {
             jComboBoxCliente.setSelectedItem(tabelaVend.getValueAt(tabelaVend.getSelectedRow(), 1).toString());
             jcombProdutos.setSelectedItem(tabelaVend.getValueAt(tabelaVend.getSelectedRow(), 3).toString());
             txtQtd.setText(tabelaVend.getValueAt(tabelaVend.getSelectedRow(), 4).toString());
-             Valortotal.setText(tabelaVend.getValueAt(tabelaVend.getSelectedRow(), 6).toString());
-            ValorUnit.setText(tabelaVend.getValueAt(tabelaVend.getSelectedRow(), 5).toString());
+             txtValortotal.setText(tabelaVend.getValueAt(tabelaVend.getSelectedRow(), 6).toString());
+            TXTValorUnit.setText(tabelaVend.getValueAt(tabelaVend.getSelectedRow(), 5).toString());
            
 
         }
@@ -941,22 +931,9 @@ public class Venda extends javax.swing.JFrame {
        
     }//GEN-LAST:event_visualizarActionPerformed
 
-    private void RealizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RealizarActionPerformed
+    private void TXTValorUnitInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_TXTValorUnitInputMethodTextChanged
 
-        //condição para saber se o campo de texto de recebimento está vazio; 
-        if (txtValorReceb.getText().equals("")) {
-            JOptionPane.showMessageDialog(null, "Digite valor recebido ? ", "Preenchar campo !", JOptionPane.WARNING_MESSAGE);
-        } else {
-
-            //Método para realizar venda;
-            realizarVenda();
-        }
-
-    }//GEN-LAST:event_RealizarActionPerformed
-
-    private void ValorUnitInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_ValorUnitInputMethodTextChanged
-
-    }//GEN-LAST:event_ValorUnitInputMethodTextChanged
+    }//GEN-LAST:event_TXTValorUnitInputMethodTextChanged
 
     private void txtQtdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtQtdActionPerformed
 
@@ -973,8 +950,14 @@ public class Venda extends javax.swing.JFrame {
 
     private void deleatarVdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleatarVdActionPerformed
    
-        VendaDao vd = new VendaDao();
-        vd.deletaTodaVenda();
+        int op=JOptionPane.showConfirmDialog(null, "Tem certeza ?");
+        if(op==JOptionPane.YES_OPTION){
+              VendaDao vd = new VendaDao();
+             vd.deletaTodaVenda();
+        }else if(op==JOptionPane.NO_OPTION || op==JOptionPane.CANCEL_OPTION){
+            JOptionPane.showMessageDialog(null, "Dados não excluidos!");
+        }
+      
       
 
     }//GEN-LAST:event_deleatarVdActionPerformed
@@ -1045,10 +1028,10 @@ public class Venda extends javax.swing.JFrame {
     public void addVendaNodetalher() {
         ComprovanteDao DAO = new ComprovanteDao();
         ComprovanteModel modelo = new ComprovanteModel();
-        modelo.setCodDetalhe(codVenda.getText());
-        modelo.setCodVenda(codVenda.getText());
-        modelo.setCodCli(String.valueOf(jComboBoxCliente.getSelectedItem()));
-        modelo.setPagamento(JcomboxPagamento.getSelectedItem().toString());
+        modelo.setCodDetalhe(Integer.parseInt(codVenda.getText()));
+        modelo.setCodVenda(Integer.parseInt(codVenda.getText()));
+        modelo.setCodCli(Integer.parseInt(jComboBoxCliente.getSelectedItem().toString()));
+      //  modelo.setPagamento(JcomboxPagamento.getSelectedItem().toString());
         modelo.setValorTotal(Double.parseDouble(labelTotal.getText()));
         modelo.setData(txtdata.getText());
         DAO.adicionarVendaNoDetalhe(modelo);
@@ -1180,8 +1163,10 @@ public class Venda extends javax.swing.JFrame {
 
             if (opcao == JOptionPane.YES_OPTION) {
                 JOptionPane.showMessageDialog(null, "Valor á ser mostrado será pelo código do cliente do Nome " + txtNcli.getText(), "Informações: ", JOptionPane.INFORMATION_MESSAGE);
-                //método para soma todas vendas
+              
+               //método para soma todas vendas
                 setaValorTotalDaVendaPeloCodigoCliente();
+                
             } else {
 
                 if (opcao == JOptionPane.NO_OPTION) {
@@ -1247,9 +1232,9 @@ public class Venda extends javax.swing.JFrame {
 
 
         if (codVenda.getText().equals(codVendar)) {
-            JOptionPane.showMessageDialog(null, "JÁ TEM ESSE CÓDIGO "+codVenda.getText());
+           // JOptionPane.showMessageDialog(null, "JÁ TEM ESSE CÓDIGO "+codVenda.getText());
         } else {
-            JOptionPane.showMessageDialog(null, "NAO TEM ESSE CÓDIGO ");
+           // JOptionPane.showMessageDialog(null, "NAO TEM ESSE CÓDIGO ");
         }
 
         if (codVenda.getText().isEmpty()) {
@@ -1275,17 +1260,32 @@ public class Venda extends javax.swing.JFrame {
         if (evt.getKeyCode() == evt.VK_UP) {
             jcombProdutos.requestFocus();
         }
+          //condição para permitir apenas números
+        if(ApenasNumeros(txtQtd.getText())){
+           
+        }else{
+            
+             if(txtQtd.getText().isEmpty()){
+                
+            }else{
+              JOptionPane.showMessageDialog(null, "Nesse campo você só poder colocar números! ","Por favor: ",JOptionPane.ERROR_MESSAGE);
+            }
+           
+           txtQtd.setText("");
+           txtQtd.requestFocus();
+         }
     }//GEN-LAST:event_txtQtdKeyPressed
 
     private void txtValorRecebKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtValorRecebKeyPressed
- setaDadosProduto();
+        //setaDadosProduto();
     }//GEN-LAST:event_txtValorRecebKeyPressed
 
     private void txtValorRecebActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtValorRecebActionPerformed
-
+ 
          
-        
-       double resultado = 0;
+         // class para formatar os números com casas decimais
+        DecimalFormat def = new DecimalFormat("#,##0.00");
+       double resultado = 0.0;
 
         // VALIDAÇÃO DO CAMPO DE TEXTO DO VALOR RECEBIDO;
         if (txtValorReceb.getText().equals("")) {
@@ -1298,16 +1298,22 @@ public class Venda extends javax.swing.JFrame {
             double valorReb = Double.parseDouble(txtValorReceb.getText());
 
             //Passando valor total de String para double;
-            double valorTotal = Double.parseDouble(Valortotal.getText());
+            double valorTotal = Double.parseDouble(txtValortotal.getText());
 
             if (valorReb < valorTotal) {
-                JOptionPane.showMessageDialog(null, "Valor a Baixo do SubTotal !");
+                JOptionPane.showMessageDialog(null, "Valor a Baixo do Valor Total !");
                 txtValorReceb.requestFocus();
-            } else {
-                realizarVenda();
+                 // realizarVenda();
                 resultado = valorReb - valorTotal;
                 txtTroco.setText("" + resultado);
-
+               String troco=def.format(resultado);
+               txtTroco.setText(troco);
+            } else {
+               // realizarVenda();
+                resultado = valorReb - valorTotal;
+                txtTroco.setText("" + resultado);
+               String troco=def.format(resultado);
+               txtTroco.setText(troco);
             }
 
         }
@@ -1410,11 +1416,49 @@ public class Venda extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         TelaPrincipal p = new TelaPrincipal();
         p.setVisible(true);
+        Venda vd = new Venda();
+        vd.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void visualizarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_visualizarKeyPressed
         tabelavazia();
     }//GEN-LAST:event_visualizarKeyPressed
+
+    private void TXTValorUnitKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TXTValorUnitKeyReleased
+        
+          //condição para permitir apenas números
+        if(ApenasNumeros(TXTValorUnit.getText())){
+           
+        }else{
+            
+             if(TXTValorUnit.getText().isEmpty()){
+                
+            }else{
+              JOptionPane.showMessageDialog(null, "Nesse campo você só poder colocar números! ","Por favor: ",JOptionPane.ERROR_MESSAGE);
+            }
+           
+           TXTValorUnit.setText("");
+           TXTValorUnit.requestFocus();
+         }
+    }//GEN-LAST:event_TXTValorUnitKeyReleased
+
+    private void txtValortotalKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtValortotalKeyReleased
+        
+          //condição para permitir apenas números
+        if(ApenasNumeros(txtValortotal.getText())){
+           
+        }else{
+            
+             if(txtValortotal.getText().isEmpty()){
+                
+            }else{
+              JOptionPane.showMessageDialog(null, "Nesse campo você só poder colocar números! ","Por favor: ",JOptionPane.ERROR_MESSAGE);
+            }
+           
+           txtValortotal.setText("");
+           txtValortotal.requestFocus();
+         }
+    }//GEN-LAST:event_txtValortotalKeyReleased
 // VER SE TEM O CODIGO VENDA SALVO NA TABELA VENDAS 
     public void verificar() {
         boolean clik;
@@ -1424,7 +1468,7 @@ public class Venda extends javax.swing.JFrame {
         clik = (codVenda.getText().equals(codVendar) && codVenda.getText().equalsIgnoreCase(codvenda));
 
         if (clik) {
-            JOptionPane.showMessageDialog(null, "Já contém esse código "+codVenda.getText()+" salvor!", "Tenter outro código diferente:", JOptionPane.INFORMATION_MESSAGE);
+          //  JOptionPane.showMessageDialog(null, "Já contém esse código "+codVenda.getText()+" salvor!", "Tenter outro código diferente:", JOptionPane.INFORMATION_MESSAGE);
             codVenda.setText("");
         } else if (!clik) {
             //  JOptionPane.showMessageDialog(null,"NAO TEM ");
@@ -1446,10 +1490,10 @@ public class Venda extends javax.swing.JFrame {
         clik = (txtdata.getText().equals(data));
 
         if (clik) {
-            JOptionPane.showMessageDialog(null, "Já contém essa data salvar!", "Tenter outra data diferente:", JOptionPane.INFORMATION_MESSAGE);
+           // JOptionPane.showMessageDialog(null, "Já contém essa data salvar!", "Tenter outra data diferente:", JOptionPane.INFORMATION_MESSAGE);
             txtdata.setText(""+data);
         } else if (!clik) {
-              JOptionPane.showMessageDialog(null,"NAO TEM ESSA DATA AINDA SALVAR!");
+            //  JOptionPane.showMessageDialog(null,"NAO TEM ESSA DATA AINDA SALVAR!");
               //VAI SALVAR A DATA NO BANCO DE DADOS
               salvarData();
         } else if (txtdata.getText().isEmpty()) {
@@ -1464,13 +1508,13 @@ public class Venda extends javax.swing.JFrame {
     public void semClisoDigitando() {
         if (codVenda.getText().equalsIgnoreCase("JAVA")) {
             //  JOptionPane.showMessageDialog(null, "legal");
-            Valortotal.setText("olá Mundo, JAVA");
+          //  Valortotal.setText("olá Mundo, JAVA");
            
-            ValorUnit.setBackground(Color.red);
+            TXTValorUnit.setBackground(Color.red);
         } else {
             // JOptionPane.showMessageDialog(null, "Dados Errados tente novamente!");
-            Valortotal.setText("");
-            ValorUnit.setBackground(Color.WHITE);
+            txtValortotal.setText("");
+            TXTValorUnit.setBackground(Color.WHITE);
         }
     }
  //método para deleta a data
@@ -1493,7 +1537,7 @@ public class Venda extends javax.swing.JFrame {
 
         //Instânciando a classe ComprovanteModel;
         ComprovanteModel cp = new ComprovanteModel();
-        cp.setCodVenda(codVenda.getText());
+        cp.setCodVenda(Integer.parseInt(codVenda.getText()));
         // colocando objeto cp no método deletar Itens da classe ComprovanteDao ;
         dao.deletaCodigoDaVenda(cp);
 
@@ -1506,7 +1550,7 @@ public class Venda extends javax.swing.JFrame {
 
         //Instânciando a classe ComprovanteModel;
         ComprovanteModel cp = new ComprovanteModel();
-        cp.setCodDetalhe(codVenda.getText());
+        cp.setCodDetalhe(Integer.parseInt(codVenda.getText()));
         // colocando objeto cp no método deletar Itens da classe ComprovanteDao ;
         dao.ExcluirUmaVendaDoDetalhe(cp);
 
@@ -1570,7 +1614,7 @@ public class Venda extends javax.swing.JFrame {
         //Instânciando a classe VendaModel;
         VendaModel vd = new VendaModel();
         //setando os valores
-        vd.setIdDeleta(Integer.parseInt(codVenda.getText()));
+        vd.setCodVenda(Integer.parseInt(codVenda.getText()));
         //Passando os valores para objeto dao
         dao.deletaVendaPeloCodigo(vd);
     }
@@ -1592,13 +1636,13 @@ public class Venda extends javax.swing.JFrame {
                 //Seando os valores no campos de textos;
                 txtNpro.setText(Rst.getString("nome"));
                 TXTestoque.setText(String.valueOf(Rst.getInt("estoque")));
-                ValorUnit.setText(String.valueOf(Rst.getDouble("valorUnit")));
+                TXTValorUnit.setText(String.valueOf(Rst.getDouble("valorUnit")));
 
             } else {
                 //  JOptionPane.showMessageDialog(null,"Produto não existe !");
                 txtNpro.setText("");
                 TXTestoque.setText("");
-                ValorUnit.setText("");
+                TXTValorUnit.setText("");
             }
 
             //Fechando conexão ResultSet;
@@ -1800,7 +1844,7 @@ public class Venda extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             //caso de algo errado exiber essa mensagem;
-            JOptionPane.showMessageDialog(null, " código não encontrado ! ");
+          //  JOptionPane.showMessageDialog(null, " código não encontrado ! ");
         }
         return true;
 
@@ -1853,14 +1897,14 @@ public class Venda extends javax.swing.JFrame {
         //guarda o resultado
         double multiplicar = 0;
         //Passando valor Unitário String para Double;
-        double valorUnit = Double.parseDouble(ValorUnit.getText());
+        double valorUnit = Double.parseDouble(TXTValorUnit.getText());
 
         if (true) {
 
             //guardando o resultado da multiplicação
             multiplicar = valorUnit * QTD;
             valorTotalBD = valorTotalBD + multiplicar;
-           Valortotal.setText(multiplicar+"");
+           txtValortotal.setText(multiplicar+"");
             //setando o resultado na labelTotal;
             labelTotal.setText(String.valueOf(valorTotalBD));
         
@@ -1873,12 +1917,12 @@ public class Venda extends javax.swing.JFrame {
     //Método para realizar a venda;
     public void realizarVenda() {
 
-        Valortotal.setText(" "+labelTotal.getText());
+        txtValortotal.setText(" "+labelTotal.getText());
         
         double valorNegativoBD = 0;
 
         //Passando valor total de String para double;
-        double valorTotal = Double.parseDouble(Valortotal.getText());
+        double valorTotal = Double.parseDouble(txtValortotal.getText());
 
         // Passando o valor recebido de String para double; 
         double valorReceb = Double.parseDouble(txtValorReceb.getText());
@@ -1956,18 +2000,18 @@ public class Venda extends javax.swing.JFrame {
         codVenda.setText("");
         jComboBoxCliente.setSelectedIndex(0);
         txtQtd.setText("");
-        Valortotal.setText("");
+        txtValortotal.setText("");
         txtNcli.setText("");
         txtNpro.setText("");
         TXTestoque.setText("");
-        ValorUnit.setText("");
+        TXTValorUnit.setText("");
         txtTroco.setText("");
         txtValorReceb.setText("");
         label.setText("");
         labelTotal.setText("");
         valorTotalBD = 0;
         jcombProdutos.setSelectedIndex(0);
-        JcomboxPagamento.setSelectedIndex(0);
+      
 
     }
 
@@ -1986,7 +2030,7 @@ public class Venda extends javax.swing.JFrame {
         try {
             Connection Conn = Conexao_BD.getConnection();
             //Comando para fazer a soma de toda coluna Valor Total no banco de dados;
-            String sql = "SELECT round(sum(total),2) FROM vendas where codVendar=" + codVenda.getText() + " and data='" + txtdata.getText() + "' and codCli='"+jComboBoxCliente.getSelectedItem()+"'";
+            String sql = "SELECT round(sum(total),2) FROM item where codVenda=" + codVenda.getText() + " and data='" + txtdata.getText() + "' and codCli='"+jComboBoxCliente.getSelectedItem()+"'";
 
             PreparedStatement Patm = Conn.prepareStatement(sql);
 
@@ -2023,7 +2067,7 @@ public class Venda extends javax.swing.JFrame {
         try {
             Connection Conn = Conexao_BD.getConnection();
             //Comando para fazer a soma de toda coluna Valor Total no banco de dados;
-            String sql = "SELECT round(sum(total),2) FROM vendas WHERE codCli=" + jComboBoxCliente.getSelectedItem() + " and data='" + txtdata.getText() + "'";
+            String sql = "SELECT round(sum(total),2) FROM item WHERE codCli=" + jComboBoxCliente.getSelectedItem() + " and data='" + txtdata.getText() + "'";
 
             PreparedStatement Patm = Conn.prepareStatement(sql);
             //    Patm.setString(1,(String)jComboBoxCliente.getSelectedItem());
@@ -2081,6 +2125,8 @@ public class Venda extends javax.swing.JFrame {
         }
 
     }
+    
+    /*
       //Método para adiciona o nome de pagamento no jcomboxPagamentos;
     public void setaDadosJcomboxPagamentos() {
 
@@ -2095,7 +2141,7 @@ public class Venda extends javax.swing.JFrame {
         }
 
     }
-
+  */
 
     public static void main(String args[]) {
 
@@ -2108,11 +2154,8 @@ public class Venda extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Adicionar;
-    private javax.swing.JComboBox<String> JcomboxPagamento;
-    private javax.swing.JButton Realizar;
+    private javax.swing.JTextField TXTValorUnit;
     private javax.swing.JTextField TXTestoque;
-    private javax.swing.JTextField ValorUnit;
-    private javax.swing.JTextField Valortotal;
     private javax.swing.JButton addItem;
     private javax.swing.JButton calcular;
     private javax.swing.JTextField codVenda;
@@ -2132,7 +2175,6 @@ public class Venda extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -2154,6 +2196,7 @@ public class Venda extends javax.swing.JFrame {
     private javax.swing.JTextField txtQtd;
     private javax.swing.JTextField txtTroco;
     private javax.swing.JTextField txtValorReceb;
+    private javax.swing.JTextField txtValortotal;
     private javax.swing.JTextField txtdata;
     private javax.swing.JButton visualizaItens;
     private javax.swing.JButton visualizar;
@@ -2162,7 +2205,7 @@ public class Venda extends javax.swing.JFrame {
     //Método para zera 
     public void zeroLabel() {
 
-        Valortotal.setText("0,00");
+        txtValortotal.setText("0,00");
         labelTotal.setText("0,00");
     }
 
@@ -2218,7 +2261,7 @@ public class Venda extends javax.swing.JFrame {
 
         try {
             if (codVenda.getText().isEmpty() && codVenda.getText().length() == 0 || jComboBoxCliente.getSelectedItem().toString().trim().length() == 0 || jcombProdutos.getSelectedItem().toString().trim().length() == 0 || txtQtd.getText() == null && txtQtd.getText().length() < 1
-                    || ValorUnit.getText().isEmpty() && ValorUnit.getText().length() == 0 || Valortotal.getText().isEmpty() && Valortotal.getText().length() == 0) {
+                    || TXTValorUnit.getText().isEmpty() && TXTValorUnit.getText().length() == 0 || txtValortotal.getText().isEmpty() && txtValortotal.getText().length() == 0) {
                 JOptionPane.showMessageDialog(null, "Preenchar os campos corretamente!", "", JOptionPane.WARNING_MESSAGE);
             }
         } catch (Exception e) {
@@ -2284,14 +2327,14 @@ public class Venda extends javax.swing.JFrame {
     //MÉTODO PARRA EVITA LETRAS
     public void permitirNumerosFlutuantes() {
 
-        if (checkLetters(ValorUnit.getText()) || checkLetters(Valortotal.getText())) {
-            ValorUnit.setBackground(Color.red);
-            Valortotal.setBackground(Color.red);
+        if (checkLetters(TXTValorUnit.getText()) || checkLetters(txtValortotal.getText())) {
+            TXTValorUnit.setBackground(Color.red);
+            txtValortotal.setBackground(Color.red);
          
             JOptionPane.showMessageDialog(null, "Não Poder digita letras nesse campos em vermelhos !");
 
-            ValorUnit.setBackground(Color.WHITE);
-            Valortotal.setBackground(Color.WHITE);
+            TXTValorUnit.setBackground(Color.WHITE);
+            txtValortotal.setBackground(Color.WHITE);
             
         }
 
@@ -2437,7 +2480,7 @@ public class Venda extends javax.swing.JFrame {
     public double fazerCalculo(){
           
           //Passando valor Unitário String para Double;
-        double valorUnit = Double.parseDouble(ValorUnit.getText());
+        double valorUnit = Double.parseDouble(TXTValorUnit.getText());
         
         double   multiplicacao1=QTDProduto*valorUnit;
         
@@ -2455,7 +2498,7 @@ public class Venda extends javax.swing.JFrame {
           
         double quantidad=Double.parseDouble(txtQtd.getText());
           //Passando valor Unitário String para Double;
-        double valorUnit = Double.parseDouble(ValorUnit.getText());
+        double valorUnit = Double.parseDouble(TXTValorUnit.getText());
         
         double   multiplicacao1=quantidad*valorUnit;
         
@@ -2488,7 +2531,7 @@ public class Venda extends javax.swing.JFrame {
         md.setCodigoLucro(String.valueOf(jcombProdutos.getSelectedItem()));
         md.setCodigoProduto(String.valueOf(jcombProdutos.getSelectedItem()));
         md.setQuantidade(QTDProduto);
-        md.setValorUnitario(Double.parseDouble(ValorUnit.getText()));
+        md.setValorUnitario(Double.parseDouble(TXTValorUnit.getText()));
         md.setValorTotal(somaTotal);
         md.setValorDcomprar(valorDoVendedor);
         md.setValorGanhor(valorLucro);
@@ -2578,7 +2621,7 @@ public class Venda extends javax.swing.JFrame {
               prod.setCodigoLucro(String.valueOf(jcombProdutos.getSelectedItem()));
               prod.setCodigoProduto(String.valueOf(jcombProdutos.getSelectedItem()));
               prod.setQuantidade(QTDProduto);
-              prod.setValorUnitario(Double.parseDouble(ValorUnit.getText()));
+              prod.setValorUnitario(Double.parseDouble(TXTValorUnit.getText()));
               prod.setValorTotal(somaTotal);
               prod.setValorDcomprar(Double.parseDouble(valorDoVendedor+""));
               prod.setValorGanhor(valorLucro);
@@ -2596,7 +2639,7 @@ public class Venda extends javax.swing.JFrame {
             Connection Conn = Conexao_BD.getConnection();
 
             //Comando para selecionar  os dados da tabela vendas
-            String sql = "SELECT codExcluir,codVendar,codCli,codProd,Qtd,valorUnit,total,data FROM vendas";
+            String sql = "SELECT codItem,codVenda,codCli,codProd,Qtd,valorUnit,total,data FROM item";
 
             PreparedStatement Patm = Conn.prepareStatement(sql);
 
@@ -2605,8 +2648,8 @@ public class Venda extends javax.swing.JFrame {
 
             if (Rst.next()) {
                 //setando os dados
-                codExclui=Rst.getString("codExcluir");
-                codDVenda=Rst.getString("codVendar");
+                codExclui=Rst.getString("codItem");
+                codDVenda=Rst.getString("codVenda");
                 codCliente=Rst.getString("codCli");
                 codProduto=Rst.getString("codProd");
                 DATA=Rst.getString("data");
@@ -2644,6 +2687,20 @@ public class Venda extends javax.swing.JFrame {
         }
         
     }
+    
+      public boolean ApenasNumeros(String str){
+        
+         return str.matches("^[0.-9 ]+");
+        
+      // return s.matches("[^0-9]+");
+    }
+    
+    //metodo para digita só nomes
+    public boolean ApenaLetras(String str) {
+
+        return str.matches("[a-zA-Z é ê ô ó á!úûí õ ç â~,.ã^~,.]+");
+    }
+    
 }
 
     

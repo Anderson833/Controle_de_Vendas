@@ -5,6 +5,8 @@ package View;
 
 import Conexao.Conexao_BD;
 import Dao.InvestimentoDao;
+import Model.ApenasNumeros;
+import Model.Data;
 import Model.InvestimentoModel;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -24,6 +26,10 @@ public class Investimento extends javax.swing.JFrame {
     public Investimento() {
         initComponents();
         setLocationRelativeTo(this);
+        //método que só poder digita números
+        soApenasNumeros();
+        //método para seta a data do dia no campo de texto
+        DataDoDia();
     }
 
      double valorDeTodoInvestimento=0;
@@ -69,6 +75,7 @@ public class Investimento extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(204, 255, 204));
 
+        txtCodInvestimento.setEditable(false);
         txtCodInvestimento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtCodInvestimentoActionPerformed(evt);
@@ -82,6 +89,11 @@ public class Investimento extends javax.swing.JFrame {
                 txtNomeProdutoActionPerformed(evt);
             }
         });
+        txtNomeProduto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtNomeProdutoKeyReleased(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel2.setText("Valor Total De TD Vendidos:");
@@ -91,16 +103,34 @@ public class Investimento extends javax.swing.JFrame {
                 txtValorDeRevendaActionPerformed(evt);
             }
         });
+        txtValorDeRevenda.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtValorDeRevendaKeyReleased(evt);
+            }
+        });
 
         txtValorDeComprar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtValorDeComprarActionPerformed(evt);
             }
         });
+        txtValorDeComprar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtValorDeComprarKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtValorDeComprarKeyReleased(evt);
+            }
+        });
 
         txtData.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtDataActionPerformed(evt);
+            }
+        });
+        txtData.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtDataKeyReleased(evt);
             }
         });
 
@@ -224,72 +254,70 @@ public class Investimento extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(299, 299, 299)
-                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(67, 67, 67)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtCodInvestimento, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(23, 23, 23)
-                                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(51, 51, 51)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtValorDeComprar, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(15, 15, 15)
-                                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(43, 43, 43)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(10, 10, 10)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(txtValorDeRevenda, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addComponent(txtNomeProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(labelValorDEtodosVendidos, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(141, 141, 141))
+                        .addGap(299, 299, 299)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(443, 443, 443)
-                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(68, 68, 68)
+                        .addGap(67, 67, 67)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtCodInvestimento, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jScrollPane1)
-                                .addGap(61, 61, 61))
+                                .addGap(23, 23, 23)
+                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(51, 51, 51)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtValorDeComprar, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(salvarInvestimentos, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(93, 93, 93)
-                                .addComponent(Alterar, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(83, 83, 83)
-                                .addComponent(Excluir, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(90, 90, 90)
-                                .addComponent(visualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(89, 89, 89)
-                                .addComponent(fazeCalculor, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(83, 83, 83)
-                                .addComponent(limpar, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                                .addGap(15, 15, 15)
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(43, 43, 43)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtValorDeRevenda, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtNomeProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 502, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(LABELvalorDoInvestimento, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(289, 289, 289))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(443, 443, 443)
+                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(68, 68, 68)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(49, 49, 49)
-                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(LABELvalorDoLucro, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(8, 8, 8))
+                        .addComponent(salvarInvestimentos, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(93, 93, 93)
+                        .addComponent(Alterar, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(83, 83, 83)
+                        .addComponent(Excluir, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(90, 90, 90)
+                        .addComponent(visualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(76, 76, 76)
+                        .addComponent(fazeCalculor, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(83, 83, 83)
+                        .addComponent(limpar, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(labelValorDEtodosVendidos, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 941, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(107, 107, 107)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(LABELvalorDoLucro, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(735, 735, 735)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -313,34 +341,35 @@ public class Investimento extends javax.swing.JFrame {
                     .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtCodInvestimento, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtNomeProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtValorDeRevenda, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtValorDeComprar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(labelValorDEtodosVendidos, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(LABELvalorDoInvestimento, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(txtQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtValorDeRevenda, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtValorDeComprar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(labelValorDEtodosVendidos, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(22, 22, 22)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(51, 51, 51)
+                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(LABELvalorDoInvestimento, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(33, 33, 33)
                         .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(LABELvalorDoLucro, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(26, 26, 26)
+                        .addComponent(LABELvalorDoLucro, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(36, 36, 36)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(salvarInvestimentos, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Alterar, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -355,7 +384,7 @@ public class Investimento extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -366,15 +395,9 @@ public class Investimento extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void fazeCalculorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fazeCalculorActionPerformed
-
-        int op =JOptionPane.showConfirmDialog(null,"Deseja realizar o calculor de toda tabela");
-        if(op==JOptionPane.YES_OPTION){
-            RealizarOsCalculosEsetaValores();
-        }else{
-              // realizando o calculor do investimento
-        calculorDoInvestimento();
-        }
       
+        RealizarOsCalculosEsetaValores();
+    
     }//GEN-LAST:event_fazeCalculorActionPerformed
 
     private void txtQuantidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtQuantidadeActionPerformed
@@ -382,7 +405,7 @@ public class Investimento extends javax.swing.JFrame {
     }//GEN-LAST:event_txtQuantidadeActionPerformed
 
     private void txtDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDataActionPerformed
-
+         DataDoDia();   
     }//GEN-LAST:event_txtDataActionPerformed
 
     private void txtValorDeComprarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtValorDeComprarActionPerformed
@@ -403,23 +426,79 @@ public class Investimento extends javax.swing.JFrame {
 
     private void AlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AlterarActionPerformed
        
+         //Método para saber se campo do código está vázio
+      
+        if(avisoParaCampoDoCodigoVazio()){
+        JOptionPane.showMessageDialog(null, "Clique na linha que deseja excluir!","Por favor:",JOptionPane.INFORMATION_MESSAGE);
+         //Método para visualizar os investimentos 
+        visualizarOsInnvestimentos();
+        }else{
+           //método para fazer o calculor do investimento de um produto especifico
+        calculorDoInvestimento();
         //Método para altera 
         alterarInvestimento();
+         //Método para visualizar os investimentos 
+        visualizarOsInnvestimentos();
+        }
+       
+        
+         //método para fazer o calculor de todos investimentos
+        // RealizarOsCalculosEsetaValores();
     }//GEN-LAST:event_AlterarActionPerformed
 
     private void salvarInvestimentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvarInvestimentosActionPerformed
-        //Método para salvar os dados de investimetos
-        addInvestimento();
-      //  JOptionPane.showMessageDialog(null, "Ola Anderson");
+       
+        
+        
+        if(preencherCampos()){
+            
+        }else{
+         //método para fazer o calculor do investimento de um produto especifico
+         calculorDoInvestimento();
+         //Método para salvar os dados de investimetos
+         addInvestimento();
+          //Método para visualizar os investimentos 
+       visualizarOsInnvestimentos(); 
+        }
+            
+        
+       
         
     }//GEN-LAST:event_salvarInvestimentosActionPerformed
 
     private void ExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExcluirActionPerformed
       
-        //Método para excluir
-        deletaInvestimento();
+        
+        
+         if(avisoParaCampoDoCodigoVazio()){
+        JOptionPane.showMessageDialog(null, "Clique na linha que deseja excluir!","Por favor:",JOptionPane.INFORMATION_MESSAGE);
+         //Método para visualizar os investimentos 
+        visualizarOsInnvestimentos();
+        }else{
+            //Método para excluir
+           deletaInvestimento();
+           //Método para limpar os campos de textos e as label 
+           limpaCampos();
+           //método para limpar as linhas da tabela
+           limpalinhas();
+         //método para fazer o calculor de todos investimentos
+         RealizarOsCalculosEsetaValores();
+         //Método para visualizar os investimentos
+        visualizarOsInnvestimentos();
+        }
+       
+      
     }//GEN-LAST:event_ExcluirActionPerformed
-
+    
+     //Método para limpar as linhas da tabela
+    public void limpalinhas() {
+        DefaultTableModel dm = (DefaultTableModel) tbInvestimento.getModel();
+        while (dm.getRowCount() > 0) {
+            dm.removeRow(0);
+        }
+    }
+    
+    
     private void visualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_visualizarActionPerformed
         
         //Método para visualizar os investimentos 
@@ -444,7 +523,119 @@ public class Investimento extends javax.swing.JFrame {
 
     private void limparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limparActionPerformed
        limpaCampos();
+        //método para limpar as linhas da tabela
+        limpalinhas();
     }//GEN-LAST:event_limparActionPerformed
+
+    private void txtValorDeComprarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtValorDeComprarKeyPressed
+      
+     
+    }//GEN-LAST:event_txtValorDeComprarKeyPressed
+
+    private void txtValorDeComprarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtValorDeComprarKeyReleased
+      //condição para permitir apenas números
+        if(sonumeros(txtValorDeComprar.getText())){
+           
+        }else{
+            
+             if(txtValorDeComprar.getText().isEmpty()){
+                
+            }else{
+              JOptionPane.showMessageDialog(null, "Nesse campo você só poder colocar números! ","Por favor: ",JOptionPane.ERROR_MESSAGE);
+            }
+           
+           txtValorDeComprar.setText("");
+           txtValorDeComprar.requestFocus();
+         }
+    }//GEN-LAST:event_txtValorDeComprarKeyReleased
+
+    private void txtValorDeRevendaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtValorDeRevendaKeyReleased
+         //condição para permitir apenas números
+        if(sonumeros(txtValorDeRevenda.getText())){
+        }else{
+            if(txtValorDeRevenda.getText().isEmpty()){
+                
+            }else{
+              JOptionPane.showMessageDialog(null, "Nesse campo você só poder colocar números! ","Por favor: ",JOptionPane.ERROR_MESSAGE);
+            }
+            txtValorDeRevenda.setText("");
+           
+           txtValorDeRevenda.requestFocus();
+         }
+    }//GEN-LAST:event_txtValorDeRevendaKeyReleased
+
+    private void txtDataKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDataKeyReleased
+      
+        //condição para permitir apenas números
+        if(sonumeros(txtData.getText())){
+        }else{
+             if(txtData.getText().isEmpty()){
+                
+            }else{
+              JOptionPane.showMessageDialog(null, "Nesse campo você só poder colocar números! ","Por favor: ",JOptionPane.ERROR_MESSAGE);
+            }
+           txtData.setText("");
+           txtData.requestFocus();
+         }
+    }//GEN-LAST:event_txtDataKeyReleased
+
+    private void txtNomeProdutoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNomeProdutoKeyReleased
+         //condição para impedir números
+        if(checkLetters(txtNomeProduto.getText())){
+          
+        }else{
+             if(txtNomeProduto.getText().isEmpty()){
+                
+            }else{
+      JOptionPane.showMessageDialog(null, "Nesse campo você só poder colocar Letras! ","Por favor: ",JOptionPane.ERROR_MESSAGE);
+         txtNomeProduto.setText("");
+           txtNomeProduto.requestFocus();
+             }
+        }
+    }//GEN-LAST:event_txtNomeProdutoKeyReleased
+   //Método para avisa se o campo de código está vázio
+      public boolean avisoParaCampoDoCodigoVazio(){
+          
+          boolean aviso=false;
+          
+          if(txtCodInvestimento.getText().isEmpty()){
+             aviso=true;
+          }
+        return aviso;
+          
+      }
+      
+      //Método para mandar preenche os campos
+    public boolean preencherCampos(){
+        boolean vrg=false;
+        if(txtNomeProduto.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Preencha os campos!","Por favor:",JOptionPane.INFORMATION_MESSAGE);
+            txtNomeProduto.requestFocus();
+            vrg=true;
+        }else
+        if(txtValorDeComprar.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Preencha os campos!","Por favor:",JOptionPane.INFORMATION_MESSAGE);
+            txtValorDeComprar.requestFocus();
+             vrg=true;
+        }else
+        if(txtValorDeRevenda.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Preencha os campos!","Por favor:",JOptionPane.INFORMATION_MESSAGE);
+            txtValorDeRevenda.requestFocus();
+             vrg=true;
+        }else
+          if(txtData.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Preencha os campos!","Por favor:",JOptionPane.INFORMATION_MESSAGE);
+            txtData.requestFocus();
+             vrg=true;
+        }
+        else
+          if(txtQuantidade.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Preencha os campos!","Por favor:",JOptionPane.INFORMATION_MESSAGE);
+            txtQuantidade.requestFocus();
+             vrg=true;
+        }
+        return vrg;
+    }
     
    public void limpaCampos(){
        txtCodInvestimento.setText(" ");
@@ -459,7 +650,7 @@ public class Investimento extends javax.swing.JFrame {
                
    }
     
-     
+     // class para formatar os números com casas decimais
   DecimalFormat def = new DecimalFormat("#,##0.00");
     //Método para fazer o calculor do investimento e do lucro
     public void calculorDoInvestimento(){
@@ -499,7 +690,6 @@ public class Investimento extends javax.swing.JFrame {
          InvestimentoDao dao =new InvestimentoDao();
          // Instanciando a classe InvestimetoModel para criar um objeto 
          InvestimentoModel invest = new InvestimentoModel();
-         invest.setCodInvestimento(txtCodInvestimento.getText());
          invest.setNomeProduto(txtNomeProduto.getText());
          invest.setQuantidadeProduto(Integer.parseInt(txtQuantidade.getText()));
          invest.setValorDeComprar(Double.parseDouble(txtValorDeComprar.getText()));
@@ -561,7 +751,7 @@ public class Investimento extends javax.swing.JFrame {
         in.setValorTotalDeTodasVendas(Double.parseDouble(labelValorDEtodosVendidos.getText()));
         in.setValorDoLucro(Double.parseDouble(LABELvalorDoLucro.getText()));
         in.setData(txtData.getText());
-        in.setCodInvestimento(txtCodInvestimento.getText());
+        in.setCodInvestimento(Integer.parseInt(txtCodInvestimento.getText()));
         
         daoalt.atualizarDadosDoInvestimentos(in);
     }
@@ -570,7 +760,7 @@ public class Investimento extends javax.swing.JFrame {
          InvestimentoDao excluir = new InvestimentoDao();
         
         InvestimentoModel deleta =new InvestimentoModel();
-        deleta.setCodInvestimento(txtCodInvestimento.getText());
+        deleta.setCodInvestimento(Integer.parseInt(txtCodInvestimento.getText()));
         excluir.deletaInvestimento(deleta);
      }
      
@@ -619,7 +809,36 @@ public class Investimento extends javax.swing.JFrame {
      }
        
      
-     
+       //metodo para digita apenas números
+    public void soApenasNumeros() {
+
+       // txtData.setDocument(new ApenasNumeros());
+        txtQuantidade.setDocument(new ApenasNumeros());
+       // txtValorDeRevenda.setDocument(new ApenasNumeros());
+       // txtValorDeComprar.setDocument(new ApenasNumeros());
+        
+
+          }
+    
+     //Método para mostrar a data ao abrir essa jFRAME investimento;
+    public void DataDoDia() {
+        Data dt = new Data();
+        txtData.setText(dt.setaData());
+      
+
+    }
+     public boolean sonumeros(String str){
+        
+         return str.matches("^[0.-9 ]+");
+        
+      // return s.matches("[^0-9]+");
+    }
+    
+    //metodo para digita só nomes
+    public boolean checkLetters(String str) {
+
+        return str.matches("[a-zA-Z é ê ô ó á!úûí õ ç â~,.ã^~,.]+");
+    }
     public static void main(String args[]) {
       
         java.awt.EventQueue.invokeLater(new Runnable() {

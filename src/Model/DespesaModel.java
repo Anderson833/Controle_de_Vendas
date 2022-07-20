@@ -9,18 +9,18 @@ package Model;
  */
 public class DespesaModel {
     //atributos de despesa
-    private String codDespesa;
+    private int codDespesa;
     private String descricao;
     private double total;
     private String data;
 
     //Métodos getters e setters
-    public String getCodDespesa() {
+    public int getCodDespesa() {
         return codDespesa;
     }
 
   
-    public void setCodDespesa(String codDespesa) {
+    public void setCodDespesa(int codDespesa) {
         this.codDespesa = codDespesa;
     }
 

@@ -7,6 +7,7 @@ package View;
 
 import Conexao.Conexao_BD;
 import Dao.ClienteDao;
+import Model.ApenasNumeros;
 import Model.ClienteModel;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -28,10 +29,9 @@ public class Cliente extends javax.swing.JFrame {
        
         initComponents();
         setLocationRelativeTo(null);
-        //Método para saber se tem código salvo
-        buscandoCodigoDosClientes();
-        //Método para ver se tem usuário ou não salvo
-        buscandoCodigoDosUsuarios();
+        //Método para proíbir letras
+        ApenasNumeros();
+       
     }
      int c=0;
      String codCliente="";
@@ -45,8 +45,6 @@ public class Cliente extends javax.swing.JFrame {
         CodCli = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         txtNome = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        txtIdUsuario = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         txtEndereco = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
@@ -66,11 +64,11 @@ public class Cliente extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(153, 153, 255));
 
-        jLabel1.setText("Código Cliente:");
+        jLabel1.setText("Código :");
+
+        CodCli.setEditable(false);
 
         jLabel2.setText("Nome:");
-
-        jLabel3.setText("ID do Usuário:");
 
         jLabel4.setText("Endereço:");
 
@@ -176,8 +174,6 @@ public class Cliente extends javax.swing.JFrame {
                 .addGap(58, 58, 58)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtIdUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(CodCli, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(94, 94, 94)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -232,14 +228,10 @@ public class Cliente extends javax.swing.JFrame {
                     .addComponent(CodCli, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(43, 43, 43)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(47, 47, 47)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtIdUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(txtEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(42, 42, 42)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(42, 42, 42)
@@ -275,48 +267,11 @@ public class Cliente extends javax.swing.JFrame {
     }//GEN-LAST:event_txtTelefoneActionPerformed
 
     private void AddClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddClienteActionPerformed
-      
-          
-     campos();
-    
-       //  JOptionPane.showMessageDialog(null, "Opa... Já tem esse código salvor, tenter outro novamente! "+CodCli.getText());  JOptionPane.showMessageDialog(null, "Opa... Já tem esse código salvor, tenter outro novamente! ");
-       
-       if(codCliente.equals(CodCli.getText())){
-            JOptionPane.showMessageDialog(null, "Opa... Já tem esse código salvor, tenter outro novamente! "+CodCli.getText());
-           // visualizarClientes();
-              //  CodCli.requestFocus();
-        }
+     
+       addCliente();
+       visualizarClientes();
     }//GEN-LAST:event_AddClienteActionPerformed
-    
-     public void campos(){
-        
-       
-             if(txtIdUsuario.getText().isEmpty()||txtEndereco.getText().isEmpty()||txtNome.getText().isEmpty()||txtTelefone.getText().isEmpty()
-                 ||CodCli.getText().isEmpty()){
-             JOptionPane.showMessageDialog(null, "Preenchar os campos corretamente!","Aviso:",JOptionPane.INFORMATION_MESSAGE);
-         }
-            else{
-           
-            if(txtIdUsuario.getText().isEmpty()){
-                
-            }else{
-                 if(txtIdUsuario.getText()!=IdUsuario){
-           JOptionPane.showMessageDialog(null, "Opa... Não tem usuário com esse ID "+txtIdUsuario.getText()+" tenter outro novamente! ");
-
-        }else{
-             //Método para adicionar clientes no banco de dados;
-             addCliente(); 
-        }
-            }
-             
-             
-          }
-        
-        
-             
-        
-     }
-    
+  
     //Método para adicionar cliente;
     public void addCliente() {
 
@@ -328,11 +283,10 @@ public class Cliente extends javax.swing.JFrame {
 
         //Pegando objeto da classe ClienteModel;
         //Setando os atributos  da Classe ClienteModel;
-        cli.setCodCli(CodCli.getText());
         cli.setNome(txtNome.getText());
         cli.setEndereco(txtEndereco.getText());
         cli.setTelefone(txtTelefone.getText());
-        cli.setIdsu(txtIdUsuario.getText());
+      
 
         //Colocando os objetos da Classe ClienteModel no objeto da classe ClienteDAO;
         dao.adicionaCliente(cli);
@@ -343,6 +297,8 @@ public class Cliente extends javax.swing.JFrame {
 
         //Método Para Deletar Cliente no Banco de Dados;
         deletarCliente();
+        
+        visualizarClientes();
     }//GEN-LAST:event_deleteActionPerformed
 
     //Método Para Deletar Cliente no Banco de Dados;
@@ -353,7 +309,7 @@ public class Cliente extends javax.swing.JFrame {
         //Instânciando  classe ClienteModel;
         ClienteModel cli = new ClienteModel();
         //Pegando código do cliente na JtextField;
-        cli.setCodCli(CodCli.getText());
+        cli.setCodCli(Integer.parseInt(CodCli.getText()));
         //Colocando no objeto da classe ClienteDao;
         dao.deletaCliente(cli);
     }
@@ -383,19 +339,25 @@ public class Cliente extends javax.swing.JFrame {
                 cliente.getNome(),
                 cliente.getEndereco(),
                 cliente.getTelefone(),
-                cliente.getIdsu()
+             
 
             });
 
         }
 
     }
-
+  
+    
+    //metodo para digita só números
+    public void ApenasNumeros() {
+        txtTelefone.setDocument(new ApenasNumeros());
+        
+          }
 
     private void btAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAtualizarActionPerformed
         //Método que atualizar os dados dos clientes; 
         atualizarCliente();
-      
+      visualizarClientes();
     }//GEN-LAST:event_btAtualizarActionPerformed
 
     //Método para atualizar cliente;
@@ -411,7 +373,7 @@ public class Cliente extends javax.swing.JFrame {
             cli.setNome(txtNome.getText());
             cli.setEndereco(txtEndereco.getText());
             cli.setTelefone(txtTelefone.getText());
-            cli.setCodCli(CodCli.getText());
+            cli.setCodCli(Integer.parseInt(CodCli.getText()));
             //Passando objeto da classe clienteModel para o objeto da classe ClienteDao;
             dao.atualizarCliente(cli);
 
@@ -568,7 +530,6 @@ public class Cliente extends javax.swing.JFrame {
     private javax.swing.JButton exibirDados;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -576,7 +537,6 @@ public class Cliente extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tabelaCli;
     private javax.swing.JTextField txtEndereco;
-    private javax.swing.JTextField txtIdUsuario;
     private javax.swing.JTextField txtNome;
     private javax.swing.JTextField txtTelefone;
     // End of variables declaration//GEN-END:variables

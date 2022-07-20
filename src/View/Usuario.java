@@ -18,7 +18,7 @@ public class Usuario extends javax.swing.JFrame {
         //Abrir no centro da tela;
         setLocationRelativeTo(this);
         // Método para buscar o login e ID do usuário
-              buscandoCodigoDosUsuarios();
+            //  buscandoCodigoDosUsuarios();
     }
           //Variável para armazenar o login e o IDusu
     String login="", IDusu="",senha="";
@@ -69,8 +69,9 @@ public class Usuario extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 204, 204));
 
-        jLabel1.setText("ID Usuário:");
+        jLabel1.setText("Código:");
 
+        txtIDusu.setEditable(false);
         txtIDusu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtIDusuActionPerformed(evt);
@@ -272,16 +273,11 @@ public class Usuario extends javax.swing.JFrame {
 
     private void adicionarCliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adicionarCliActionPerformed
           
-       if(txtIDusu.getText().equalsIgnoreCase(IDusu)){
-           JOptionPane.showMessageDialog(null, "Já tem usuário com esse ID "+txtIDusu.getText());
-           visualizarUsuario();
-       }else{
+     
            //MÉTODO PARA ADICIONA USUARIO NO BANCO DE DADOS;
         addUsuario();
-        //Limpar os campos depois que adicionar usuário;
-          limpar();
           visualizarUsuario();
-       }
+       
        
     }//GEN-LAST:event_adicionarCliActionPerformed
 
@@ -294,7 +290,6 @@ public class Usuario extends javax.swing.JFrame {
         //Instânciando UsuarioModdel;
         UsuarioModel usu = new UsuarioModel();
         //Setando os atributos do UsuarioModel;
-        usu.setIdUsu(txtIDusu.getText());
         usu.setNome(txtnome.getText());
         usu.setEndereco(txtendereco.getText());
         usu.setTelefone(txttelefone.getText());
@@ -329,7 +324,7 @@ public class Usuario extends javax.swing.JFrame {
             //Instânciando UsuarioModdel;
             UsuarioModel usu = new UsuarioModel();
             //Setando os atributos do UsuarioModel;
-            usu.setIdUsu(txtIDusu.getText());
+            usu.setIdUsu(Integer.parseInt(txtIDusu.getText()));
             usu.setNome(txtnome.getText());
             usu.setEndereco(txtendereco.getText());
             usu.setTelefone(txttelefone.getText());
@@ -455,7 +450,7 @@ public class Usuario extends javax.swing.JFrame {
             //Instânciando UsuarioModdel;
             UsuarioModel usu = new UsuarioModel();
             
-            usu.setIdUsu(txtIDusu.getText());
+            usu.setIdUsu(Integer.parseInt(txtIDusu.getText()));
             
             dao.deletaUsuario(usu);
         

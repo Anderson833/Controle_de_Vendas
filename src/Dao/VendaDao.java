@@ -30,7 +30,7 @@ public class VendaDao {
          try {
              
              //Selecionando toda tabela venda;
-             String sql="SELECT * FROM vendas";
+             String sql="SELECT * FROM item";
              
              PreparedStatement patm = conn.prepareStatement(sql);
              
@@ -41,10 +41,10 @@ public class VendaDao {
                  //Instânciando  classe VendaModel;
                  VendaModel venda = new VendaModel();
                  //Setando os Valores;
-               venda.setIdDeleta(rst.getInt("codExcluir"));
-               venda.setCodVenda(rst.getString("codVendar"));
-               venda.setCodCli(rst.getString("codCli")); 
-               venda.setCodProd(rst.getString("codProd"));
+               venda.setIdDeleta(rst.getInt("codItem"));
+               venda.setCodVenda(rst.getInt("codVenda"));
+               venda.setCodCli(rst.getInt("codCli")); 
+               venda.setCodProd(rst.getInt("codProd"));
                venda.setQtdProd(rst.getInt("Qtd"));
                venda.setValorUnit(rst.getDouble("valorUnit"));
                venda.setValorTotal(rst.getDouble("total"));
@@ -83,18 +83,18 @@ public class VendaDao {
        
         try {
             //Inserindo os dados das vendas no banco de dados;
-            String sql="INSERT INTO vendas(codExcluir,codVendar,codCli,codProd,Qtd,valorUnit,total,data) VALUES(?,?,?,?,?,?,?,?)";
+            String sql="INSERT INTO item(codVenda,codCli,codProd,Qtd,valorUnit,total,data) VALUES(?,?,?,?,?,?,?)";
              
             PreparedStatement patm = conn.prepareStatement(sql);
             //Passando como paramentros os atributos da classe VendaModel;
-            patm.setInt(1, venda.getIdDeleta());
-            patm.setString(2, venda.getCodVenda());
-            patm.setString(3, venda.getCodCli());
-            patm.setString(4, venda.getCodProd());
-            patm.setDouble(5, venda.getQtdProd());
-            patm.setDouble(6, venda.getValorUnit());
-            patm.setDouble(7, venda.getValorTotal());
-            patm.setString(8, venda.getData());
+          
+            patm.setInt(1, venda.getCodVenda());
+            patm.setInt(2, venda.getCodCli());
+            patm.setInt(3, venda.getCodProd());
+            patm.setDouble(4, venda.getQtdProd());
+            patm.setDouble(5, venda.getValorUnit());
+            patm.setDouble(6, venda.getValorTotal());
+            patm.setString(7, venda.getData());
             
             //Executar;
             int upd=patm.executeUpdate();
@@ -129,12 +129,12 @@ public class VendaDao {
         try {
 
           // Comando que  Deletar a venda pelo código;
-            String sql = "DELETE FROM vendas WHERE codExcluir=?";
+            String sql = "DELETE FROM items WHERE codItem=?";
 
             PreparedStatement patm = conn.prepareStatement(sql);
              
             //Passando em paramentros código da venda;
-            patm.setInt(1, vd.getIdDeleta());
+            patm.setInt(1, vd.getCodVenda());
             
             //Executar;
             int res = patm.executeUpdate();
@@ -171,7 +171,7 @@ public class VendaDao {
         try {
 
           // Comando que  Deletar toda venda ;
-            String sql = "DELETE FROM vendas";
+            String sql = "DELETE FROM item";
 
             PreparedStatement patm = conn.prepareStatement(sql);
            
@@ -223,10 +223,10 @@ public class VendaDao {
                  //Instânciando  classe VendaModel;
                  VendaModel venda = new VendaModel();
                  //Setando os Valores;
-               venda.setIdDeleta(rst.getInt("codExcluir"));
-               venda.setCodVenda(rst.getString("codVendar"));
-               venda.setCodCli(rst.getString("codCli")); 
-               venda.setCodProd(rst.getString("codProd"));
+               venda.setIdDeleta(rst.getInt("codItem"));
+               venda.setCodVenda(rst.getInt("codVenda"));
+               venda.setCodCli(rst.getInt("codCli")); 
+               venda.setCodProd(rst.getInt("codProd"));
                venda.setQtdProd(rst.getInt("Qtd"));
                venda.setValorUnit(rst.getDouble("valorUnit"));
                venda.setValorTotal(rst.getDouble("total"));
@@ -264,7 +264,7 @@ public class VendaDao {
          try {
              
              //Selecionando toda tabela vendas pela data;
-             String sql="SELECT * FROM vendas WHERE codVendar='"+vd+"' and codCli='"+cli+"'";
+             String sql="SELECT * FROM item WHERE codVenda='"+vd+"' and codCli='"+cli+"'";
              
              PreparedStatement patm = conn.prepareStatement(sql);
              
@@ -274,10 +274,10 @@ public class VendaDao {
                  //Instânciando  classe VendaModel;
                  VendaModel venda = new VendaModel();
                  //Setando os Valores;
-               venda.setIdDeleta(rst.getInt("codExcluir"));
-               venda.setCodVenda(rst.getString("codVendar"));
-               venda.setCodCli(rst.getString("codCli")); 
-               venda.setCodProd(rst.getString("codProd"));
+               venda.setIdDeleta(rst.getInt("codItem"));
+               venda.setCodVenda(rst.getInt("codVenda"));
+               venda.setCodCli(rst.getInt("codCli")); 
+               venda.setCodProd(rst.getInt("codProd"));
                venda.setQtdProd(rst.getInt("Qtd"));
                venda.setValorUnit(rst.getDouble("valorUnit"));
                venda.setValorTotal(rst.getDouble("total"));
@@ -307,7 +307,7 @@ public class VendaDao {
      
      
        //Método para visualizar todos os dados da vendas pela data;
-     public List<VendaModel> visualizarDataComecoFim(String dataInicio,String dataFinal){
+     public List<VendaModel> visualizarDataComecoEfinal(String dataInicio,String dataFinal){
         //Criando uma Connection com Classe Conexao_BD; 
         Connection conn=Conexao_BD.getConnection();
      
@@ -317,7 +317,7 @@ public class VendaDao {
          try {
              
              //Selecionando toda tabela vendas;
-             String sql="select * from vendas where data >'"+dataInicio+"' and data<'"+dataFinal+"'";
+             String sql="select * from item where data >'"+dataInicio+"' and data<'"+dataFinal+"'";
              
              PreparedStatement patm = conn.prepareStatement(sql);
              
@@ -328,10 +328,10 @@ public class VendaDao {
                   //Instânciando  classe VendaModel;
                  VendaModel venda = new VendaModel();
                  //Setando os Valores;
-               venda.setIdDeleta(rst.getInt("codExcluir"));
-               venda.setCodVenda(rst.getString("codVendar"));
-               venda.setCodCli(rst.getString("codCli")); 
-               venda.setCodProd(rst.getString("codProd"));
+               venda.setIdDeleta(rst.getInt("codItem"));
+               venda.setCodVenda(rst.getInt("codVenda"));
+               venda.setCodCli(rst.getInt("codCli")); 
+               venda.setCodProd(rst.getInt("codProd"));
                venda.setQtdProd(rst.getInt("Qtd"));
                venda.setValorUnit(rst.getDouble("valorUnit"));
                venda.setValorTotal(rst.getDouble("total"));
@@ -367,7 +367,7 @@ public class VendaDao {
        
         try {
             //Inserindo os dados das vendas no banco de dados;
-            String sql="INSERT INTO codVenda(codVendar) VALUES(?)";
+            String sql="INSERT INTO vendas(codVenda) VALUES(?)";
              
             PreparedStatement patm = conn.prepareStatement(sql);
             //Passando como paramentros os atributos da classe VendaModel;
@@ -410,8 +410,8 @@ public class VendaDao {
             PreparedStatement patm = conn.prepareStatement(sql);
             //Passando como paramentros os atributos da classe VendaModel;
            
-            patm.setString(1, venda.getCodProd());
-            patm.setString(2, venda.getCodProd());
+            patm.setInt(1, venda.getCodProd());
+            patm.setInt(2, venda.getCodProd());
             patm.setInt(3, venda.getQtdProd());
             patm.setDouble(4, venda.getValorUnit());
             patm.setDouble(5, venda.getValorTotal());

@@ -27,15 +27,14 @@ public class DespesaDao {
         
        
         try {
-            //Inserindo os dados da despesa na tabela ;
-            String sql="insert into despesas(codDespesa,descricao,valorTotal,data)values(?,?,?,?)";
+            //Inserindo os dados da despesa no banco de dados ;
+            String sql="insert into despesas(descricao,valorTotal,data)values(?,?,?)";
              
             PreparedStatement patm = conn.prepareStatement(sql);
             //Passando como paramentros os atributos da classse DespesaModel;
-            patm.setString(1, despesa.getCodDespesa());
-            patm.setString(2, despesa.getDescricao());
-            patm.setDouble(3, despesa.getTotal());
-            patm.setString(4, despesa.getData());
+            patm.setString(1, despesa.getDescricao());
+            patm.setDouble(2, despesa.getTotal());
+            patm.setString(3, despesa.getData());
           
             
             //Executar;
@@ -84,7 +83,7 @@ public class DespesaDao {
                  //Instanciando a classe DespesaModel;
                  DespesaModel desp = new DespesaModel();
                  //Setando os dados da despesa;
-                 desp.setCodDespesa(rst.getString("codDespesa"));
+                 desp.setCodDespesa(rst.getInt("codDespesa"));
                  desp.setDescricao(rst.getString("descricao"));
                  desp.setTotal(rst.getDouble("valorTotal"));
                  desp.setData(rst.getString("data"));
@@ -130,7 +129,7 @@ public class DespesaDao {
             patm.setString(1,despesa.getDescricao());
             patm.setDouble(2,despesa.getTotal());
             patm.setString(3,despesa.getData());
-            patm.setString(4,despesa.getCodDespesa());
+            patm.setInt(4,despesa.getCodDespesa());
             //Executar;
              int res= patm.executeUpdate();
             
@@ -169,7 +168,7 @@ public class DespesaDao {
             PreparedStatement patm = conn.prepareStatement(sql);
              
             //Passando em paramentros código do cliente;
-            patm.setString(1, despesas.getCodDespesa());
+            patm.setInt(1, despesas.getCodDespesa());
             
             //Executar;
             int res = patm.executeUpdate();

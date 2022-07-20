@@ -9,10 +9,12 @@ package Model;
 public class VendaModel {
     
     //Passando os atributos da venda;
-    private int  idDeleta;
-    private String codVenda;
-    private String codProd;
-    private String codCli;
+   
+    private int codVenda;
+    private int IdDeleta;
+    private int codItens;
+    private int codProd;
+    private int codCli;
     private int qtdProd;
     private double valorUnit;
     private double valorTotal;
@@ -21,34 +23,34 @@ public class VendaModel {
     private double precoDeComprar;
     
     
-    // Os métodos get e set
+    // Os métodos getters e setters
     
-    public String getCodVenda() {
+    public int getCodVenda() {
         return codVenda;
     }
 
    
-    public void setCodVenda(String codVenda) {
+    public void setCodVenda(int codVenda) {
         this.codVenda = codVenda;
     }
 
    
-    public String getCodProd() {
+    public int getCodProd() {
         return codProd;
     }
 
     
-    public void setCodProd(String codProd) {
+    public void setCodProd(int codProd) {
         this.codProd = codProd;
     }
 
    
-    public String getCodCli() {
+    public int getCodCli() {
         return codCli;
     }
 
     
-    public void setCodCli(String codCli) {
+    public void setCodCli(int codCli) {
         this.codCli = codCli;
     }
 
@@ -92,43 +94,53 @@ public class VendaModel {
     }
 
   
-    public int getIdDeleta() {
-        return idDeleta;
-    }
-
    
-    public void setIdDeleta(int idDeleta) {
-        this.idDeleta = idDeleta;
-    }
-    /**
-     * @return the valorGanhor
-     */
     public double getValorGanhor() {
         return valorGanhor;
     }
 
-    /**
-     * @param valorGanhor the valorGanhor to set
-     */
     public void setValorGanhor(double valorGanhor) {
         this.valorGanhor = valorGanhor;
     }
 
-    /**
-     * @return the precoDeComprar
-     */
+   
     public double getPrecoDeComprar() {
         return precoDeComprar;
     }
 
-    /**
-     * @param precoDeComprar the precoDeComprar to set
-     */
+   
     public void setPrecoDeComprar(double precoDeComprar) {
         this.precoDeComprar = precoDeComprar;
     }
 
+    
+    public int getCodItens() {
+        return codItens;
+    }
+
    
-    
-    
+    public void setCodItens(int codItens) {
+        this.codItens = codItens;
+    }
+
+   
+     public String toString() {
+        return  String.valueOf(getCodCli());
+    }
+
+    /**
+     * @return the IdDeleta
+     */
+    public int getIdDeleta() {
+        return IdDeleta;
+    }
+
+    /**
+     * @param IdDeleta the IdDeleta to set
+     */
+    public void setIdDeleta(int IdDeleta) {
+        this.IdDeleta = IdDeleta;
+    }
+
+   
 }

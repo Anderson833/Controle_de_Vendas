@@ -6,7 +6,10 @@ package View;
 
 import Conexao.Conexao_BD;
 import Dao.DespesaDao;
+import Model.ApenasNumeros;
+import Model.Data;
 import Model.DespesaModel;
+import java.awt.Color;
 import static java.awt.Frame.MAXIMIZED_BOTH;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -27,6 +30,9 @@ public class Despesas extends javax.swing.JFrame {
      */
     public Despesas() {
         initComponents();
+        //MÉTODO PARA EXIBIR A DATA DO DIA PRESENTE
+         DataDoDia();
+        //Método para impedir letras nos campos de data, valor total
         
         setLocationRelativeTo(this);
     }
@@ -60,7 +66,6 @@ public class Despesas extends javax.swing.JFrame {
         visualizar = new javax.swing.JButton();
         Deleta = new javax.swing.JButton();
         limparCampos = new javax.swing.JButton();
-        Realizarcalculor = new javax.swing.JButton();
         alterar2 = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -102,13 +107,39 @@ public class Despesas extends javax.swing.JFrame {
         ));
         jScrollPane3.setViewportView(jTable3);
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(204, 102, 255));
+
+        txtTotal.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtTotalKeyReleased(evt);
+            }
+        });
+
+        txtData.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtDataActionPerformed(evt);
+            }
+        });
+        txtData.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtDataKeyReleased(evt);
+            }
+        });
 
         jLabel2.setText("Valor Total:");
 
         jLabel3.setText("Data:");
+
+        txtDescricao.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtDescricaoKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtDescricaoKeyReleased(evt);
+            }
+        });
 
         tbDespesas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -133,6 +164,7 @@ public class Despesas extends javax.swing.JFrame {
         });
         jScrollPane4.setViewportView(tbDespesas);
 
+        addDespesas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icone/salve-.png"))); // NOI18N
         addDespesas.setText("Adicionar");
         addDespesas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -142,16 +174,19 @@ public class Despesas extends javax.swing.JFrame {
 
         jLabel1.setText("Descrição:");
 
+        txtCodDespesa.setEditable(false);
+
         jLabel4.setText("Código:");
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 3, 24)); // NOI18N
         jLabel5.setText(" Despesas");
 
+        LabelTotalDeTodasDespesas.setBackground(new java.awt.Color(0, 0, 0));
         LabelTotalDeTodasDespesas.setFont(new java.awt.Font("Tahoma", 3, 18)); // NOI18N
-        LabelTotalDeTodasDespesas.setForeground(new java.awt.Color(255, 255, 255));
 
         jLabel6.setText("Valor Total De Todas Despesas:");
 
+        visualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icone/visualizador.png"))); // NOI18N
         visualizar.setText("Visualizar");
         visualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -159,6 +194,7 @@ public class Despesas extends javax.swing.JFrame {
             }
         });
 
+        Deleta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icone/claro.png"))); // NOI18N
         Deleta.setText("Deletar");
         Deleta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -166,15 +202,15 @@ public class Despesas extends javax.swing.JFrame {
             }
         });
 
+        limparCampos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icone/limpando-produtos.png"))); // NOI18N
         limparCampos.setText("Limpar");
-
-        Realizarcalculor.setText("Calcular");
-        Realizarcalculor.addActionListener(new java.awt.event.ActionListener() {
+        limparCampos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                RealizarcalculorActionPerformed(evt);
+                limparCamposActionPerformed(evt);
             }
         });
 
+        alterar2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icone/atualizar.png"))); // NOI18N
         alterar2.setText("Alterar");
         alterar2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -189,15 +225,10 @@ public class Despesas extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(137, 137, 137)
                 .addComponent(jScrollPane4)
+                .addGap(110, 110, 110)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(110, 110, 110)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(LabelTotalDeTodasDespesas, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(143, 143, 143)
-                        .addComponent(Realizarcalculor, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(LabelTotalDeTodasDespesas, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(42, 42, 42))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(498, 498, 498)
@@ -207,14 +238,14 @@ public class Despesas extends javax.swing.JFrame {
                 .addGap(96, 96, 96)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(addDespesas, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(82, 82, 82)
-                        .addComponent(visualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(87, 87, 87)
-                        .addComponent(alterar2, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(59, 59, 59)
-                        .addComponent(Deleta, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(75, 75, 75)
+                        .addComponent(addDespesas, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(56, 56, 56)
+                        .addComponent(visualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(61, 61, 61)
+                        .addComponent(alterar2, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(54, 54, 54)
+                        .addComponent(Deleta, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(43, 43, 43)
                         .addComponent(limparCampos, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -271,19 +302,18 @@ public class Despesas extends javax.swing.JFrame {
                         .addGap(63, 63, 63)
                         .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(LabelTotalDeTodasDespesas, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(Realizarcalculor, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(LabelTotalDeTodasDespesas, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(49, 49, 49)
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(25, 25, 25)
+                .addGap(38, 38, 38)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(addDespesas, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
+                    .addComponent(addDespesas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(alterar2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(visualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(Deleta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(limparCampos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(limparCampos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Deleta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(26, 26, 26))
         );
 
@@ -303,10 +333,27 @@ public class Despesas extends javax.swing.JFrame {
        DecimalFormat def = new DecimalFormat("#,##0.00");
        
     private void addDespesasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addDespesasActionPerformed
+         
+        camposVazio();
+        
+          if(camposVazio()){
+           JOptionPane.showMessageDialog(null, "Preencha os campos!","Por favor:",JOptionPane.INFORMATION_MESSAGE);    
+          }else{
+           
+            //Método para salvar os dados das despesas
+            salvarDespesas();
+        //Método para visualizar as despesas
+        visualizarDespesas();
+        //Método para realizar a soma das despesas
+        RealizarSomaDasDespesas();
+          }
+         
+    }//GEN-LAST:event_addDespesasActionPerformed
+  
+    public void salvarDespesas(){
         // Instanciando a classe DespesaModel para criar  o objeto despesa
         DespesaModel d = new DespesaModel();
         //setando os valores 
-        d.setCodDespesa(txtCodDespesa.getText());
         d.setDescricao(txtDescricao.getText());
         d.setTotal(Double.parseDouble(txtTotal.getText()));
         d.setData(txtData.getText());
@@ -314,19 +361,43 @@ public class Despesas extends javax.swing.JFrame {
         DespesaDao dp = new DespesaDao();
         //Passando para o método de adicionarDespesa o objeto da classe DespesaModel
         dp.adicionaDespesa(d);
-    }//GEN-LAST:event_addDespesasActionPerformed
-
+    }
+    
+    
     private void visualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_visualizarActionPerformed
      //Método para exibir todas as despesas armazenadar
      visualizarDespesas();
+     //Método para realizar a soma das despesas
+       RealizarSomaDasDespesas();
     }//GEN-LAST:event_visualizarActionPerformed
 
     private void alterar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_alterar2ActionPerformed
-      
+        
+        if(avisoParaCampoDoCodigoVazio()){
+             JOptionPane.showMessageDialog(null, "Clique na linha que deseja altera!","Por favor:",JOptionPane.INFORMATION_MESSAGE);
+       //Método para exibir todas as despesas armazenadar
+        visualizarDespesas();
+        }else{
+         
         //Método para alterar os dados de despesa
-        alterarDespesa();
+        alterarDespesa(); 
+         //Método para realizar a soma das despesas
+        RealizarSomaDasDespesas();  
+        //Método para exibir todas as despesas armazenadar
+        visualizarDespesas();
+      
+        }
+        
+       
     }//GEN-LAST:event_alterar2ActionPerformed
-
+    //Método para permitir só números
+      public boolean soNumeros(String str){
+        
+         return str.matches("^[0.-9]+");
+        
+      // return s.matches("[^0-9]+");
+    }
+    
     private void tbDespesasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbDespesasMouseClicked
         
         if(tbDespesas.getSelectedRow()!=-1){
@@ -339,17 +410,128 @@ public class Despesas extends javax.swing.JFrame {
     }//GEN-LAST:event_tbDespesasMouseClicked
 
     private void DeletaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeletaActionPerformed
-       
-        //Método para deleta despesa
+       //Método para saber se campo do código está vázio
+        avisoParaCampoDoCodigoVazio();  
+        if(avisoParaCampoDoCodigoVazio()){
+             JOptionPane.showMessageDialog(null, "Clique na linha que deseja excluir!","Por favor:",JOptionPane.INFORMATION_MESSAGE);
+        }else{
+            //Método para deleta despesa
         ApagarDespesa();
-    }//GEN-LAST:event_DeletaActionPerformed
-
-    private void RealizarcalculorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RealizarcalculorActionPerformed
-        //Método para executar a soma de todas despesas
-        RealizarSomaDasDespesas();
+         //Método para exibir todas as despesas armazenadar
+        visualizarDespesas();
+          //Método para realizar a soma das despesas
+        RealizarSomaDasDespesas(); 
+        }
         
-    }//GEN-LAST:event_RealizarcalculorActionPerformed
-      //Método sem retorno para visualizar as despesas 
+       
+    }//GEN-LAST:event_DeletaActionPerformed
+  
+      
+     //metodo para digita só letras
+    public boolean checkLetters(String str) {
+        
+              return str.matches("[a-zA-Z]+"); 
+         
+    }
+     //Método para mostrar a data ao abrir essa jFRAME venda;
+    public void DataDoDia() {
+        Data dt = new Data();
+        txtData.setText(dt.setaData());
+        
+    }
+    //Método para verificar se tem campos varios
+    public boolean camposVazio(){
+        boolean preencha=false;
+        if(txtDescricao.getText().isEmpty() && txtData.getText().isEmpty()&& txtTotal.getText().isEmpty()
+                || txtDescricao.getText().isEmpty() || txtData.getText().isEmpty()|| txtTotal.getText().isEmpty()){
+          
+            if(txtDescricao.getText().isEmpty()){
+                 txtDescricao.requestFocus();
+            }else if(txtTotal.getText().isEmpty()){
+                txtTotal.requestFocus();
+            }else if(txtData.getText().isEmpty()){
+                txtData.requestFocus();
+        }
+         preencha=true;
+        }
+         return preencha;
+      }
+    
+    private void limparCamposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limparCamposActionPerformed
+       //limpar tudo
+        limparGeral();
+    }//GEN-LAST:event_limparCamposActionPerformed
+
+     public void limparGeral(){
+           //setando os campos vázio
+        txtCodDespesa.setText("");
+        txtData.setText("");
+        txtDescricao.setText("");
+        txtTotal.setText("");
+        LabelTotalDeTodasDespesas.setText("");
+        //Método para limpa as linhas da tabela
+        limpalinhas();
+     }
+     
+    private void txtDescricaoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDescricaoKeyReleased
+          //condição para impedir números
+        if(soNumeros(txtDescricao.getText())){
+      JOptionPane.showMessageDialog(null, "Nesse campo você só poder colocar Letras! ","Por favor: ",JOptionPane.ERROR_MESSAGE);
+         txtDescricao.setText("");
+           txtDescricao.requestFocus();
+            
+        }
+    }//GEN-LAST:event_txtDescricaoKeyReleased
+
+    private void txtDescricaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDescricaoKeyPressed
+       
+    }//GEN-LAST:event_txtDescricaoKeyPressed
+
+    private void txtTotalKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTotalKeyReleased
+       
+         //condição para permitir apenas números
+        if(soNumeros(txtTotal.getText())){
+        }else{
+            if(txtTotal.getText().isEmpty()){
+                
+            }else{
+              JOptionPane.showMessageDialog(null, "Nesse campo você só poder colocar números! ","Por favor: ",JOptionPane.ERROR_MESSAGE);
+            }
+            txtTotal.setText("");
+           
+           txtTotal.requestFocus();
+         }
+    }//GEN-LAST:event_txtTotalKeyReleased
+
+    private void txtDataKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDataKeyReleased
+        
+         //condição para permitir apenas números
+        if(soNumeros(txtData.getText())){
+        }else{
+            if(txtData.getText().isEmpty()){
+                
+            }else{
+              JOptionPane.showMessageDialog(null, "Nesse campo você só poder colocar números! ","Por favor: ",JOptionPane.ERROR_MESSAGE);
+            }
+            txtData.setText("");
+           
+           txtData.requestFocus();
+         }
+    }//GEN-LAST:event_txtDataKeyReleased
+
+    private void txtDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDataActionPerformed
+      DataDoDia();
+    }//GEN-LAST:event_txtDataActionPerformed
+    
+    //Método para limpar as linhas da tabela
+    public void limpalinhas() {
+        DefaultTableModel dm = (DefaultTableModel) tbDespesas.getModel();
+        while (dm.getRowCount() > 0) {
+            dm.removeRow(0);
+        }
+    }
+    
+//Método sem retorno para visualizar as despesas 
      public void visualizarDespesas(){
             //Instanciando a classe DespesaDao;
          DespesaDao despesas =new DespesaDao();
@@ -370,6 +552,19 @@ public class Despesas extends javax.swing.JFrame {
               
         }
      }
+     //Método para avisa se o campo de código está vázio
+      public boolean avisoParaCampoDoCodigoVazio(){
+          
+          boolean aviso=false;
+          
+          if(txtCodDespesa.getText().isEmpty()){
+             aviso=true;
+          }
+        return aviso;
+          
+      }
+     
+     
     //Método para alterar os dados da despesa
     public void alterarDespesa(){
         //Instanciando a  classe de DespesaDao para construir um objeto 
@@ -380,18 +575,19 @@ public class Despesas extends javax.swing.JFrame {
         dps.setDescricao(txtDescricao.getText());
         dps.setTotal(Double.parseDouble(txtTotal.getText()));
         dps.setData(txtData.getText());
-        dps.setCodDespesa(txtCodDespesa.getText());
+        dps.setCodDespesa(Integer.parseInt(txtCodDespesa.getText()));
       
         //Uma objeto com seu método de atualizarDespesa receber um objeto de despesa 
         alt.atualizarDespesa(dps);
     }
     
+    //Deletar despesas pelo código da despesa
      public void ApagarDespesa(){
           //Instanciando a  classe de DespesaDao para construir um objeto 
         DespesaDao deleta = new DespesaDao();
         //Instanciando a  classe de DespesaModel para criar um objeto do tipo despesa
         DespesaModel dps =new DespesaModel();
-        dps.setCodDespesa(txtCodDespesa.getText());
+        dps.setCodDespesa(Integer.parseInt(txtCodDespesa.getText()));
         deleta.excluirDespesa(dps);
      }
     private void formWindowOpened(java.awt.event.WindowEvent evt) {                                  
@@ -450,7 +646,6 @@ public class Despesas extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Deleta;
     private javax.swing.JLabel LabelTotalDeTodasDespesas;
-    private javax.swing.JButton Realizarcalculor;
     private javax.swing.JButton addDespesas;
     private javax.swing.JButton alterar2;
     private javax.swing.JLabel jLabel1;

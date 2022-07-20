@@ -2,7 +2,6 @@
 package Dao;
 
 import Conexao.Conexao_BD;
-import Model.ClienteModel;
 import Model.RelatorioModel;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -40,7 +39,7 @@ public class RelatorioDao {
                  //Instânciando  classe RelatorioModel;
                  RelatorioModel relat = new RelatorioModel();
                  //Setando os Valores;
-                relat.setCodRelatorio(rst.getString("codRela"));
+                relat.setCodRelatorio(rst.getInt("codRela"));
                 relat.setValorDespesa(rst.getDouble("Despesa"));
                 relat.setValorLucro(rst.getDouble("Lucro"));
                 relat.setValorInvestido(rst.getDouble("Investimento"));
@@ -82,17 +81,16 @@ public class RelatorioDao {
        
         try {
             //Comando para inserir os dados do relatório no banco de dados;/,
-            String sql="INSERT INTO relatorio(codRela,Despesa,Lucro,Investimento,ValorDeTodoProdutoVendido,capital,data) VALUES(?,?,?,?,?,?,?)";
+            String sql="INSERT INTO relatorio(Despesa,Lucro,Investimento,ValorDeTodoProdutoVendido,capital,data) VALUES(?,?,?,?,?,?)";
              
             PreparedStatement patm = conn.prepareStatement(sql);
             //Passando como paramentros os atributos do relatório da classe RelatorioModel;
-            patm.setString(1, relat.getCodRelatorio());
-            patm.setDouble(2, relat.getValorDespesa());
-            patm.setDouble(3, relat.getValorLucro());
-            patm.setDouble(4, relat.getValorInvestido());
-            patm.setDouble(5, relat.getValorDeTodosProdutosVendidos());
-            patm.setDouble(6, relat.getCapital());
-            patm.setString(7, relat.getData());
+            patm.setDouble(1, relat.getValorDespesa());
+            patm.setDouble(2, relat.getValorLucro());
+            patm.setDouble(3, relat.getValorInvestido());
+            patm.setDouble(4, relat.getValorDeTodosProdutosVendidos());
+            patm.setDouble(5, relat.getCapital());
+            patm.setString(6, relat.getData());
             
             //Executar;
             int upd=patm.executeUpdate();
@@ -137,14 +135,14 @@ public class RelatorioDao {
             patm.setDouble(4,relatorio.getValorDeTodosProdutosVendidos());
             patm.setDouble(5,relatorio.getCapital());
             patm.setString(6,relatorio.getData());
-            patm.setString(7,relatorio.getCodRelatorio());
+            patm.setInt(7,relatorio.getCodRelatorio());
         
             //Executar;
              int res= patm.executeUpdate();
             
             if(res>0){
                 //Mensagem para mostrar para usuário caso esteja tudo correto!;
-                JOptionPane.showMessageDialog(null,"Dados do relatório alterado comsucesso!","Sucesso!",JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null,"Dados do relatório atualizado com sucesso!","Sucesso!",JOptionPane.INFORMATION_MESSAGE);
             }else{
                 //Mensagem oara exibir para usuário caso tenha informações incorretas;
                 JOptionPane.showMessageDialog(null,"Dados não alterado !","Error",JOptionPane.ERROR_MESSAGE);
@@ -177,7 +175,7 @@ public class RelatorioDao {
             PreparedStatement patm = conn.prepareStatement(sql);
              
             //Passando em paramentros código de relatorio;
-            patm.setString(1, relatorio.getCodRelatorio());
+            patm.setInt(1, relatorio.getCodRelatorio());
             
             //Executar;
             int res = patm.executeUpdate();

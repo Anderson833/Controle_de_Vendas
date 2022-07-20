@@ -28,7 +28,7 @@ public class Conexao_BD {
             Class.forName("com.mysql.jdbc.Driver");
 
             //Criando uma Conexão com Banco De Dados;
-            conexao = DriverManager.getConnection("jdbc:mysql://localhost:3306/estoque_venda", "root", "");
+            conexao = DriverManager.getConnection("jdbc:mysql://localhost:3306/controle_d_venda", "root", "");
 
         } catch (Exception e) {
             // Caso ocorrer algum error exibir essa mensagem;

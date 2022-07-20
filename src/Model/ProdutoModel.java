@@ -8,72 +8,54 @@ package Model;
 public class ProdutoModel {
     
     //Atributos do Produto
-    private String codProd;
+    private int codProd;
     private String descricao;
     private String produto;
     private double ValorDeRevenda;
     private double valorDcomprar;
     private int Qtd_estoquer;
+    private int codFornec;
 
-    /**
-     * @return the codProd
-     */
-    public String getCodProd() {
+    //Métodos getters e setters
+    public int getCodProd() {
         return codProd;
     }
 
-    /**
-     * @param codProd the codProd to set
-     */
-    public void setCodProd(String codProd) {
+   
+    public void setCodProd(int codProd) {
         this.codProd = codProd;
     }
 
-    /**
-     * @return the descricao
-     */
+    
     public String getDescricao() {
         return descricao;
     }
 
-    /**
-     * @param descricao the descricao to set
-     */
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
 
-    /**
-     * @return the produto
-     */
+   
     public String getProduto() {
         return produto;
     }
 
-    /**
-     * @param produto the produto to set
-     */
+  
     public void setProduto(String produto) {
         this.produto = produto;
     }
 
-    /**
-     * @return the ValorDeRevenda
-     */
+   
     public double getValorDeRevenda() {
         return ValorDeRevenda;
     }
 
-    /**
-     * @param ValorDeRevenda the ValorDeRevenda to set
-     */
+    
     public void setValorDeRevenda(double ValorDeRevenda) {
         this.ValorDeRevenda = ValorDeRevenda;
     }
 
-    /**
-     * @return the valorDcomprar
-     */
+   
     public double getValorDcomprar() {
         return valorDcomprar;
     }
@@ -95,10 +77,24 @@ public class ProdutoModel {
 
     @Override
     public String toString() {
-        return getCodProd();
+        return String.valueOf(getCodProd());
+    }
+
+    /**
+     * @return the codFornec
+     */
+    public int getCodFornec() {
+        return codFornec;
+    }
+
+    /**
+     * @param codFornec the codFornec to set
+     */
+    public void setCodFornec(int codFornec) {
+        this.codFornec = codFornec;
     }
 
      
-    
+   
   
 }

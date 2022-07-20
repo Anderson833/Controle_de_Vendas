@@ -27,19 +27,14 @@ public class FornecedorDao {
        
         try {
             //Comando para inserir os dados do fornecedor no banco de dados;
-            String sql="INSERT INTO fornecedor(codFornec,nome,endereco,contato,produto,valorDvd,valorDcompra,Qtd_Prod,data)VALUES(?,?,?,?,?,?,?,?,?)";
+            String sql="INSERT INTO fornecedor(nome,endereco,contato,data)VALUES(?,?,?,?)";
              
             PreparedStatement patm = conn.prepareStatement(sql);
             //Passando como paramentros os atributos do fornecedor da classe FornecedorModel;
-            patm.setString(1, fornec.getCodFornec());
-            patm.setString(2, fornec.getNomeFornec());
-            patm.setString(3, fornec.getEndereco());
-            patm.setString(4, fornec.getContato());
-            patm.setString(5, fornec.getNomeproduto());
-            patm.setDouble(6, fornec.getValorDeRevenda());
-            patm.setDouble(7, fornec.getValorDcomprar());
-            patm.setInt(8, fornec.getQtd_estoque());
-            patm.setString(9, fornec.getData());
+            patm.setString(1, fornec.getNomeFornec());
+            patm.setString(2, fornec.getEndereco());
+            patm.setString(3, fornec.getContato());
+            patm.setString(4, fornec.getData());
            
             
             //Executar;
@@ -90,14 +85,10 @@ public class FornecedorDao {
                  //Instânciando  classe FornecedorModel;
                  FornecedorModel fornec = new FornecedorModel();
                  //Setando os Valores;
-                 fornec.setCodFornec(rst.getString("codFornec"));
+                 fornec.setCodFornec(rst.getInt("codFornec"));
                  fornec.setNomeFornec(rst.getString("nome"));
                  fornec.setEndereco(rst.getString("endereco"));
                  fornec.setContato(rst.getString("contato"));
-                 fornec.setNomeproduto(rst.getString("produto"));
-                 fornec.setValorDeRevenda(rst.getDouble("valorDvd"));
-                 fornec.setValorDcomprar(rst.getDouble("valorDcompra"));
-                 fornec.setQtd_estoque(rst.getInt("Qtd_Prod"));
                  fornec.setData(rst.getString("data"));
               
                
@@ -133,7 +124,7 @@ public class FornecedorDao {
                try {
            
           //Comando para que realizar atualização no banco de dados;
-            String sql="UPDATE fornecedor SET nome=?,endereco=?,contato=?,produto=?,valorDvd=?,valorDcompra=?,Qtd_Prod=?,data=? WHERE codFornec=?";
+            String sql="UPDATE fornecedor SET nome=?,endereco=?,contato=?,data=? WHERE codFornec=?";
             
             
             
@@ -143,12 +134,9 @@ public class FornecedorDao {
             patm.setString(1,fornec.getNomeFornec());
             patm.setString(2, fornec.getEndereco());
             patm.setString(3,fornec.getContato());
-            patm.setString(4,fornec.getNomeproduto());
-            patm.setDouble(5,fornec.getValorDeRevenda());
-            patm.setDouble(6,fornec.getValorDcomprar());
-            patm.setInt(7,fornec.getQtd_estoque());
-            patm.setString(8, fornec.getData());
-            patm.setString(9, fornec.getCodFornec());
+            patm.setString(4, fornec.getData());
+            patm.setInt(5, fornec.getCodFornec());
+           
             //Executar;
              int res= patm.executeUpdate();
             
@@ -188,7 +176,7 @@ public class FornecedorDao {
             PreparedStatement patm = conn.prepareStatement(sql);
              
             //Passando em paramentros código do fornecedor;
-            patm.setString(1,fornec.getCodFornec());
+            patm.setInt(1,fornec.getCodFornec());
             
             //Executar;
             int res = patm.executeUpdate();

@@ -40,9 +40,9 @@ public class ComprovanteDao {
                  //Instânciando  classe ComprovateModel;
                  ComprovanteModel comp = new ComprovanteModel();
                  //Setando os Valores;
-                 comp.setCodDetalhe(rst.getString("codDetalh"));
-                 comp.setCodVenda(rst.getString("codVendar"));
-                comp.setCodCli(rst.getString("codCli"));
+                 comp.setCodDetalhe(rst.getInt("codDetalh"));
+                 comp.setCodVenda(rst.getInt("codVenda"));
+                comp.setCodCli(rst.getInt("codCli"));
                 comp.setValorTotal(rst.getDouble("total"));
                comp.setData(rst.getString("data"));
                listComprov.add(comp);
@@ -68,7 +68,7 @@ public class ComprovanteDao {
          
      }
     
-       //Método para visualizar todos os dados da comprar pelo código;
+       //Método para visualizar todos os dados da venda pelo código;
      public List<VendaModel> visualizarComprovantePeloIDCOMPRAR(VendaModel num){
         //Criando uma Connection com Classe Conexao_BD; 
         Connection conn=Conexao_BD.getConnection();
@@ -79,7 +79,7 @@ public class ComprovanteDao {
          try {
              
              //Selecionando toda tabela vendas pelo código da venda;
-             String sql="SELECT * FROM vendas WHERE codVendar="+num.getCodVenda()+"";
+             String sql="SELECT * FROM vendas WHERE codVenda="+num.getCodVenda()+"";
              
              PreparedStatement patm = conn.prepareStatement(sql);
              
@@ -90,10 +90,10 @@ public class ComprovanteDao {
                //Instânciando  classe VendaModel;
                  VendaModel venda = new VendaModel();
                  //Setando os Valores;
-               venda.setIdDeleta(rst.getInt("codExcluir"));
-               venda.setCodVenda(rst.getString("codVendar"));
-               venda.setCodCli(rst.getString("codCli")); 
-               venda.setCodProd(rst.getString("codProd"));
+               venda.setCodVenda(rst.getInt("codDetalh"));
+               venda.setCodVenda(rst.getInt("codVenda"));
+               venda.setCodCli(rst.getInt("codCli")); 
+               venda.setCodProd(rst.getInt("codProd"));
                venda.setQtdProd(rst.getInt("Qtd"));
                venda.setValorUnit(rst.getDouble("valorUnit"));
                venda.setValorTotal(rst.getDouble("total"));
@@ -132,13 +132,14 @@ public class ComprovanteDao {
        
         try {
             //Inserindo os dados  na tabela detalhe no banco de dados;
-            String sql="INSERT INTO detalhe(codDetalh,codVendar,codCli,total,data) VALUES(?,?,?,?,?)";
+            String sql="INSERT INTO detalhe(codDetalh,codVenda,codCli,total,data) VALUES(?,?,?,?,?)";
              
             PreparedStatement patm = conn.prepareStatement(sql);
             //Passando como paramentros os atributos da classe ComprovanteModel;
-            patm.setString(1, comprov.getCodDetalhe());
-            patm.setString(2, comprov.getCodVenda());
-            patm.setString(3, comprov.getCodCli());
+          
+            patm.setInt(1, comprov.getCodDetalhe());
+            patm.setInt(2, comprov.getCodVenda());
+            patm.setInt(3, comprov.getCodCli());
             patm.setDouble(4, comprov.getValorTotal());
             patm.setString(5, comprov.getData());
             //Executar;
@@ -184,7 +185,7 @@ public class ComprovanteDao {
             PreparedStatement patm = conn.prepareStatement(sql);
              
             //Passando em paramentros código de excluir;
-            patm.setString(1, comp.getCodDetalhe());
+            patm.setInt(1, comp.getCodDetalhe());
             
             //Executar;
             int res = patm.executeUpdate();
@@ -232,10 +233,10 @@ public class ComprovanteDao {
                  //Instânciando  classe VendaModel;
                  VendaModel venda = new VendaModel();
                  //Setando os Valores;
-               venda.setIdDeleta(rst.getInt("codExcluir"));
-               venda.setCodVenda(rst.getString("codVenda"));
-               venda.setCodCli(rst.getString("codCli")); 
-               venda.setCodProd(rst.getString("codProd"));
+               venda.setCodVenda(rst.getInt("codVenda"));
+               venda.setCodItens(rst.getInt("codItens"));
+               venda.setCodCli(rst.getInt("codCli")); 
+               venda.setCodProd(rst.getInt("codProd"));
                venda.setQtdProd(rst.getInt("Qtd"));
                venda.setValorUnit(rst.getDouble("valorUnit"));
                venda.setValorTotal(rst.getDouble("total"));
@@ -284,10 +285,10 @@ public class ComprovanteDao {
                   //Instânciando  classe VendaModel;
                  VendaModel venda = new VendaModel();
                  //Setando os Valores;
-               venda.setIdDeleta(rst.getInt("codExcluir"));
-               venda.setCodVenda(rst.getString("codVendar"));
-               venda.setCodCli(rst.getString("codCli")); 
-               venda.setCodProd(rst.getString("codProd"));
+               venda.setCodVenda(rst.getInt("codVenda"));
+               venda.setCodItens(rst.getInt("codItens"));
+               venda.setCodCli(rst.getInt("codCli")); 
+               venda.setCodProd(rst.getInt("codProd"));
                venda.setQtdProd(rst.getInt("Qtd"));
                venda.setValorUnit(rst.getDouble("valorUnit"));
                venda.setValorTotal(rst.getDouble("total"));
@@ -468,7 +469,7 @@ public class ComprovanteDao {
             PreparedStatement patm = conn.prepareStatement(sql);
              
             //Passando em paramentros códiogo;
-            patm.setString(1, md.getCodDetalhe());
+            patm.setInt(1, md.getCodDetalhe());
             
             //Executar;
             int res = patm.executeUpdate();

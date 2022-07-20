@@ -9,7 +9,7 @@ public class UsuarioModel {
     
     //Atributos do usuário;
     
-    private String idUsu;
+    private int idUsu;
     private String nome;
     private String endereco;
     private String telefone;
@@ -47,10 +47,10 @@ public class UsuarioModel {
     }
     
     
-    public String getIdUsu() {
+    public int getIdUsu() {
         return idUsu;
     }
-    public void setIdUsu(String idUsu) {
+    public void setIdUsu(int idUsu) {
         this.idUsu = idUsu;
     }
    
@@ -75,7 +75,7 @@ public class UsuarioModel {
 
     @Override
     public String toString() {
-        return this.getIdUsu();
+        return String.valueOf(this.getIdUsu());
     }
      
 }

@@ -8,22 +8,18 @@ package Model;
 public class FornecedorModel {
     
   // Os Atributos que contem para fornecedor;
-    private String codFornec;
+    private int codFornec;
     private String nomeFornec;
     private String endereco;
     private String contato;
-    private String Nomeproduto;
-    private double valorDeRevenda;
-    private double valorDcomprar;
-    private int Qtd_estoque;
     private String data;
    
-    public String getCodFornec() {
+    public int getCodFornec() {
         return codFornec;
     }
 
    
-    public void setCodFornec(String codFornec) {
+    public void setCodFornec(int codFornec) {
         this.codFornec = codFornec;
     }
 
@@ -54,46 +50,6 @@ public class FornecedorModel {
         this.contato = contato;
     }
 
-   
-    public String getNomeproduto() {
-        return Nomeproduto;
-    }
-
-   
-    public void setNomeproduto(String Nomeproduto) {
-        this.Nomeproduto = Nomeproduto;
-    }
-
-  
-    public double getValorDeRevenda() {
-        return valorDeRevenda;
-    }
-
-   
-    public void setValorDeRevenda(double valorDeRevenda) {
-        this.valorDeRevenda = valorDeRevenda;
-    }
-
-   
-    public double getValorDcomprar() {
-        return valorDcomprar;
-    }
-
-   
-    public void setValorDcomprar(double valorDcomprar) {
-        this.valorDcomprar = valorDcomprar;
-    }
-
-  
-    public int getQtd_estoque() {
-        return Qtd_estoque;
-    }
-
-   
-    public void setQtd_estoque(int Qtd_estoque) {
-        this.Qtd_estoque = Qtd_estoque;
-    }
-
     
     public String getData() {
         return data;
@@ -102,6 +58,11 @@ public class FornecedorModel {
     
     public void setData(String data) {
         this.data = data;
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(this.getCodFornec());
     }
     
     

@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package View;
 
 import Conexao.Conexao_BD;
@@ -44,7 +40,7 @@ public class Comprovante extends javax.swing.JFrame {
         try {
             Connection Conn = Conexao_BD.getConnection();
             //Comando para fazer a soma de toda coluna Valor Total no banco de dados;
-            String sql = "SELECT round(sum(total),2) FROM vendas ";
+            String sql = "SELECT round(sum(total),2) FROM item ";
    
             
             PreparedStatement Patm = Conn.prepareStatement(sql);
@@ -82,8 +78,99 @@ public class Comprovante extends javax.swing.JFrame {
         
      }
     
+    //Método para seta os valor total  dos itens no campo de texto e na label;
+     public void setaValorTotalDosItensPelaDataEspecifica() {
+         
+         DecimalFormat formater = new DecimalFormat("#0.00");
+        
+         
+        try {
+            Connection Conn = Conexao_BD.getConnection();
+            //Comando para fazer a soma de toda coluna Valor Total no banco de dados;
+            String sql = "SELECT round(sum(total),2) FROM item where data='"+txtData.getText()+"'";
+   
+            
+            PreparedStatement Patm = Conn.prepareStatement(sql);
+         
+            ResultSet Rst = Patm.executeQuery();
+            
+           
+         
+
+            while (Rst.next()) {
+
+                     //Pegando o valor da soma
+               double total= Rst.getDouble("round(sum(total),2)");
+                    //setando o valor no campo de texto e na label; 
+                     Valortt.setText(formater.format(total));
+                 
+           
+
+            }
+              //Fechando conexão ResultSet;
+             Rst.close();
+             
+             //Fechando conexão PreparedStatement;
+            Patm.close();
+            
+            //Fechando conexão Connection;
+            Conn.close();
+          
+
+        } catch (SQLException e) {
+             //caso de error mostrar essa mensagem;
+            JOptionPane.showMessageDialog(null, "Valor não setado! ");
+        }
+        
+        
+     }
     
-    
+    //Método para seta os valor total  dos itens no campo de texto e na label;
+     public void setaValorTotalPelaDataDeInicio_Final() {
+         
+         DecimalFormat formater = new DecimalFormat("#0.00");
+        
+         
+        try {
+            Connection Conn = Conexao_BD.getConnection();
+            //Comando para fazer a soma de toda coluna Valor Total no banco de dados;
+            String sql = "SELECT round(sum(total),2) FROM item data >'"+txtdataInicio+"' and data<'"+txtdataFinal+"'";
+   
+            
+            PreparedStatement Patm = Conn.prepareStatement(sql);
+         
+            ResultSet Rst = Patm.executeQuery();
+            
+           
+         
+
+            while (Rst.next()) {
+
+                     //Pegando o valor da soma
+               double total= Rst.getDouble("round(sum(total),2)");
+                    //setando o valor no campo de texto e na label; 
+                     Valortt.setText(formater.format(total));
+                 
+           
+
+            }
+              //Fechando conexão ResultSet;
+             Rst.close();
+             
+             //Fechando conexão PreparedStatement;
+            Patm.close();
+            
+            //Fechando conexão Connection;
+            Conn.close();
+          
+
+        } catch (SQLException e) {
+             //caso de error mostrar essa mensagem;
+            JOptionPane.showMessageDialog(null, "Valor não setado! ");
+        }
+        
+        
+     }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -99,14 +186,13 @@ public class Comprovante extends javax.swing.JFrame {
         tabelaVend = new javax.swing.JTable();
         Valortt = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        dat = new javax.swing.JTextField();
+        txtData = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         txtdataInicio = new javax.swing.JTextField();
         txtdataFinal = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        visualizar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Visualização de todas vendas");
@@ -155,9 +241,9 @@ public class Comprovante extends javax.swing.JFrame {
         jLabel1.setText("Valor Total =");
         jLabel1.setAlignmentX(10.0F);
 
-        dat.addActionListener(new java.awt.event.ActionListener() {
+        txtData.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                datActionPerformed(evt);
+                txtDataActionPerformed(evt);
             }
         });
 
@@ -173,17 +259,10 @@ public class Comprovante extends javax.swing.JFrame {
 
         jLabel4.setText("Data Final:");
 
-        jButton1.setText("DataIF");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        visualizar.setText("Visualizar");
+        visualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
-        jButton2.setText("delet");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                visualizarActionPerformed(evt);
             }
         });
 
@@ -202,21 +281,11 @@ public class Comprovante extends javax.swing.JFrame {
                                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(0, 0, Short.MAX_VALUE)
-                                        .addComponent(jButton1))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(dat, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 148, Short.MAX_VALUE)
-                                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(Valortt, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(57, 57, 57)
-                                        .addComponent(jButton2)))
+                                .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 148, Short.MAX_VALUE)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(Valortt, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(157, 157, 157))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -224,13 +293,12 @@ public class Comprovante extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(txtdataInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(35, 35, 35)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(txtdataFinal)
-                                        .addGap(634, 634, 634))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(0, 0, Short.MAX_VALUE)))))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(txtdataFinal, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(64, 64, 64)
+                                .addComponent(visualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)))
                         .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
@@ -248,24 +316,19 @@ public class Comprovante extends javax.swing.JFrame {
                         .addGap(22, 22, 22)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(dat, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 14, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtdataInicio, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
-                            .addComponent(jButton1)
-                            .addComponent(txtdataFinal))
-                        .addGap(20, 20, 20))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton2)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtdataInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtdataFinal, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(visualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -302,28 +365,23 @@ public class Comprovante extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_ValorttActionPerformed
 
-    private void datActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_datActionPerformed
+    private void txtDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDataActionPerformed
         
        visualizarPeladate();
-       setaValorTotalpelaData();
-    }//GEN-LAST:event_datActionPerformed
+       setaValorTotalDosItensPelaDataEspecifica();
+      // setaValorTotalpelaData();
+    }//GEN-LAST:event_txtDataActionPerformed
 
     private void txtdataFinalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtdataFinalActionPerformed
        
-        visualizarDataInicioDataFinal();
-        
+       
     }//GEN-LAST:event_txtdataFinalActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       visualizarDataInicioDataFinal();
-       setaValorTotalpelaDataComecEfinal();
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-      
-        deletarVendaPeloCodigo();
-        
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void visualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_visualizarActionPerformed
+    
+        visualizarDataInicioDataFinal();
+     setaValorTotalpelaDataComecoEfinal();
+    }//GEN-LAST:event_visualizarActionPerformed
    
     
     //Método para  deletar vendas;
@@ -334,15 +392,13 @@ public class Comprovante extends javax.swing.JFrame {
         
         //Instânciando a classe VendaModel;
         VendaModel cp = new VendaModel();
-        cp.setIdDeleta(Integer.parseInt(dat.getText()));
+        cp.setCodVenda(Integer.parseInt(txtData.getText()));
         // colocando objeto cp no método deletar Itens da classe ComprovanteDao ;
         dao.deletaVendaPeloCodigo(cp);
 
     }
     
-    /**
-     * @param args the command line arguments
-     */
+    
     
  
     // Visualizar os Detalhes da compra;
@@ -352,10 +408,9 @@ public class Comprovante extends javax.swing.JFrame {
             modelo.setNumRows(0);
             //Instânciando a classe ComprovanteDao;
             VendaDao dao = new VendaDao();
-            //Um Laço de repetição para lista todas compras na tabela comprar no banco de dados; 
+            //Um Laço de repetição para lista todas vendas que está  no banco de dados armazenadar; 
             for (VendaModel item : dao.visualizarVenda()) {
                 modelo.addRow(new Object[]{
-                    
                 item.getIdDeleta(),
                 item.getCodVenda(),
                 item.getCodCli(),
@@ -363,8 +418,9 @@ public class Comprovante extends javax.swing.JFrame {
                 item.getQtdProd(),
                 item.getValorUnit(),
                 item.getValorTotal(),
-                item.getData()
-                
+                item.getData() 
+               
+               
                 });
            }
             
@@ -380,16 +436,17 @@ public class Comprovante extends javax.swing.JFrame {
             //Instânciando a classe ComprovanteDao;
             VendaDao dao = new VendaDao();
             //Um Laço de repetição para lista todas compras na tabela comprar no banco de dados; 
-            for (VendaModel item : dao.visualizarPelaData(dat.getText())) {
+            for (VendaModel item : dao.visualizarPelaData(txtData.getText())) {
                 modelo.addRow(new Object[]{
-                 item.getIdDeleta(),
+                item.getIdDeleta(),
                 item.getCodVenda(),
                 item.getCodCli(),
                 item.getCodProd(),
                 item.getQtdProd(),
                 item.getValorUnit(),
                 item.getValorTotal(),
-                item.getData()
+                item.getData() 
+              
                 
                 });
            }
@@ -406,8 +463,9 @@ public class Comprovante extends javax.swing.JFrame {
             //Instânciando a classe ComprovanteDao;
             VendaDao dao = new VendaDao();
             //Um Laço de repetição para lista todas compras na tabela comprar no banco de dados; 
-            for (VendaModel item : dao.visualizarDataComecoFim(txtdataInicio.getText(),txtdataFinal.getText())) {
+            for (VendaModel item : dao.visualizarDataComecoEfinal(txtdataInicio.getText(),txtdataFinal.getText())) {
                 modelo.addRow(new Object[]{
+               
                 item.getIdDeleta(),
                 item.getCodVenda(),
                 item.getCodCli(),
@@ -438,7 +496,7 @@ public class Comprovante extends javax.swing.JFrame {
         try {
             Connection Conn = Conexao_BD.getConnection();
             //Comando para fazer a soma de toda coluna Valor Total no banco de dados;
-            String sql = "select round(sum(total),2) from vendas where data='"+dat.getText()+"'";
+            String sql = "select round(sum(total),2) from item where data='"+txtData.getText()+"'";
    
             
             PreparedStatement Patm = Conn.prepareStatement(sql);
@@ -484,7 +542,7 @@ public class Comprovante extends javax.swing.JFrame {
         try {
             Connection Conn = Conexao_BD.getConnection();
             //Comando para fazer a soma de toda coluna Valor Total no banco de dados;
-            String sql = "select codExcluir, codVendar,codCli, codProd,Qtd,valorUnit,total,data from vendas where data >'"+txtdataInicio+"' and data<'"+txtdataFinal+"'";
+            String sql = "select codItem,codVenda,codCli, codProd,Qtd,valorUnit,total,data from item where data >'"+txtdataInicio+"' and data<'"+txtdataFinal+"'";
    
             
             PreparedStatement Patm = Conn.prepareStatement(sql);
@@ -521,7 +579,7 @@ public class Comprovante extends javax.swing.JFrame {
         
      }
      //Método para seta os valor total  dos itens no campo de texto e na label;
-     public void setaValorTotalpelaDataComecEfinal() {
+     public void setaValorTotalpelaDataComecoEfinal() {
          
          DecimalFormat formater = new DecimalFormat("#0.00");
         
@@ -529,7 +587,7 @@ public class Comprovante extends javax.swing.JFrame {
         try {
             Connection Conn = Conexao_BD.getConnection();
             //Comando para fazer a soma de toda coluna Valor Total no banco de dados;
-            String sql = "select round(sum(total),2) from vendas where data>'"+txtdataInicio.getText()+"' and data <'"+txtdataFinal.getText()+"'";
+            String sql = "select round(sum(total),2) from item where data>'"+txtdataInicio.getText()+"' and data <'"+txtdataFinal.getText()+"'";
    
             
             PreparedStatement Patm = Conn.prepareStatement(sql);
@@ -604,9 +662,6 @@ public class Comprovante extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField Valortt;
-    private javax.swing.JTextField dat;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -614,7 +669,9 @@ public class Comprovante extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tabelaVend;
+    private javax.swing.JTextField txtData;
     private javax.swing.JTextField txtdataFinal;
     private javax.swing.JTextField txtdataInicio;
+    private javax.swing.JButton visualizar;
     // End of variables declaration//GEN-END:variables
 }

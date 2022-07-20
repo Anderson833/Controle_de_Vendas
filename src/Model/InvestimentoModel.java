@@ -9,7 +9,7 @@ package Model;
  */
 public class InvestimentoModel {
     // Os atributos de investimento
-    private String codInvestimento;
+    private int codInvestimento;
     private String nomeProduto;
     private int  QuantidadeProduto;
     private double ValorDeComprar;
@@ -20,11 +20,11 @@ public class InvestimentoModel {
     private String data;
 
     // Os métodos getters e setters
-    public String getCodInvestimento() {
+    public int getCodInvestimento() {
         return codInvestimento;
     }
 
-    public void setCodInvestimento(String codInvestimento) {
+    public void setCodInvestimento(int codInvestimento) {
         this.codInvestimento = codInvestimento;
     }
 

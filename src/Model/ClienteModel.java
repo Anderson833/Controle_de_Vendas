@@ -9,33 +9,25 @@ public class ClienteModel {
     
     
     //Atributos
-    private String codCli;
-    private String Idsu;
+    private  int codCli;
     private String nome;
     private String endereco;
     private String telefone;
     //Os Métodos gettres e settres  
-    public String getCodCli() {
+    public int getCodCli() {
         return codCli;
     }
 
   
-    public void setCodCli(String codCli) {
+    public void setCodCli(int codCli) {
         this.codCli = codCli;
     }
   
-    public String getIdsu() {
-        return Idsu;
-    }
+ 
 
    
-    public void setIdsu(String Idsu) {
-        this.Idsu = Idsu;
-    }
-
-    @Override
     public String toString() {
-        return getCodCli();
+        return String.valueOf(getCodCli());
     }
     
      //Métodos get e set
