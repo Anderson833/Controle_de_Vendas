@@ -141,7 +141,7 @@ public class Fornecedor extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tabelaFornec);
 
         visualizarFornec.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icone/visualizador.png"))); // NOI18N
-        visualizarFornec.setText("Visualizar");
+        visualizarFornec.setText("Listar Tudo");
         visualizarFornec.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         visualizarFornec.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

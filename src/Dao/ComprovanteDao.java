@@ -79,7 +79,7 @@ public class ComprovanteDao {
          try {
              
              //Selecionando toda tabela vendas pelo código da venda;
-             String sql="SELECT * FROM vendas WHERE codVenda="+num.getCodVenda()+"";
+             String sql="SELECT * FROM item WHERE codVenda="+num.getCodVenda()+"";
              
              PreparedStatement patm = conn.prepareStatement(sql);
              

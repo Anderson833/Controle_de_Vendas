@@ -30,7 +30,8 @@ public class Cliente extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         //Método para proíbir letras
-        ApenasNumeros();
+       
+        visualizarClientes();
        
     }
      int c=0;
@@ -70,6 +71,12 @@ public class Cliente extends javax.swing.JFrame {
 
         jLabel2.setText("Nome:");
 
+        txtNome.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtNomeKeyReleased(evt);
+            }
+        });
+
         jLabel4.setText("Endereço:");
 
         txtEndereco.addActionListener(new java.awt.event.ActionListener() {
@@ -83,6 +90,11 @@ public class Cliente extends javax.swing.JFrame {
         txtTelefone.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtTelefoneActionPerformed(evt);
+            }
+        });
+        txtTelefone.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtTelefoneKeyReleased(evt);
             }
         });
 
@@ -105,7 +117,7 @@ public class Cliente extends javax.swing.JFrame {
         });
 
         exibirDados.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icone/visualizador.png"))); // NOI18N
-        exibirDados.setText("Ver Dados");
+        exibirDados.setText("Listar Tudo");
         exibirDados.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         exibirDados.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -195,22 +207,22 @@ public class Cliente extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(122, 122, 122)
                 .addComponent(AddCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
+                .addGap(69, 69, 69)
                 .addComponent(delete, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btlimp, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
-                .addComponent(exibirDados, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(67, Short.MAX_VALUE))
+                .addGap(57, 57, 57)
+                .addComponent(exibirDados, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(57, 57, 57))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(161, 161, 161)
-                .addComponent(jScrollPane1)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 731, Short.MAX_VALUE)
                 .addGap(162, 162, 162))
         );
         jPanel1Layout.setVerticalGroup(
@@ -241,7 +253,7 @@ public class Cliente extends javax.swing.JFrame {
                     .addComponent(btAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(exibirDados, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btlimp, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(17, 17, 17))
+                .addGap(26, 26, 26))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -403,6 +415,50 @@ public class Cliente extends javax.swing.JFrame {
         limpalinha();
     }//GEN-LAST:event_btlimpActionPerformed
 
+    private void txtTelefoneKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefoneKeyReleased
+       //condição para permitir apenas números
+        if(sonumeros(txtTelefone.getText())){
+           
+        }else{
+            
+             if(txtTelefone.getText().isEmpty()){
+                
+            }else{
+              JOptionPane.showMessageDialog(null, "Nesse campo você só poder colocar números! ","Por favor: ",JOptionPane.ERROR_MESSAGE);
+            }
+           
+           txtTelefone.setText("");
+           txtTelefone.requestFocus();
+         }
+    }//GEN-LAST:event_txtTelefoneKeyReleased
+
+    private void txtNomeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNomeKeyReleased
+         //condição para impedir números
+        if(checkLetters(txtNome.getText())){
+          
+        }else{
+             if(txtNome.getText().isEmpty()){
+                
+            }else{
+      JOptionPane.showMessageDialog(null, "Nesse campo você só poder colocar Letras! ","Por favor: ",JOptionPane.ERROR_MESSAGE);
+         txtNome.setText("");
+           txtNome.requestFocus();
+             }
+        }
+
+    }//GEN-LAST:event_txtNomeKeyReleased
+ public boolean sonumeros(String str){
+        
+         return str.matches("^[0.-9 ]+");
+        
+      // return s.matches("[^0-9]+");
+    }
+    
+    //metodo para digita só nomes
+    public boolean checkLetters(String str) {
+
+        return str.matches("[a-zA-Z é ê ô ó á!úûí õ ç â~,.ã^~,.]+");
+    }
     //Método para limpar os campos de textos;
     public void limpar() {
         CodCli.setText("");

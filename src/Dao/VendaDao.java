@@ -122,14 +122,14 @@ public class VendaDao {
      
      //Método para deletar item no banco de dados pelo código do Venda;
       public void deletaVendaPeloCodigo(VendaModel vd){
-          
+           //
            //Criando uma Connection com Classe Conexao_BD; 
         Connection conn=Conexao_BD.getConnection();
              
         try {
 
           // Comando que  Deletar a venda pelo código;
-            String sql = "DELETE FROM items WHERE codItem=?";
+            String sql = "DELETE FROM item WHERE codItem=?";
 
             PreparedStatement patm = conn.prepareStatement(sql);
              
@@ -201,6 +201,47 @@ public class VendaDao {
         
       }
       
+       //Método para deletar o codigo da venda na tabela vendas;
+      public void deletaCodigoDaVenda(VendaModel vd){
+           //
+           //Criando uma Connection com Classe Conexao_BD; 
+        Connection conn=Conexao_BD.getConnection();
+             
+        try {
+
+          // Comando que  Deletar o codigo pelo código;
+            String sql = "DELETE FROM vendas WHERE codVenda=?";
+
+            PreparedStatement patm = conn.prepareStatement(sql);
+             
+            //Passando em paramentros código da venda;
+            patm.setInt(1, vd.getCodVenda());
+            
+            //Executar;
+            int res = patm.executeUpdate();
+
+            if (res > 0) {
+                //Caso de tudo certo será exibido essa mensagem para usuário;
+                JOptionPane.showMessageDialog(null, "Código venda Deletado com Sucesso !", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                 //Caso de errado será exibido essa mensagem para usuário;
+                JOptionPane.showMessageDialog(null, "Código venda não Deletado !", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+            //Fechando conexão PreparedStatement;
+            patm.close();
+            
+            //Fechando conexão Connection;
+            conn.close();
+            
+
+        } catch (Exception e) {
+            //Caso de error ao deletar mostrar essa mensagem;
+             JOptionPane.showMessageDialog(null, "Error ao Deletar codigo venda,  !", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        
+      }
+      
       
         //Método para visualizar todos os dados da vendas pela data;
      public ArrayList<VendaModel> visualizarPelaData(String dat){
@@ -213,7 +254,7 @@ public class VendaDao {
          try {
              
              //Selecionando toda tabela vendas pela data;
-             String sql="SELECT * FROM vendas WHERE data='"+dat+"'";
+             String sql="SELECT * FROM item WHERE data='"+dat+"'";
              
              PreparedStatement patm = conn.prepareStatement(sql);
              
@@ -317,7 +358,7 @@ public class VendaDao {
          try {
              
              //Selecionando toda tabela vendas;
-             String sql="select * from item where data >'"+dataInicio+"' and data<'"+dataFinal+"'";
+             String sql="select * from item where data>'"+dataInicio+"' and data<'"+dataFinal+"'";
              
              PreparedStatement patm = conn.prepareStatement(sql);
              
@@ -359,7 +400,7 @@ public class VendaDao {
      }
      
        //Método para adicionar venda ao banco de dados;
-    public void adicionaCodVENDA(IDvenda venda){
+    public void adicionaCodVENDA(){
         
         //Criando uma Connection com Classe Conexao_BD; 
         Connection conn=Conexao_BD.getConnection();
@@ -367,21 +408,21 @@ public class VendaDao {
        
         try {
             //Inserindo os dados das vendas no banco de dados;
-            String sql="INSERT INTO vendas(codVenda) VALUES(?)";
+            String sql="INSERT INTO vendas() VALUES()";
              
             PreparedStatement patm = conn.prepareStatement(sql);
             //Passando como paramentros os atributos da classe VendaModel;
-            patm.setString(1, venda.getIdVendar());
+           // patm.setString(1, venda.getIdVendar());
           
             //Executar;
             int upd=patm.executeUpdate();
             
             if(upd>0){
                 //Caso de tudo certo exibir essa mensagem;
-                JOptionPane.showMessageDialog(null, "ID Adicionado Com Sucesso");
+                JOptionPane.showMessageDialog(null, "Codigo da venda Adicionado Com Sucesso");
             }else{
                 //Caso de error  exibir essa mensagem;
-                JOptionPane.showMessageDialog(null, "ID Não Adicionado !","Error ",JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "codigo da venda não Adicionado !","Error ",JOptionPane.ERROR_MESSAGE);
             }
             
              //Fechando conexão PreparedStatement;
@@ -396,6 +437,8 @@ public class VendaDao {
         }
         
     }
+    
+    
       //Método para adicionar o lucro ao banco de dados;
     public void adicionaValoresDoLucro(VendaModel venda){
         

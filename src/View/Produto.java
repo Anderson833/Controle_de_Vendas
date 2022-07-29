@@ -121,7 +121,7 @@ public class Produto extends javax.swing.JFrame {
         });
 
         EXIBIR.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icone/visualizador.png"))); // NOI18N
-        EXIBIR.setText("Visualizar ");
+        EXIBIR.setText("Listar Tudo");
         EXIBIR.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         EXIBIR.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

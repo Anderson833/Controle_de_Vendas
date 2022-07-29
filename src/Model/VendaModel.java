@@ -127,7 +127,8 @@ public class VendaModel {
      public String toString() {
         return  String.valueOf(getCodCli());
     }
-
+   
+     
     /**
      * @return the IdDeleta
      */

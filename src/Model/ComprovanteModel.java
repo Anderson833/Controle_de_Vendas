@@ -27,9 +27,6 @@ public class ComprovanteModel extends VendaModel {
         this.codDetalhe = codDetalhe;
     }
 
-    @Override
-    public String toString() {
-        return getPagamento();
-    }
+   
     
 }

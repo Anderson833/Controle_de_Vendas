@@ -67,7 +67,7 @@ public class Usuario extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Usuário");
 
-        jPanel1.setBackground(new java.awt.Color(255, 204, 204));
+        jPanel1.setBackground(new java.awt.Color(153, 255, 153));
 
         jLabel1.setText("Código:");
 
@@ -80,6 +80,12 @@ public class Usuario extends javax.swing.JFrame {
 
         jLabel2.setText("Nome:");
 
+        txtnome.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtnomeKeyReleased(evt);
+            }
+        });
+
         jLabel3.setText("Endereço:");
 
         txtendereco.addActionListener(new java.awt.event.ActionListener() {
@@ -89,6 +95,12 @@ public class Usuario extends javax.swing.JFrame {
         });
 
         jLabel4.setText("Telefone:");
+
+        txttelefone.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txttelefoneKeyReleased(evt);
+            }
+        });
 
         adicionarCli.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icone/salve-.png"))); // NOI18N
         adicionarCli.setText("Adicionar");
@@ -109,6 +121,7 @@ public class Usuario extends javax.swing.JFrame {
         });
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(51, 51, 255));
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icone/usuario-masculino.png"))); // NOI18N
         jLabel5.setText("  Cadastrar Usuários");
         jLabel5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -141,7 +154,7 @@ public class Usuario extends javax.swing.JFrame {
         jScrollPane2.setViewportView(tbusu);
 
         visualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icone/visualizador.png"))); // NOI18N
-        visualizar.setText("Exibir Dados");
+        visualizar.setText("Listar Tudo");
         visualizar.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         visualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -440,7 +453,51 @@ public class Usuario extends javax.swing.JFrame {
          //Limpar os campos depois que excluir usuário;
           limpar();
     }//GEN-LAST:event_execluirActionPerformed
-     //Método para deletar Usuário
+
+    private void txtnomeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtnomeKeyReleased
+         //condição para impedir números
+        if(checkLetters(txtnome.getText())){
+          
+        }else{
+             if(txtnome.getText().isEmpty()){
+                
+            }else{
+      JOptionPane.showMessageDialog(null, "Nesse campo você só poder colocar Letras! ","Por favor: ",JOptionPane.ERROR_MESSAGE);
+         txtnome.setText("");
+           txtnome.requestFocus();
+             }
+        }
+    }//GEN-LAST:event_txtnomeKeyReleased
+
+    private void txttelefoneKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txttelefoneKeyReleased
+        //condição para permitir apenas números
+        if(sonumeros(txttelefone.getText())){
+           
+        }else{
+            
+             if(txttelefone.getText().isEmpty()){
+                
+            }else{
+              JOptionPane.showMessageDialog(null, "Nesse campo você só poder colocar números! ","Por favor: ",JOptionPane.ERROR_MESSAGE);
+            }
+           
+           txttelefone.setText("");
+           txttelefone.requestFocus();
+         }
+    }//GEN-LAST:event_txttelefoneKeyReleased
+     public boolean sonumeros(String str){
+        
+         return str.matches("^[0.-9 ]+");
+        
+      // return s.matches("[^0-9]+");
+    }
+    
+    //metodo para digita só nomes
+    public boolean checkLetters(String str) {
+
+        return str.matches("[a-zA-Z é ê ô ó á!úûí õ ç â~,.ã^~,.]+");
+    }
+    //Método para deletar Usuário
       public void deletarUsuario(){
       
           

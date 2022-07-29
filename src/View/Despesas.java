@@ -187,7 +187,7 @@ public class Despesas extends javax.swing.JFrame {
         jLabel6.setText("Valor Total De Todas Despesas:");
 
         visualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icone/visualizador.png"))); // NOI18N
-        visualizar.setText("Visualizar");
+        visualizar.setText("Listar Tudo");
         visualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 visualizarActionPerformed(evt);

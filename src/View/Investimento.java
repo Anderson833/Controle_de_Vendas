@@ -232,7 +232,7 @@ public class Investimento extends javax.swing.JFrame {
         });
 
         visualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icone/visualizador.png"))); // NOI18N
-        visualizar.setText("Visualizar");
+        visualizar.setText("Listar Tudo");
         visualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 visualizarActionPerformed(evt);
@@ -829,7 +829,7 @@ public class Investimento extends javax.swing.JFrame {
     }
      public boolean sonumeros(String str){
         
-         return str.matches("^[0.-9 ]+");
+         return str.matches("^[0./-9 ]+");
         
       // return s.matches("[^0-9]+");
     }
