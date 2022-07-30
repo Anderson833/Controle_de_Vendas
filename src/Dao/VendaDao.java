@@ -157,7 +157,7 @@ public class VendaDao {
         } catch (Exception e) {
             //Caso de error ao deletar mostrar essa mensagem;
              JOptionPane.showMessageDialog(null, "Error ao Deletar Item,  !", "Error", JOptionPane.ERROR_MESSAGE);
-             JOptionPane.showMessageDialog(null,"Se o problema persistir, excluir a venda na tabela detalhe com código da venda  ");
+             JOptionPane.showMessageDialog(null,"Se o problema persistir, excluir a venda na tabela de comprovante com código da venda  ");
         }
         
       }
@@ -202,7 +202,7 @@ public class VendaDao {
       }
       
        //Método para deletar o codigo da venda na tabela vendas;
-      public void deletaCodigoDaVenda(VendaModel vd){
+      public void deletaTodosCodigoDaTabelaVenda(VendaModel vd){
            //
            //Criando uma Connection com Classe Conexao_BD; 
         Connection conn=Conexao_BD.getConnection();
@@ -210,7 +210,7 @@ public class VendaDao {
         try {
 
           // Comando que  Deletar o codigo pelo código;
-            String sql = "DELETE FROM vendas WHERE codVenda=?";
+            String sql = "DELETE FROM vendas ";
 
             PreparedStatement patm = conn.prepareStatement(sql);
              
@@ -241,6 +241,47 @@ public class VendaDao {
         }
         
       }
+       //Método para deletar  os itens pelo código da venda do cliente e pela data;
+      public void deletaVendaPeloCodigoClienteData(String codvenda,String codcli,String data){
+           //
+           //Criando uma Connection com Classe Conexao_BD; 
+        Connection conn=Conexao_BD.getConnection();
+             
+        try {
+
+          // Comando que  Deletar ;
+            String sql = "DELETE FROM item WHERE codVenda='"+codvenda+"'and codCli='"+codcli+"'and data='"+data+"' ";
+
+            PreparedStatement patm = conn.prepareStatement(sql);
+             
+            //Passando em paramentros código da venda;
+           // patm.setInt(1, vd.getIdDeleta());
+            
+            //Executar;
+            int res = patm.executeUpdate();
+
+            if (res > 0) {
+                //Caso de tudo certo será exibido essa mensagem para usuário;
+                JOptionPane.showMessageDialog(null, "itens Deletado com Sucesso !", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                 //Caso de errado será exibido essa mensagem para usuário;
+                JOptionPane.showMessageDialog(null, "itens não Deletado !", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+            //Fechando conexão PreparedStatement;
+            patm.close();
+            
+            //Fechando conexão Connection;
+            conn.close();
+            
+
+        } catch (Exception e) {
+            //Caso de error ao deletar mostrar essa mensagem;
+             JOptionPane.showMessageDialog(null, "Error ao Deletar codigo venda,  !", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        
+      }
+      
       
       
         //Método para visualizar todos os dados da vendas pela data;

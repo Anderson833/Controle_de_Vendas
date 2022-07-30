@@ -505,13 +505,13 @@ public class Venda extends javax.swing.JFrame {
                                 .addGroup(digitanomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(addItem, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(58, 58, 58)
+                                .addGap(54, 54, 54)
                                 .addGroup(digitanomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(digitanomeLayout.createSequentialGroup()
                                         .addGap(10, 10, 10)
-                                        .addComponent(deletarItem, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(24, 24, 24)
+                                        .addComponent(deletarItem, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(28, 28, 28)
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 553, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))))
                     .addGroup(digitanomeLayout.createSequentialGroup()
@@ -665,18 +665,15 @@ public class Venda extends javax.swing.JFrame {
                             .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(11, 11, 11)
                         .addComponent(txtValorReceb, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(digitanomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(digitanomeLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(addItem))
-                            .addGroup(digitanomeLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(deletarItem)))
-                        .addGap(29, 29, 29))
+                        .addGap(56, 56, 56)
+                        .addGroup(digitanomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(digitanomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(addItem)
+                            .addComponent(deletarItem))
+                        .addGap(63, 63, 63))
                     .addGroup(digitanomeLayout.createSequentialGroup()
                         .addGroup(digitanomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtQtd, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -732,10 +729,11 @@ public class Venda extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "O campo do código da venda!","Opa... está Vazio:",JOptionPane.ERROR_MESSAGE);
         ///     codVenda.requestFocus();
          }else{
-             //método que fazer o cadastro das vendas na tabelha detalhe
-              addVendaNodetalher();
              adicionarCodVend();
              codVenda.setText("");
+             //método que fazer o cadastro das vendas na tabelha detalhe
+              addVendaNodetalher();
+            
       
          }   
     }//GEN-LAST:event_AdicionarActionPerformed
@@ -744,7 +742,12 @@ public class Venda extends javax.swing.JFrame {
      public void ProcessoDeCalculo(){
           //Método para saber ser tem algo campo nulo
            // valorNulo();
-           
+           if(codigoVenda==null){
+                  adicionarCodVend();
+             codVenda.setText("");
+            
+             
+             }
              setaCodigoDaVenda();
               
               if(codVenda.getText().equals(codigoVenda)){
@@ -943,18 +946,27 @@ public class Venda extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void deleatarVdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleatarVdActionPerformed
-   
-        int op=JOptionPane.showConfirmDialog(null, "Tem certeza ?");
-        if(op==JOptionPane.YES_OPTION){
+        
+        int itens=JOptionPane.showConfirmDialog(null, "Deseja deleta todos itens do cliente ?");
+        
+        if(itens==JOptionPane.YES_OPTION){
+           
+        JOptionPane.showMessageDialog(null, "Todos os itens adicionar pelo código da venda do cliente e pela data será excluídos!");
+          deletaItensComCodigovdCodClicodData();
+        }else{
+         
+            int todosItensVendidosEmGeral=JOptionPane.showConfirmDialog(null, "Deseja deleta todos itens em geral ?");
+
+        if(todosItensVendidosEmGeral==JOptionPane.YES_OPTION){
               VendaDao vd = new VendaDao();
              vd.deletaTodaVenda();
                //Método para limpar as linhas da tabela;
                limpalinha();
-        }else if(op==JOptionPane.NO_OPTION || op==JOptionPane.CANCEL_OPTION){
+        }else if(todosItensVendidosEmGeral==JOptionPane.NO_OPTION || todosItensVendidosEmGeral==JOptionPane.CANCEL_OPTION){
             JOptionPane.showMessageDialog(null, "Dados não excluidos!");
         }
       
-      
+        }
 
     }//GEN-LAST:event_deleatarVdActionPerformed
 
@@ -2559,14 +2571,10 @@ public class Venda extends javax.swing.JFrame {
         
        
     }
-    //método para deleta  o código da venda na tabela vendas
-    public void deletaCodigoDaVenda(){
-        
-        VendaModel md = new VendaModel();
-        VendaDao da = new VendaDao();
-        
-        md.setCodVenda(Integer.parseInt(codVenda.getText()));
-        da.deletaCodigoDaVenda(md);
+    //método para deleta  os itens com codigo da venda do cliente e da data
+    public void deletaItensComCodigovdCodClicodData(){
+        VendaDao d = new VendaDao();
+        d.deletaVendaPeloCodigoClienteData(codVenda.getText(),jComboBoxCliente.getSelectedItem().toString(),txtdata.getText());
     }
     
     //métodos para aceitar somente números
