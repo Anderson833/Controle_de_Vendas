@@ -139,13 +139,11 @@ public class Venda extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         label = new javax.swing.JLabel();
-        deleatarVd = new javax.swing.JButton();
         jLabel13 = new javax.swing.JLabel();
         addItem = new javax.swing.JButton();
         jLabel14 = new javax.swing.JLabel();
         deletarItem = new javax.swing.JButton();
         labelTotal = new javax.swing.JLabel();
-        somaItens = new javax.swing.JButton();
         jcombProdutos = new javax.swing.JComboBox();
         jComboBoxCliente = new javax.swing.JComboBox();
         jLabel17 = new javax.swing.JLabel();
@@ -297,7 +295,7 @@ public class Venda extends javax.swing.JFrame {
         });
 
         Adicionar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icone/salve-.png"))); // NOI18N
-        Adicionar.setText("Salvar");
+        Adicionar.setText("Salvar Venda");
         Adicionar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         Adicionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -393,15 +391,6 @@ public class Venda extends javax.swing.JFrame {
         label.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         label.setText("Valor Total");
 
-        deleatarVd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icone/claro.png"))); // NOI18N
-        deleatarVd.setText("Excluir");
-        deleatarVd.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        deleatarVd.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                deleatarVdActionPerformed(evt);
-            }
-        });
-
         jLabel13.setText("Add Item:");
 
         addItem.setText("+");
@@ -422,13 +411,6 @@ public class Venda extends javax.swing.JFrame {
 
         labelTotal.setBackground(new java.awt.Color(255, 255, 0));
         labelTotal.setFont(new java.awt.Font("Tahoma", 3, 24)); // NOI18N
-
-        somaItens.setText("Somar Itens");
-        somaItens.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                somaItensActionPerformed(evt);
-            }
-        });
 
         jcombProdutos.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
         jcombProdutos.setForeground(new java.awt.Color(0, 0, 255));
@@ -596,15 +578,11 @@ public class Venda extends javax.swing.JFrame {
                                         .addComponent(txtQtd, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(digitanomeLayout.createSequentialGroup()
                                 .addGap(24, 24, 24)
-                                .addGroup(digitanomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(labelTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(somaItens, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(labelTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap(20, Short.MAX_VALUE))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, digitanomeLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(deleatarVd, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(Adicionar, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Adicionar, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(calcular, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -693,17 +671,13 @@ public class Venda extends javax.swing.JFrame {
                                 .addComponent(label, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(digitanomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(digitanomeLayout.createSequentialGroup()
-                                        .addComponent(labelTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(somaItens, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(labelTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(18, 18, Short.MAX_VALUE)))
                 .addGroup(digitanomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(visualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(calcular, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(deleatarVd, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Adicionar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(21, 21, 21))
         );
@@ -730,10 +704,10 @@ public class Venda extends javax.swing.JFrame {
         ///     codVenda.requestFocus();
          }else{
              adicionarCodVend();
-             codVenda.setText("");
+           
              //método que fazer o cadastro das vendas na tabelha detalhe
               addVendaNodetalher();
-            
+              codVenda.setText("");
       
          }   
     }//GEN-LAST:event_AdicionarActionPerformed
@@ -759,7 +733,7 @@ public class Venda extends javax.swing.JFrame {
                 //Método para atualizar os produtos
                  setaAtualizacaoProduto();
                //Método para visualizar as vendas pelo código do cliente e da venda
-              visualizarPeloCodigoVendaEdoCliente();
+              visualizarPeloCodigoVendaEdoClienteEaData();
             //seta o valor total da comprar do cliente na label total
               setaValorTotalDaVENDAPelocod();
             
@@ -773,8 +747,8 @@ public class Venda extends javax.swing.JFrame {
                 adicionarItem();
                 //Método para atualizar os produtos
                  setaAtualizacaoProduto();
-               //Método para visualizar as vendas pelo código do cliente e da venda
-              visualizarPeloCodigoVendaEdoCliente();
+               //Método para lista os itens pelo código do cliente e da venda e a data
+              visualizarPeloCodigoVendaEdoClienteEaData();
             //seta o valor total da comprar do cliente na label total
               setaValorTotalDaVENDAPelocod(); 
 
@@ -945,31 +919,6 @@ public class Venda extends javax.swing.JFrame {
         limpalinha();
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void deleatarVdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleatarVdActionPerformed
-        
-        int itens=JOptionPane.showConfirmDialog(null, "Deseja deleta todos itens do cliente ?");
-        
-        if(itens==JOptionPane.YES_OPTION){
-           
-        JOptionPane.showMessageDialog(null, "Todos os itens adicionar pelo código da venda do cliente e pela data será excluídos!");
-          deletaItensComCodigovdCodClicodData();
-        }else{
-         
-            int todosItensVendidosEmGeral=JOptionPane.showConfirmDialog(null, "Deseja deleta todos itens em geral ?");
-
-        if(todosItensVendidosEmGeral==JOptionPane.YES_OPTION){
-              VendaDao vd = new VendaDao();
-             vd.deletaTodaVenda();
-               //Método para limpar as linhas da tabela;
-               limpalinha();
-        }else if(todosItensVendidosEmGeral==JOptionPane.NO_OPTION || todosItensVendidosEmGeral==JOptionPane.CANCEL_OPTION){
-            JOptionPane.showMessageDialog(null, "Dados não excluidos!");
-        }
-      
-        }
-
-    }//GEN-LAST:event_deleatarVdActionPerformed
-
     private void addItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addItemActionPerformed
       
          
@@ -1049,20 +998,19 @@ public class Venda extends javax.swing.JFrame {
 
 
     private void deletarItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deletarItemActionPerformed
-         //Variável para pergunta se usuárioque deletar pelo código da venda
-        int venda = JOptionPane.showConfirmDialog(null, "Deseja deletar Item ?", "Escolha Opção:", JOptionPane.YES_NO_CANCEL_OPTION);
-        //fazendo a codição
-        switch (venda) {
-            //opcão sim
-            case JOptionPane.YES_OPTION:
+       
+     
                 // condiçao para valida o campo de texto de código venda 
                 if (codVenda.getText().equals("")) {
                     //caso seja verdade mostrar essa mensagem
-                    JOptionPane.showMessageDialog(null, "Preenchar Campo do código Venda Com Código Deleta!", "Obrigatório!", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Clique na linha da tabela que você deseja deletar!", "Obrigatório!", JOptionPane.WARNING_MESSAGE);
+                    
                 } else if(jcombProdutos.getSelectedIndex()==0){
                     JOptionPane.showMessageDialog(null," Informe o código do Produto que deseja Deleta!");
                  jcombProdutos.requestFocus();
+               
                      }else{
+                         
                       //Método que vai soma os produtos antes de excluir
                     reporProd();
                      //Método para atualizar produto antes de excluir
@@ -1073,26 +1021,8 @@ public class Venda extends javax.swing.JFrame {
                     visualizarVENDAS();
                     codVenda.setText("");
                 }
-                      
-                break;
-            //opção não
-            case JOptionPane.NO_OPTION:
-                //Instânciando a classe VendaDao;
-                VendaDao dao = new VendaDao();
-                //Método para deletar toda venda
-                dao.deletaTodaVenda();
-                break;
-            //opcãp cancelar
-            case JOptionPane.CANCEL_OPTION:
-                //mostrar ess mensagem caso cancelar a opção
-                JOptionPane.showMessageDialog(null, "Opção Cancelada!", "", JOptionPane.INFORMATION_MESSAGE);
-
-                break;
-            default:
-                //caso não for nenhuma dessa a cima será exibida essa mensagem;
-                JOptionPane.showMessageDialog(null, "Tenter Novamente...", "Opção Invalida!", JOptionPane.INFORMATION_MESSAGE);
-                break;
-        }
+             
+       
 
 
         /*
@@ -1131,43 +1061,6 @@ public class Venda extends javax.swing.JFrame {
          */
     }//GEN-LAST:event_deletarItemActionPerformed
 
-    private void somaItensActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_somaItensActionPerformed
-
-        // opcão para escolhe qual maneira que somar a venda
-        int confirmacao = JOptionPane.showConfirmDialog(null, "Deseja Fazer A somar ", "Escolha Opção:", JOptionPane.YES_NO_CANCEL_OPTION);
-
-        if (confirmacao == JOptionPane.YES_OPTION) {
-
-            int opcao = JOptionPane.showConfirmDialog(null, "Deseja fazer pelo código do Cliente ? ", "Escolha Opção:", JOptionPane.YES_NO_CANCEL_OPTION);
-
-            if (opcao == JOptionPane.YES_OPTION) {
-                JOptionPane.showMessageDialog(null, "Valor á ser mostrado será pelo código do cliente do Nome " + txtNcli.getText(), "Informações: ", JOptionPane.INFORMATION_MESSAGE);
-              
-               //método para soma todas vendas
-                setaValorTotalDaVendaPeloCodigoCliente();
-                
-            } else {
-
-                if (opcao == JOptionPane.NO_OPTION) {
-                    JOptionPane.showMessageDialog(null, "Nesse caso vai fazer a somar pelo código da venda !");
-
-                    if (codVenda.getText().equals("")) {
-                        JOptionPane.showMessageDialog(null, "Preenchar Campo do código Venda,tente novamente!", "Obrigatório!", JOptionPane.WARNING_MESSAGE);
-                        codVenda.requestFocus();
-                    } else {
-                        //Método para seta os valores da VENDA;
-                        setaValorTotalDaVENDAPelocod();
-
-                    }
-                } else if (opcao == JOptionPane.CANCEL_OPTION) {
-                    JOptionPane.showMessageDialog(null, "Opção Invalida !");
-                }
-            }
-        }
-
-
-    }//GEN-LAST:event_somaItensActionPerformed
-
     private void jcombProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcombProdutosActionPerformed
 
         //condição pra saber se jcomboBox produto esta seleciona em 0 
@@ -1182,7 +1075,7 @@ public class Venda extends javax.swing.JFrame {
 
             //método para seta os dados do produto
             setaDadosProduto();
-            txtQtd.setText("");
+            //txtQtd.setText("");
             if (txtQtd.getText().equals("")) {
                 txtQtd.requestFocus();
             } else {
@@ -1538,14 +1431,14 @@ public class Venda extends javax.swing.JFrame {
     }
 
     //Método para visualizar todas Vendas pelo código do cliente e da venda;
-    public void visualizarPeloCodigoVendaEdoCliente() {
+    public void visualizarPeloCodigoVendaEdoClienteEaData() {
         DefaultTableModel modelo = (DefaultTableModel) tabelaVend.getModel();
         //Método para não repetir os dados na tabela de vendas;
         modelo.setNumRows(0);
         //Instânciando a classe ComprovanteDao;
         VendaDao dao = new VendaDao();
         //Um Laço de repetição para lista todas comprar na tabela vendas no banco de dados; 
-        for (VendaModel item : dao.visualizarPeloCodVendaEcliente(codVenda.getText(),jComboBoxCliente.getSelectedItem().toString())) {
+        for (VendaModel item : dao.listaVendaPeloCodigoClienteData(codVenda.getText(),jComboBoxCliente.getSelectedItem().toString(),txtdata.getText())) {
             modelo.addRow(new Object[]{
                 //Passando os objetos 
                 item.getIdDeleta(),
@@ -2040,7 +1933,6 @@ public class Venda extends javax.swing.JFrame {
     private javax.swing.JButton addItem;
     private javax.swing.JButton calcular;
     private javax.swing.JTextField codVenda;
-    private javax.swing.JButton deleatarVd;
     private javax.swing.JButton deletarItem;
     private javax.swing.JPanel digitanome;
     private javax.swing.JButton jButton1;
@@ -2067,7 +1959,6 @@ public class Venda extends javax.swing.JFrame {
     private javax.swing.JLabel label;
     private javax.swing.JLabel labelTotal;
     private javax.swing.JLabel lbHora;
-    private javax.swing.JButton somaItens;
     private javax.swing.JTable tabelaVend;
     private javax.swing.JTextField txtNcli;
     private javax.swing.JTextField txtNpro;
@@ -2571,11 +2462,7 @@ public class Venda extends javax.swing.JFrame {
         
        
     }
-    //método para deleta  os itens com codigo da venda do cliente e da data
-    public void deletaItensComCodigovdCodClicodData(){
-        VendaDao d = new VendaDao();
-        d.deletaVendaPeloCodigoClienteData(codVenda.getText(),jComboBoxCliente.getSelectedItem().toString(),txtdata.getText());
-    }
+  
     
     //métodos para aceitar somente números
       public boolean ApenasNumeros(String str){

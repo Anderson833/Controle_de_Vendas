@@ -28,7 +28,7 @@ public class ComprovanteDao {
         
          try {
              
-             //Selecionando toda tabela comprar;
+             //Selecionando toda tabela detalhe;
              String sql="SELECT * FROM detalhe";
              
              PreparedStatement patm = conn.prepareStatement(sql);
@@ -121,6 +121,99 @@ public class ComprovanteDao {
          
      }
     
+      //Método para visualizar todos os dados das vendas entre as datas;
+     public ArrayList<ComprovanteModel> listaEntreAsDatas(String dataInicio,String datafinal){
+        //Criando uma Connection com Classe Conexao_BD; 
+        Connection conn=Conexao_BD.getConnection();
+     
+        //ArrayList de comprovante;
+         ArrayList<ComprovanteModel> listComprov = new ArrayList<>();
+        
+         try {
+             
+             //Selecionando toda tabela vendas entre as datas data;
+             String sql="SELECT * FROM detalhe  WHERE data>'"+dataInicio+"' and data<'"+datafinal+"'";
+             
+             PreparedStatement patm = conn.prepareStatement(sql);
+             
+             ResultSet rst=patm.executeQuery();
+             
+             while (rst.next()) {
+               //Instânciando  classe ComprovateModel;
+                 ComprovanteModel comp = new ComprovanteModel();
+                 //Setando os Valores;
+                 comp.setCodDetalhe(rst.getInt("codDetalh"));
+                 comp.setCodVenda(rst.getInt("codVenda"));
+                comp.setCodCli(rst.getInt("codCli"));
+                comp.setValorTotal(rst.getDouble("total"));
+               comp.setData(rst.getString("data"));
+                listComprov.add(comp);
+             }
+             
+             //Fechando conexão ResultSet;
+             rst.close();
+             
+             //Fechando conexão PreparedStatement;
+            patm.close();
+            
+            //Fechando conexão Connection;
+            conn.close();
+             
+         } catch (Exception e) {
+             //Algo de error, mostrar essa mensagem;
+             JOptionPane.showMessageDialog(null, "Error ao listar entre as datas!");
+         }
+         //Retornando uma Lista;
+        return listComprov;
+         
+     }
+     
+       //Método para lista todos os dados das vendas pela data;
+     public ArrayList<ComprovanteModel> ListarPelaDataEspecifica(String dat){
+        //Criando uma Connection com Classe Conexao_BD; 
+        Connection conn=Conexao_BD.getConnection();
+     
+        //ArrayList de comprovante;
+         ArrayList<ComprovanteModel> listComprov = new ArrayList<>();
+        
+         try {
+             
+             //Selecionando toda tabela vendas pela data;
+             String sql="SELECT * FROM detalhe WHERE data='"+dat+"'";
+             
+             PreparedStatement patm = conn.prepareStatement(sql);
+             
+             ResultSet rst=patm.executeQuery();
+             
+             while (rst.next()) {
+                   //Instânciando  classe ComprovateModel;
+                 ComprovanteModel comp = new ComprovanteModel();
+               comp.setCodDetalhe(rst.getInt("codDetalh"));
+                 comp.setCodVenda(rst.getInt("codVenda"));
+                comp.setCodCli(rst.getInt("codCli"));
+                comp.setValorTotal(rst.getDouble("total"));
+               comp.setData(rst.getString("data"));
+              listComprov.add(comp);
+             
+             }
+             
+             //Fechando conexão ResultSet;
+             rst.close();
+             
+             //Fechando conexão PreparedStatement;
+            patm.close();
+            
+            //Fechando conexão Connection;
+            conn.close();
+             
+         } catch (Exception e) {
+             //Algo de error, mostrar essa mensagem;
+             JOptionPane.showMessageDialog(null, "Error ao Visualizar Todas vendas pela data!");
+         }
+         //Retornando uma Lista;
+        return listComprov;
+         
+     }
      
      
       //Método para adicionar a venda na tabel detalhe no banco de dados;
@@ -213,7 +306,7 @@ public class ComprovanteDao {
       }
       
      //Método para visualizar todos os dados da venda pela data;
-     public List<ComprovanteModel> visualizarPelaData(String dat){
+     public List<ComprovanteModel> visualizarPelaDataEspecifica(String dat){
         //Criando uma Connection com Classe Conexao_BD; 
         Connection conn=Conexao_BD.getConnection();
      
@@ -223,7 +316,7 @@ public class ComprovanteDao {
          try {
              
              //Selecionando toda tabela vendas pela data;
-             String sql="SELECT * FROM vendas WHERE data='"+dat+"'";
+             String sql="SELECT * FROM detalhe WHERE data='"+dat+"'";
              
              PreparedStatement patm = conn.prepareStatement(sql);
              

@@ -73,6 +73,60 @@ public class VendaDao {
          
      }
     
+      //Método para lista todos os dados das vendas pelo código da venda do cliente e da data;
+     public List<VendaModel> listaVendaPeloCodigoClienteData(String cod,String cli,String data){
+        //Criando uma Connection com Classe Conexao_BD; 
+        Connection conn=Conexao_BD.getConnection();
+     
+        //ArrayList de venda;
+         ArrayList<VendaModel> listVenda = new ArrayList<>();
+        
+         try {
+             
+             //Selecionando toda tabela de item;
+             String sql="SELECT * FROM item WHERE codVenda='"+cod+"' and codCli='"+cli+"'and data='"+data+"'";
+             
+             PreparedStatement patm = conn.prepareStatement(sql);
+             
+             ResultSet rst=patm.executeQuery();
+             
+             while (rst.next()) {
+               
+                 //Instânciando  classe VendaModel;
+                 VendaModel venda = new VendaModel();
+                 //Setando os Valores;
+               venda.setIdDeleta(rst.getInt("codItem"));
+               venda.setCodVenda(rst.getInt("codVenda"));
+               venda.setCodCli(rst.getInt("codCli")); 
+               venda.setCodProd(rst.getInt("codProd"));
+               venda.setQtdProd(rst.getInt("Qtd"));
+               venda.setValorUnit(rst.getDouble("valorUnit"));
+               venda.setValorTotal(rst.getDouble("total"));
+               venda.setData(rst.getString("data"));
+             
+               listVenda.add(venda);
+                 //Adicionado na Lista;
+             
+             }
+             
+             //Fechando conexão ResultSet;
+             rst.close();
+             
+             //Fechando conexão PreparedStatement;
+            patm.close();
+            
+            //Fechando conexão Connection;
+            conn.close();
+             
+         } catch (Exception e) {
+             //Algo de error, mostrar essa mensagem;
+             JOptionPane.showMessageDialog(null, "Error ao Visualizar Todas vendas!");
+         }
+         //Retornando uma Lista;
+        return listVenda;
+         
+     }
+    
      
    //Método para adicionar itens na tabela vendas no banco de dados;
     public void adicionaItens(VendaModel venda){
@@ -242,7 +296,7 @@ public class VendaDao {
         
       }
        //Método para deletar  os itens pelo código da venda do cliente e pela data;
-      public void deletaVendaPeloCodigoClienteData(String codvenda,String codcli,String data){
+      public void deletaItensPeloCodigoClienteData(String codvenda,String codcli,String data){
            //
            //Criando uma Connection com Classe Conexao_BD; 
         Connection conn=Conexao_BD.getConnection();
@@ -281,8 +335,6 @@ public class VendaDao {
         }
         
       }
-      
-      
       
         //Método para visualizar todos os dados da vendas pela data;
      public ArrayList<VendaModel> visualizarPelaData(String dat){
@@ -335,8 +387,8 @@ public class VendaDao {
          
      }
      
-     //Método para visualizar todos os dados da vendas pelo código da venda e do cliente;
-     public ArrayList<VendaModel> visualizarPeloCodVendaEcliente(String vd,String cli){
+     //Método para visualizar todos os dados da vendas pelo código do cliente e a data;
+     public ArrayList<VendaModel> listaPeloCodigoClienteEaData(String CodCli,String data){
         //Criando uma Connection com Classe Conexao_BD; 
         Connection conn=Conexao_BD.getConnection();
      
@@ -345,8 +397,8 @@ public class VendaDao {
         
          try {
              
-             //Selecionando toda tabela vendas pela data;
-             String sql="SELECT * FROM item WHERE codVenda='"+vd+"' and codCli='"+cli+"'";
+             //Selecionando toda tabela item pela codigo do cliente e a data;
+             String sql="SELECT * FROM item WHERE codCli='"+CodCli+"' and data='"+data+"'";
              
              PreparedStatement patm = conn.prepareStatement(sql);
              
@@ -379,7 +431,7 @@ public class VendaDao {
              
          } catch (Exception e) {
              //Algo de error, mostrar essa mensagem;
-             JOptionPane.showMessageDialog(null, "Error ao Visualizar as compras do cliente pelo código da vendar e do cliente!");
+             JOptionPane.showMessageDialog(null, "error ao lista os itens pelo código do cliente e a data!");
          }
          //Retornando uma Lista;
         return listComprov;
