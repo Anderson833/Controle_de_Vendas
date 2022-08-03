@@ -214,7 +214,52 @@ public class ComprovanteDao {
         return listComprov;
          
      }
+      //Método para visualizar todos os dados da venda pela data;
+     public List<ComprovanteModel> listapelaDataCodCliente(String dat,String cli){
+        //Criando uma Connection com Classe Conexao_BD; 
+        Connection conn=Conexao_BD.getConnection();
      
+        //ArrayList de comprovante;
+         ArrayList<ComprovanteModel> listComprov = new ArrayList<>();
+        
+         try {
+             
+             //Selecionando toda tabela vendas pela data;
+             String sql="SELECT * FROM detalhe WHERE data='"+dat+"'and codCli='"+cli+"'";
+             
+             PreparedStatement patm = conn.prepareStatement(sql);
+             
+             ResultSet rst=patm.executeQuery();
+             
+             while (rst.next()) {
+              
+               //Instânciando  classe ComprovateModel;
+                 ComprovanteModel comp = new ComprovanteModel();
+               comp.setCodDetalhe(rst.getInt("codDetalh"));
+                 comp.setCodVenda(rst.getInt("codVenda"));
+                comp.setCodCli(rst.getInt("codCli"));
+                comp.setValorTotal(rst.getDouble("total"));
+               comp.setData(rst.getString("data"));
+              listComprov.add(comp);
+             }
+             
+             //Fechando conexão ResultSet;
+             rst.close();
+             
+             //Fechando conexão PreparedStatement;
+            patm.close();
+            
+            //Fechando conexão Connection;
+            conn.close();
+             
+         } catch (Exception e) {
+             //Algo de error, mostrar essa mensagem;
+             JOptionPane.showMessageDialog(null, "Error ao Visualizar Todas compras pela data!");
+         }
+         //Retornando uma Lista;
+        return listComprov;
+         
+     }
      
       //Método para adicionar a venda na tabel detalhe no banco de dados;
     public void adicionarVendaNoDetalhe(ComprovanteModel comprov){
@@ -304,6 +349,44 @@ public class ComprovanteDao {
         }
         
       }
+         //Método para deletar uma venda na tabela detalhe;
+      public void ExcluirTodaTabelaDoDetalhe(){
+          
+           //Criando uma Connection com Classe Conexao_BD; 
+        Connection conn=Conexao_BD.getConnection();
+             
+        try {
+
+          // Comando que  Deletar uma venda;
+            String sql = "DELETE FROM detalhe";
+
+            PreparedStatement patm = conn.prepareStatement(sql);
+        
+            
+            //Executar;
+            int res = patm.executeUpdate();
+
+            if (res > 0) {
+                //Caso de tudo certo será exibido essa mensagem para usuário;
+                JOptionPane.showMessageDialog(null, "Todas vendas deletadas com Sucesso !", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                 //Caso de errado será exibido essa mensagem para usuário;
+                JOptionPane.showMessageDialog(null, "Todas vendas não deletadas !", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+            //Fechando conexão PreparedStatement;
+            patm.close();
+            
+            //Fechando conexão Connection;
+            conn.close();
+            
+
+        } catch (Exception e) {
+            //Caso de error ao deletar mostrar essa mensagem;
+          //   JOptionPane.showMessageDialog(null, "Error ao Deletar venda !", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        
+      }
       
      //Método para visualizar todos os dados da venda pela data;
      public List<ComprovanteModel> visualizarPelaDataEspecifica(String dat){
@@ -355,6 +438,7 @@ public class ComprovanteDao {
         return listComprov;
          
      }
+      
     
       //Método para visualizar todos os dados da comprar pela data;
      public List<VendaModel> visualizarDataComecoFim(String dataInicio,String dataFinal){
@@ -409,52 +493,58 @@ public class ComprovanteDao {
          
      }
      
-     
-       //Método para adicionar código da venda na tabela detalhe no banco de dados;
-    public void adicionaIdVenda(VendaModel comprov){
-        
+        //Método para lista todas venda pelo codigo do cliente e da data;
+     public List<ComprovanteModel> listaItensCliente(String cli){
         //Criando uma Connection com Classe Conexao_BD; 
         Connection conn=Conexao_BD.getConnection();
+     
+        //ArrayList de venda;
+         ArrayList<ComprovanteModel> listVenda = new ArrayList<>();
         
-       
-        try {
-            //Inserindo o idComprar na tabela idVenda no bd
-            String sql="INSERT INTO idvenda(idComprar) VALUES(?)";
+         try {
              
-            PreparedStatement patm = conn.prepareStatement(sql);
-            //Passando como paramentros os atributos da classe ComprovanteModel;
-         
-           
-            //Executar;
-            int upd=patm.executeUpdate();
-            
-         if(upd>0){
-                //Caso de tudo certo exibir essa mensagem;
-          //   JOptionPane.showMessageDialog(null, "Item Adicionado Com Sucesso");
-        
-            }else{
-                //Caso de error  exibir essa mensagem;
-                JOptionPane.showMessageDialog(null, "IdVenda Não Adicionado !","Error ",JOptionPane.ERROR_MESSAGE);
-            }
-         
-            
-       
-            
-            
+             //Selecionando toda tabela de item;
+             String sql="SELECT * FROM detalhe WHERE codCli='"+cli+"'";
+             
+             PreparedStatement patm = conn.prepareStatement(sql);
+             
+             ResultSet rst=patm.executeQuery();
+             
+             while (rst.next()) {
+               
+                 //Instânciando  classe ComprovateModel;
+                 ComprovanteModel comp = new ComprovanteModel();
+               comp.setCodDetalhe(rst.getInt("codDetalh"));
+                 comp.setCodVenda(rst.getInt("codVenda"));
+                comp.setCodCli(rst.getInt("codCli"));
+                comp.setValorTotal(rst.getDouble("total"));
+               comp.setData(rst.getString("data"));
+              listVenda.add(comp);
+             
+               listVenda.add(comp);
+                 //Adicionado na Lista;
+             
+             }
+             
+             //Fechando conexão ResultSet;
+             rst.close();
+             
              //Fechando conexão PreparedStatement;
             patm.close();
             
             //Fechando conexão Connection;
             conn.close();
-            
-        } catch (SQLException ex) {
-            //Caso aconteça algum error mostrar essa mensagem;
-           JOptionPane.showMessageDialog(null, "Error ao Adicionar Item !");
-        }
-     
-        
-        
-    }
+             
+         } catch (Exception e) {
+             //Algo de error, mostrar essa mensagem;
+             JOptionPane.showMessageDialog(null, "Error ao lista itens vendas!");
+         }
+         //Retornando uma Lista;
+        return listVenda;
+         
+     }
+    
+    
      //Método para adicionar o tipo de pagemento na tabela detalhe no banco de dados;
     public void adicionaTipoPagamento(ComprovanteModel comprov){
         
@@ -548,45 +638,5 @@ public class ComprovanteDao {
          
      }
     
-     //Método para deletar Item na tabela idvenda no banco de dados pelo código do idCompar;
-      public void deletaCodigoDaVenda(ComprovanteModel md){
-          
-           //Criando uma Connection com Classe Conexao_BD; 
-        Connection conn=Conexao_BD.getConnection();
-             
-        try {
-
-          // Comando que  Deletar o código da tabel codVenda;
-            String sql = "DELETE FROM codVendar WHERE codVenda=?";
-
-            PreparedStatement patm = conn.prepareStatement(sql);
-             
-            //Passando em paramentros códiogo;
-            patm.setInt(1, md.getCodDetalhe());
-            
-            //Executar;
-            int res = patm.executeUpdate();
-
-            if (res > 0) {
-                //Caso de tudo certo será exibido essa mensagem para usuário;
-                JOptionPane.showMessageDialog(null, "Código Deletado com Sucesso !", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                 //Caso de errado será exibido essa mensagem para usuário;
-                JOptionPane.showMessageDialog(null, "Código  não Deletado !", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-
-            //Fechando conexão PreparedStatement;
-            patm.close();
-            
-            //Fechando conexão Connection;
-            conn.close();
-            
-
-        } catch (Exception e) {
-            //Caso de error ao deletar mostrar essa mensagem;
-             JOptionPane.showMessageDialog(null, "Error ao Deletar código  !", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-        
-      }
-      
+  
 }

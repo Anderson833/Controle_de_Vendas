@@ -454,7 +454,7 @@ public class Fornecedor extends javax.swing.JFrame {
 
     private void enderecoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_enderecoKeyReleased
          //condição para impedir números
-        if(checkLetters(endereco.getText())){
+      /*  if(checkLetters(endereco.getText())){
           
         }else{
               if(endereco.getText().isEmpty()){
@@ -464,7 +464,7 @@ public class Fornecedor extends javax.swing.JFrame {
          endereco.setText("");
            endereco.requestFocus();
               }
-        }
+        }*/
     }//GEN-LAST:event_enderecoKeyReleased
 
     private void telefoneKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_telefoneKeyReleased

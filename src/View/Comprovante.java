@@ -3,7 +3,10 @@ package View;
 
 import Conexao.Conexao_BD;
 import Dao.ComprovanteDao;
+import Dao.LucroDao;
+import Dao.VendaDao;
 import Model.ComprovanteModel;
+import Model.Data;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,11 +25,14 @@ public class Comprovante extends javax.swing.JFrame {
     public Comprovante() {
         initComponents();
         visualizarVenda();
-        setaValorTotalDeTodasVendas();
+       setaValorTotalDeTodasVendas();
+       
+       
         setLocationRelativeTo(this);
     }
    //variavel para armazenar as datas salvas no banco de dados
      String data="";
+     String codigoOpcao="";
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -37,7 +43,7 @@ public class Comprovante extends javax.swing.JFrame {
         tabdetalhevd = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         botdelete = new javax.swing.JButton();
-        deletar = new javax.swing.JTextField();
+        txtOpcoes = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         LABELtOTAL = new javax.swing.JLabel();
@@ -50,15 +56,16 @@ public class Comprovante extends javax.swing.JFrame {
         txtdataespecifica = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
+        botdeleteTUDO = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Informações das vendas realizadas");
         setBackground(new java.awt.Color(255, 255, 102));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        jPanel2.setBackground(new java.awt.Color(0, 204, 255));
+        jPanel2.setBackground(new java.awt.Color(153, 255, 153));
 
-        tabdetalhevd.setBackground(new java.awt.Color(0, 204, 204));
+        tabdetalhevd.setFont(new java.awt.Font("Tahoma", 2, 18)); // NOI18N
         tabdetalhevd.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -82,6 +89,7 @@ public class Comprovante extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tabdetalhevd.setAlignmentX(0.1F);
         tabdetalhevd.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tabdetalhevdMouseClicked(evt);
@@ -105,14 +113,14 @@ public class Comprovante extends javax.swing.JFrame {
             }
         });
 
-        deletar.addActionListener(new java.awt.event.ActionListener() {
+        txtOpcoes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                deletarActionPerformed(evt);
+                txtOpcoesActionPerformed(evt);
             }
         });
-        deletar.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtOpcoes.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                deletarKeyReleased(evt);
+                txtOpcoesKeyReleased(evt);
             }
         });
 
@@ -126,6 +134,11 @@ public class Comprovante extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
         jLabel3.setText("Total De Todas Vendas:");
 
+        txtDataInicio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtDataInicioActionPerformed(evt);
+            }
+        });
         txtDataInicio.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtDataInicioKeyReleased(evt);
@@ -134,6 +147,11 @@ public class Comprovante extends javax.swing.JFrame {
 
         jLabel4.setText("Data de Inicio:");
 
+        txtDataFinal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtDataFinalActionPerformed(evt);
+            }
+        });
         txtDataFinal.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtDataFinalKeyReleased(evt);
@@ -142,6 +160,7 @@ public class Comprovante extends javax.swing.JFrame {
 
         jLabel5.setText("Data Final:");
 
+        listaentreasdatas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icone/visualizador.png"))); // NOI18N
         listaentreasdatas.setText("Listar entre as datas");
         listaentreasdatas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -170,52 +189,64 @@ public class Comprovante extends javax.swing.JFrame {
             }
         });
 
+        botdeleteTUDO.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icone/claro.png"))); // NOI18N
+        botdeleteTUDO.setText("Deletar Tudo");
+        botdeleteTUDO.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botdeleteTUDOActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(207, 207, 207)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(425, 425, 425)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(207, 207, 207)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtDataInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(39, 39, 39)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtDataFinal, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(109, 109, 109)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtdataespecifica, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(37, 37, 37)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(deletar, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(71, 71, 71)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(LABELtOTAL, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(210, 210, 210)
-                        .addComponent(listaentreasdatas, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(39, 39, 39)
-                        .addComponent(jButton1)
-                        .addGap(50, 50, 50)
-                        .addComponent(botdelete, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(44, 44, 44)
-                        .addComponent(jButton2))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(239, 239, 239)
-                        .addComponent(jScrollPane1)
-                        .addGap(90, 90, 90)))
-                .addGap(75, 75, 75))
+                                .addGap(218, 218, 218)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(txtDataInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(39, 39, 39)
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(txtDataFinal, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(109, 109, 109)
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(txtdataespecifica, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(37, 37, 37)
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(txtOpcoes, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(71, 71, 71))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(3, 3, 3)
+                                        .addComponent(listaentreasdatas, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(39, 39, 39)
+                                        .addComponent(jButton1)
+                                        .addGap(50, 50, 50)
+                                        .addComponent(botdelete, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(botdeleteTUDO, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(31, 31, 31)))
+                                .addComponent(jButton2)))
+                        .addContainerGap(88, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 613, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(LABELtOTAL, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(49, 49, 49))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -223,8 +254,12 @@ public class Comprovante extends javax.swing.JFrame {
                 .addGap(61, 61, 61)
                 .addComponent(jLabel1)
                 .addGap(110, 110, 110)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(LABELtOTAL, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -241,33 +276,31 @@ public class Comprovante extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(11, 11, 11)
-                        .addComponent(deletar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(11, 11, 11)
-                        .addComponent(LABELtOTAL, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(6, 6, 6)
+                        .addComponent(txtOpcoes, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(48, 48, 48)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(listaentreasdatas, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(botdelete, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(1, 1, 1)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(botdelete, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(botdeleteTUDO, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addGap(0, 18, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -283,7 +316,7 @@ public class Comprovante extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
    //método para limpa os campos
     public void limpaCampos(){
-        deletar.setText("");
+        txtOpcoes.setText("");
         LABELtOTAL.setText("");
         txtDataFinal.setText("");
         txtDataInicio.setText("");
@@ -301,7 +334,7 @@ public class Comprovante extends javax.swing.JFrame {
                 //criando um objeto comprovante;
         ComprovanteModel cm = new ComprovanteModel();
         //passando os dados para deleta;
-        cm.setCodDetalhe(Integer.parseInt(deletar.getText()));
+        cm.setCodDetalhe(Integer.parseInt(txtOpcoes.getText()));
         //recebendo os dados de deleta
       
         
@@ -317,29 +350,49 @@ public class Comprovante extends javax.swing.JFrame {
     
        
     }//GEN-LAST:event_botdeleteActionPerformed
-    
+    //MÉTODO PARA DELETA TODAS VENDAS, TODOS ITENS, TODOS DOS CÓDIGOS DA TABELA VENDAS, TODOS DADOS DA TABELA DDE LUCROS
+    public void detelaEmGeral(){
+            VendaDao vd = new VendaDao();
+         //MÉTODO PARA DELETAR TODOS CÓDIGOS DA TABELA VENDAS
+             vd.deletaTodosCodigoDaTabelaVenda();
+         //instânciando comprovante dão; 
+          ComprovanteDao dao = new ComprovanteDao();
+          //MÉTODO PARA DELETAR TODAS VENDAS
+          dao.ExcluirTodaTabelaDoDetalhe();
+          
+           //MÉTODO PARA DELETAR TODOS ITENS
+             vd.deletaTodaVenda();
+            
+            
+             LucroDao LC = new LucroDao();
+             //MÉTODO PARA DELETAR TODOS DADOS DA TABELA LUCROS
+             LC.deletaTODOSLucros();
+             
+             
+    }
     
     private void tabdetalhevdMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabdetalhevdMouseClicked
         
-        deletar.setText(tabdetalhevd.getValueAt(tabdetalhevd.getSelectedRow(),0).toString());
+        txtOpcoes.setText(tabdetalhevd.getValueAt(tabdetalhevd.getSelectedRow(),2).toString());
+        txtdataespecifica.setText(tabdetalhevd.getValueAt(tabdetalhevd.getSelectedRow(),4).toString());
     }//GEN-LAST:event_tabdetalhevdMouseClicked
 
-    private void deletarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_deletarKeyReleased
+    private void txtOpcoesKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtOpcoesKeyReleased
           //condição para permitir apenas números
-        if(sonumeros(deletar.getText())){
+        if(sonumeros(txtOpcoes.getText())){
            
         }else{
             
-             if(deletar.getText().isEmpty()){
+             if(txtOpcoes.getText().isEmpty()){
                 
             }else{
               JOptionPane.showMessageDialog(null, "Nesse campo você só poder colocar números! ","Por favor: ",JOptionPane.ERROR_MESSAGE);
             }
            
-           deletar.setText("");
-           deletar.requestFocus();
+           txtOpcoes.setText("");
+           txtOpcoes.requestFocus();
          }
-    }//GEN-LAST:event_deletarKeyReleased
+    }//GEN-LAST:event_txtOpcoesKeyReleased
 
     private void listaentreasdatasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listaentreasdatasActionPerformed
       
@@ -415,12 +468,23 @@ public class Comprovante extends javax.swing.JFrame {
 
     }
     private void txtdataespecificaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtdataespecificaActionPerformed
-       //método para lista por uma data especifica
+      
+          buscarData();
+        
+        if(txtdataespecifica.getText().equals(data)){
+             //método para lista por uma data especifica
         listaPorDataEspecificar();
         //método para seta o valor total por uma unica data
         setaValorTotalPelaDataEspecifica();
+        }else{
+            JOptionPane.showMessageDialog(null, "Essa data  "+txtdataespecifica.getText()+"  não se encontrar ! ");
+        }
+
+     
     }//GEN-LAST:event_txtdataespecificaActionPerformed
 
+   
+    
     private void txtDataInicioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDataInicioKeyReleased
           //condição para permitir apenas números
         if(sonumeros(txtDataInicio.getText())){
@@ -433,6 +497,11 @@ public class Comprovante extends javax.swing.JFrame {
            txtDataInicio.setText("");
            txtDataInicio.requestFocus();
          }
+        
+            
+        
+        
+        
     }//GEN-LAST:event_txtDataInicioKeyReleased
 
     private void txtDataFinalKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDataFinalKeyReleased
@@ -464,20 +533,70 @@ public class Comprovante extends javax.swing.JFrame {
          }
     }//GEN-LAST:event_txtdataespecificaKeyReleased
 
-    private void deletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deletarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_deletarActionPerformed
+    private void txtOpcoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtOpcoesActionPerformed
+                  
+         //método para seta os códigos dos clientes cadastrados
+          setacodigoDoCliente();
+              buscarData();
+        if(txtdataespecifica.getText().equals("")){
+                   
+            if(txtOpcoes.getText().equals(codigoOpcao)){
+                 //método para lista pelo código do cliente
+               listaPeloCodCliente();
+              //método para soma a venda pelo código do cliente
+               somaVendaValorTotalPeloCodCliente();
+            }else{
+               JOptionPane.showMessageDialog(null, "Não se encontra cliente com esse código "+txtOpcoes.getText()+"","Tente outro código:",JOptionPane.INFORMATION_MESSAGE);
+            txtOpcoes.requestFocus();
+            }  
+       }else{   
+            if(txtOpcoes.getText().equals(codigoOpcao)){
+              
+            }else if(txtOpcoes.getText()!=codigoOpcao){
+               JOptionPane.showMessageDialog(null, "Não se encontra cliente com esse código "+txtOpcoes.getText()+"","Tente outro código:",JOptionPane.INFORMATION_MESSAGE);
+            txtOpcoes.requestFocus();
+            }   
+          else  if(txtdataespecifica.getText().equals(data)){
+            
+        }else if(txtdataespecifica.getText()!=data){
+            JOptionPane.showMessageDialog(null, "Essa data  "+txtdataespecifica.getText()+"  não se encontrar ! ");
+        }else{
+                 //método para lista pela data, código do cliente
+                 listaPelaDataCodCliente();
+                //método para soma as vendas pela data, código do cliente
+                 somaVendaValorTotalPelaDataCodCliente();
+                }
+           
+         }
+        
+    }//GEN-LAST:event_txtOpcoesActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
          //método para lista tudo
            visualizarVenda();
+           //método para soma todas vendas salvas
+          setaValorTotalDeTodasVendas();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void txtDataInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDataInicioActionPerformed
+          Data dt = new Data();
+        txtDataInicio.setText(dt.setaData());
+    }//GEN-LAST:event_txtDataInicioActionPerformed
+
+    private void txtDataFinalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDataFinalActionPerformed
+         Data dt = new Data();
+        txtDataFinal.setText(dt.setaData());
+    }//GEN-LAST:event_txtDataFinalActionPerformed
+
+    private void botdeleteTUDOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botdeleteTUDOActionPerformed
+     detelaEmGeral();
+    }//GEN-LAST:event_botdeleteTUDOActionPerformed
      //Método para avisa se o campo de código está vázio
       public boolean avisoParaCampoDoCodigoVazio(){
           
           boolean aviso=false;
           
-          if(deletar.getText().isEmpty()){
+          if(txtOpcoes.getText().isEmpty()){
              aviso=true;
           }
         return aviso;
@@ -570,8 +689,7 @@ public class Comprovante extends javax.swing.JFrame {
         }
 
     }
-     
-    //Método para seta os valor total por uma data especifica na labeltotal;
+       //Método para seta os valor total por uma data especifica na labeltotal;
     public void setaValorTotalPelaDataEspecifica() {
 
         DecimalFormat formater = new DecimalFormat("#0.00");
@@ -609,6 +727,83 @@ public class Comprovante extends javax.swing.JFrame {
 
     }
 
+    //Método para seta os valor total por uma data especifica na labeltotal;
+    public void somaVendaValorTotalPeloCodCliente() {
+
+        DecimalFormat formater = new DecimalFormat("#0.00");
+
+        try {
+            Connection Conn = Conexao_BD.getConnection();
+            //Comando para fazer a soma de toda coluna Valor Total no banco de dados;
+            String sql = "select round(sum(total),2) from detalhe WHERE codCli='"+txtOpcoes.getText()+"'";
+
+            PreparedStatement Patm = Conn.prepareStatement(sql);
+
+            ResultSet Rst = Patm.executeQuery();
+
+            while (Rst.next()) {
+
+                //Pegando o valor da soma
+                double total = Rst.getDouble("round(sum(total),2)");
+                //setando o valor no campo de texto e na label; 
+                LABELtOTAL.setText("R$ "+formater.format(total));
+
+            }
+            //Fechando conexão ResultSet;
+            Rst.close();
+
+            //Fechando conexão PreparedStatement;
+            Patm.close();
+
+            //Fechando conexão Connection;
+            Conn.close();
+
+        } catch (SQLException e) {
+            //caso de error mostrar essa mensagem;
+            JOptionPane.showMessageDialog(null, "Valor não setado! ");
+        }
+
+    }
+   
+      //Método para seta os valor total por uma data especifica e pelo código do cliente na labeltotal;
+    public void somaVendaValorTotalPelaDataCodCliente() {
+
+        DecimalFormat formater = new DecimalFormat("#0.00");
+
+        try {
+            Connection Conn = Conexao_BD.getConnection();
+            //Comando para fazer a soma de toda coluna Valor Total no banco de dados;
+            String sql = "select round(sum(total),2) from detalhe WHERE data='"+txtdataespecifica.getText()+"' and codCli='"+txtOpcoes.getText()+"'";
+
+            PreparedStatement Patm = Conn.prepareStatement(sql);
+
+            ResultSet Rst = Patm.executeQuery();
+
+            while (Rst.next()) {
+
+                //Pegando o valor da soma
+                double total = Rst.getDouble("round(sum(total),2)");
+                //setando o valor no campo de texto e na label; 
+                LABELtOTAL.setText("R$ "+formater.format(total));
+
+            }
+            //Fechando conexão ResultSet;
+            Rst.close();
+
+            //Fechando conexão PreparedStatement;
+            Patm.close();
+
+            //Fechando conexão Connection;
+            Conn.close();
+
+        } catch (SQLException e) {
+            //caso de error mostrar essa mensagem;
+            JOptionPane.showMessageDialog(null, "Valor não setado! ");
+        }
+
+    }
+
+    /*
     /*
     public void tab(){
            try {
@@ -665,7 +860,48 @@ public class Comprovante extends javax.swing.JFrame {
         }
 
     }
-  
+     //Método para lista as vendas pelo código do cliente;
+    public void listaPeloCodCliente() {
+        DefaultTableModel modelo = (DefaultTableModel) tabdetalhevd.getModel();
+        //Método para não repetir os dados na tabela de comprar;
+        modelo.setNumRows(0);
+        //Instânciando a classe ComprovanteDao;
+        ComprovanteDao dao = new ComprovanteDao();
+        //Um Laço de repetição para lista todas compras na tabela comprar no banco de dados; 
+        for (ComprovanteModel item : dao.listaItensCliente(txtOpcoes.getText())) {
+            modelo.addRow(new Object[]{
+                //Passando os objetos 
+                item.getCodDetalhe(),
+                item.getCodVenda(),
+                item.getCodCli(),
+                item.getValorTotal(),
+                item.getData()
+
+            });
+        }
+
+    }
+     //Método para lista as vendas pelo código do cliente;
+    public void listaPelaDataCodCliente() {
+        DefaultTableModel modelo = (DefaultTableModel) tabdetalhevd.getModel();
+        //Método para não repetir os dados na tabela de comprar;
+        modelo.setNumRows(0);
+        //Instânciando a classe ComprovanteDao;
+        ComprovanteDao dao = new ComprovanteDao();
+        //Um Laço de repetição para lista todas compras na tabela comprar no banco de dados; 
+        for (ComprovanteModel item : dao.listapelaDataCodCliente(txtdataespecifica.getText(),txtOpcoes.getText())) {
+            modelo.addRow(new Object[]{
+                //Passando os objetos 
+                item.getCodDetalhe(),
+                item.getCodVenda(),
+                item.getCodCli(),
+                item.getValorTotal(),
+                item.getData()
+
+            });
+        }
+
+    }
       //Método para visualizar todas Vendas;
     public void listaEntreASdatas() {
         DefaultTableModel modelo = (DefaultTableModel) tabdetalhevd.getModel();
@@ -709,7 +945,40 @@ public class Comprovante extends javax.swing.JFrame {
 
     }
     
-    
+      //Método para buscar o código do cliente;
+    public void setacodigoDoCliente() {
+
+        try {
+            Connection Conn = Conexao_BD.getConnection();
+
+            //comando para seta o código do cliente
+            String sql = "SELECT codCli from detalhe";
+            PreparedStatement Patm = Conn.prepareStatement(sql);
+            //executar
+            ResultSet Rst = Patm.executeQuery();
+
+            while (Rst.next()) {
+            //Setando o código
+               codigoOpcao=Rst.getString("codCli");
+                
+           //   JOptionPane.showMessageDialog(null," Código do detalhe "+codigoOpcao);
+
+            } 
+
+            //Fechando conexão ResultSet;
+            Rst.close();
+
+            //Fechando conexão PreparedStatement;
+            Patm.close();
+
+            //Fechando conexão Connection;
+            Conn.close();
+
+        } catch (SQLException e) {
+            //caso de error exiber essa mensagem
+            JOptionPane.showMessageDialog(null, "codigo do cliente não Encontrado !");
+        }
+    }
     public static void main(String args[]) {
       
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -722,7 +991,7 @@ public class Comprovante extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel LABELtOTAL;
     private javax.swing.JButton botdelete;
-    private javax.swing.JTextField deletar;
+    private javax.swing.JButton botdeleteTUDO;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
@@ -738,6 +1007,7 @@ public class Comprovante extends javax.swing.JFrame {
     private javax.swing.JTable tabdetalhevd;
     private javax.swing.JTextField txtDataFinal;
     private javax.swing.JTextField txtDataInicio;
+    private javax.swing.JTextField txtOpcoes;
     private javax.swing.JTextField txtdataespecifica;
     // End of variables declaration//GEN-END:variables
 }

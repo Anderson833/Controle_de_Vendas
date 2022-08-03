@@ -16,9 +16,7 @@ import javax.swing.JOptionPane;
  */
 public class LucroDao {
     
-    String codProduto;
-    int Quantidade=0;
-    double total;
+ 
     
    
      //Método para adicionar os dados do lucro no banco de dados;
@@ -29,19 +27,21 @@ public class LucroDao {
        
         try {
             //Inserindo os dados das vendas no banco de dados;
-            String sql="INSERT INTO lucro(codLuc,codProd,Qtd,Vvend,total,Vlcompra,Ganhor,data) VALUES(?,?,?,?,?,?,?,?)";
+            String sql="INSERT INTO lucro(codLuc,codProd,Qtd,Vvend,total,Vlcompra,valorinvest,Ganhor,data) VALUES(?,?,?,?,?,?,?,?,?)";
              
             PreparedStatement patm = conn.prepareStatement(sql);
             //Passando como paramentros os atributos da classe VendaModel;
            
+         
             patm.setString(1, lucro.getCodigoLucro());
             patm.setString(2, lucro.getCodigoProduto());
             patm.setDouble(3, lucro.getQuantidade());
             patm.setDouble(4, lucro.getValorUnitario());
             patm.setDouble(5, lucro.getValorTotal());
             patm.setDouble(6, lucro.getValorDcomprar());
-            patm.setDouble(7, lucro.getValorGanhor());
-            patm.setString(8, lucro.getData());
+            patm.setDouble(7, lucro.getValorInvestir());
+            patm.setDouble(8, lucro.getValorGanhor());
+            patm.setString(9, lucro.getData());
            
             
             //Executar;
@@ -49,10 +49,10 @@ public class LucroDao {
             
             if(upd>0){
                 //Caso de tudo certo exibir essa mensagem;
-                JOptionPane.showMessageDialog(null, "Informações do Lucro Adicionado Com Sucesso");
+              //  JOptionPane.showMessageDialog(null, "Informações do Lucro Adicionado Com Sucesso");
             }else{
                 //Caso de error  exibir essa mensagem;
-                JOptionPane.showMessageDialog(null, "Informações do Lucro Não Adicionado !","Error ",JOptionPane.ERROR_MESSAGE);
+              //  JOptionPane.showMessageDialog(null, "Informações do Lucro Não Adicionado !","Error ",JOptionPane.ERROR_MESSAGE);
             }
             
              //Fechando conexão PreparedStatement;
@@ -63,7 +63,7 @@ public class LucroDao {
             
         } catch (SQLException ex) {
             //Caso aconteça algum error mostrar essa mensagem;
-           JOptionPane.showMessageDialog(null, "Error ao Adicionar dados do lucro !");
+          // JOptionPane.showMessageDialog(null, "Error ao Adicionar dados do lucro !");
         }
         
     }
@@ -76,7 +76,7 @@ public class LucroDao {
        
         try {
             //deleta os dados lucro no banco de dados;
-            String sql="delete from lucro where codProd=?";
+            String sql="delete from lucro where codLuc=?";
              
             PreparedStatement pam=conn.prepareStatement(sql);
             pam.setString(1, cod);
@@ -95,6 +95,38 @@ public class LucroDao {
         } catch (SQLException ex) {
             //Caso aconteça algum error mostrar essa mensagem;
            JOptionPane.showMessageDialog(null, "Error ao deleta  dados do lucro !");
+        }
+        
+    }
+     
+      
+      //Método para deleta os dados do lucro no banco de dados;
+     public void deletaTODOSLucros(){
+          //Criando uma Connection com Classe Conexao_BD; 
+        Connection conn=Conexao_BD.getConnection();
+           
+       
+        try {
+            //deleta os dados lucro no banco de dados;
+            String sql="delete from lucro";
+             
+            PreparedStatement pam=conn.prepareStatement(sql);
+           // pam.setString(1, cod);
+            
+            int dtl=pam.executeUpdate();
+            
+            if(dtl>0){
+         //       JOptionPane.showMessageDialog(null, "Todo lucro deletado com sucesso");
+            }else{
+           //     JOptionPane.showMessageDialog(null, "Não deletou o lucro  !");
+            }
+            
+            //Fechando conexão Connection;
+            conn.close();
+            
+        } catch (SQLException ex) {
+            //Caso aconteça algum error mostrar essa mensagem;
+         ///  JOptionPane.showMessageDialog(null, "Error ao deleta  dados do lucro !");
         }
         
     }
@@ -128,6 +160,7 @@ public class LucroDao {
             lucro.setValorUnitario(rst.getDouble("Vvend"));
             lucro.setValorTotal(rst.getDouble("total"));
             lucro.setValorDcomprar(rst.getDouble("Vlcompra"));
+            lucro.setValorInvestir(rst.getDouble("valorinvest"));
             lucro.setValorGanhor(rst.getDouble("ganhor"));
             lucro.setData(rst.getString("data"));
              
@@ -200,7 +233,7 @@ public class LucroDao {
              
          } catch (SQLException e) {
              //Algo de error, mostrar essa mensagem;
-             JOptionPane.showMessageDialog(null, "Error ao Visualizar os dados do lucro!");
+         //    JOptionPane.showMessageDialog(null, "Error ao Visualizar os dados do lucro!");
          }
          //Retornando uma Lista;
         return listDados;
@@ -214,28 +247,31 @@ public class LucroDao {
                try {
            
           //Comando para que realizar atualização no banco de dados;
-            String sql="UPDATE lucro SET Qtd=?,Vvend=?,total=?,Vlcompra=?,Ganhor=? WHERE codLuc=? and data=?";
+            String sql="UPDATE lucro SET Qtd=?,Vvend=?,total=?,Vlcompra=?, valorinvest=?,Ganhor=?, data=? WHERE codProd=?";
             
             
             
             PreparedStatement patm = conn.prepareStatement(sql);
             //Passandoos valores nos paramentros;
+           
             patm.setDouble(1, lucro.getQuantidade());
             patm.setDouble(2, lucro.getValorUnitario());
             patm.setDouble(3, lucro.getValorTotal());
             patm.setDouble(4, lucro.getValorDcomprar());
-            patm.setDouble(5, lucro.getValorGanhor());
-            patm.setString(6, lucro.getCodigoProduto());
+            patm.setDouble(5, lucro.getValorInvestir());
+            patm.setDouble(6, lucro.getValorGanhor());
             patm.setString(7, lucro.getData());
+            patm.setString(8, lucro.getCodigoProduto());
+          
             //Executar;
              int res= patm.executeUpdate();
             
             if(res>0){
                 //Mensagem para mostrar para usuário caso esteja tudo correto!;
-                JOptionPane.showMessageDialog(null,"Lucro Atualizador com Sucesso !","Sucesso!",JOptionPane.INFORMATION_MESSAGE);
+              //  JOptionPane.showMessageDialog(null,"Lucro Atualizador com Sucesso !","Sucesso!",JOptionPane.INFORMATION_MESSAGE);
             }else{
                 //Mensagem oara exibir para usuário caso tenha informações incorretas;
-                JOptionPane.showMessageDialog(null,"Lucro não Atualizador !","Error",JOptionPane.ERROR_MESSAGE);
+              //  JOptionPane.showMessageDialog(null,"Lucro não Atualizador !","Error",JOptionPane.ERROR_MESSAGE);
             }
             
             //Fechando conexão PreparedStatement;
@@ -246,7 +282,7 @@ public class LucroDao {
             
         } catch (Exception e) {
             //Mensagem caso de error;
-              JOptionPane.showMessageDialog(null,"Error ao Atualizar Lucro !","Error",JOptionPane.ERROR_MESSAGE);
+            //  JOptionPane.showMessageDialog(null,"Error ao Atualizar Lucro !","Error",JOptionPane.ERROR_MESSAGE);
         }
      
        }

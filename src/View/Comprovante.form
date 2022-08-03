@@ -34,7 +34,8 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
               <Component id="jPanel2" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -42,7 +43,8 @@
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
               <Component id="jPanel2" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -53,7 +55,7 @@
     <Container class="javax.swing.JPanel" name="jPanel2">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ff" green="cc" red="0" type="rgb"/>
+          <Color blue="99" green="ff" red="99" type="rgb"/>
         </Property>
       </Properties>
 
@@ -61,58 +63,65 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
+                  <EmptySpace min="-2" pref="207" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="425" pref="425" max="-2" attributes="0"/>
-                          <Component id="jLabel1" min="-2" pref="263" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="-2" pref="207" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabel4" min="-2" pref="110" max="-2" attributes="0"/>
-                              <Component id="txtDataInicio" min="-2" pref="120" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace min="39" pref="39" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabel5" min="-2" pref="90" max="-2" attributes="0"/>
-                              <Component id="txtDataFinal" min="-2" pref="122" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace min="109" pref="109" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabel6" min="-2" pref="113" max="-2" attributes="0"/>
-                              <Component id="txtdataespecifica" min="-2" pref="128" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace min="37" pref="37" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabel2" min="-2" pref="98" max="-2" attributes="0"/>
-                              <Component id="deletar" min="-2" pref="108" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace min="71" pref="71" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabel3" min="-2" pref="161" max="-2" attributes="0"/>
                               <Group type="102" attributes="0">
-                                  <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
-                                  <Component id="LABELtOTAL" min="-2" pref="180" max="-2" attributes="0"/>
+                                  <EmptySpace min="218" pref="218" max="-2" attributes="0"/>
+                                  <Component id="jLabel1" min="-2" pref="263" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="jLabel4" min="-2" pref="110" max="-2" attributes="0"/>
+                                              <Component id="txtDataInicio" min="-2" pref="120" max="-2" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace min="39" pref="39" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="jLabel5" min="-2" pref="90" max="-2" attributes="0"/>
+                                              <Component id="txtDataFinal" min="-2" pref="122" max="-2" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace min="109" pref="109" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="jLabel6" min="-2" pref="113" max="-2" attributes="0"/>
+                                              <Component id="txtdataespecifica" min="-2" pref="128" max="-2" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace min="37" pref="37" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="jLabel2" min="-2" pref="98" max="-2" attributes="0"/>
+                                              <Component id="txtOpcoes" min="-2" pref="108" max="-2" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace min="-2" pref="71" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
+                                          <Component id="listaentreasdatas" min="-2" pref="172" max="-2" attributes="0"/>
+                                          <EmptySpace min="39" pref="39" max="-2" attributes="0"/>
+                                          <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
+                                          <Component id="botdelete" min="-2" pref="122" max="-2" attributes="0"/>
+                                          <EmptySpace max="32767" attributes="0"/>
+                                          <Component id="botdeleteTUDO" min="-2" pref="162" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <Component id="jButton2" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
+                          <EmptySpace pref="88" max="32767" attributes="0"/>
                       </Group>
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="-2" pref="210" max="-2" attributes="0"/>
-                          <Component id="listaentreasdatas" min="-2" pref="172" max="-2" attributes="0"/>
-                          <EmptySpace min="39" pref="39" max="-2" attributes="0"/>
-                          <Component id="jButton1" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="50" pref="50" max="-2" attributes="0"/>
-                          <Component id="botdelete" min="-2" pref="104" max="-2" attributes="0"/>
-                          <EmptySpace min="44" pref="44" max="-2" attributes="0"/>
-                          <Component id="jButton2" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="239" max="-2" attributes="0"/>
-                          <Component id="jScrollPane1" max="32767" attributes="0"/>
-                          <EmptySpace min="90" pref="90" max="-2" attributes="0"/>
+                      <Group type="102" alignment="1" attributes="0">
+                          <Component id="jScrollPane1" min="-2" pref="613" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="LABELtOTAL" min="-2" pref="180" max="-2" attributes="0"/>
+                              <Component id="jLabel3" min="-2" pref="161" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace min="-2" pref="75" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -122,8 +131,13 @@
                   <EmptySpace min="61" pref="61" max="-2" attributes="0"/>
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="110" max="-2" attributes="0"/>
-                  <Component id="jScrollPane1" min="-2" pref="154" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Component id="jScrollPane1" min="-2" pref="154" max="-2" attributes="0"/>
+                      <Component id="jLabel3" min="-2" pref="32" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Component id="LABELtOTAL" min="-2" pref="65" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <Component id="jLabel4" min="-2" pref="25" max="-2" attributes="0"/>
@@ -143,25 +157,20 @@
                       <Group type="102" attributes="0">
                           <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="11" pref="11" max="-2" attributes="0"/>
-                          <Component id="deletar" min="-2" pref="31" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" attributes="0">
-                          <Component id="jLabel3" min="-2" pref="32" max="-2" attributes="0"/>
-                          <EmptySpace min="11" pref="11" max="-2" attributes="0"/>
-                          <Component id="LABELtOTAL" min="-2" pref="55" max="-2" attributes="0"/>
+                          <Component id="txtOpcoes" min="-2" pref="31" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="listaentreasdatas" min="-2" pref="32" max="-2" attributes="0"/>
                       <Component id="jButton1" min="-2" pref="32" max="-2" attributes="0"/>
-                      <Component id="botdelete" min="-2" pref="32" max="-2" attributes="0"/>
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="1" pref="1" max="-2" attributes="0"/>
-                          <Component id="jButton2" min="-2" pref="31" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="botdelete" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
+                          <Component id="botdeleteTUDO" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
+                          <Component id="jButton2" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace pref="36" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="18" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -176,8 +185,8 @@
           <SubComponents>
             <Component class="javax.swing.JTable" name="tabdetalhevd">
               <Properties>
-                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="cc" green="cc" red="0" type="rgb"/>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="18" style="2"/>
                 </Property>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                   <Table columnCount="5" rowCount="0">
@@ -188,6 +197,7 @@
                     <Column editable="false" title="Data" type="java.lang.String"/>
                   </Table>
                 </Property>
+                <Property name="alignmentX" type="float" value="0.1"/>
               </Properties>
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tabdetalhevdMouseClicked"/>
@@ -217,10 +227,10 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botdeleteActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JTextField" name="deletar">
+        <Component class="javax.swing.JTextField" name="txtOpcoes">
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deletarActionPerformed"/>
-            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="deletarKeyReleased"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtOpcoesActionPerformed"/>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtOpcoesKeyReleased"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">
@@ -253,6 +263,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txtDataInicio">
           <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtDataInicioActionPerformed"/>
             <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtDataInicioKeyReleased"/>
           </Events>
         </Component>
@@ -263,6 +274,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txtDataFinal">
           <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtDataFinalActionPerformed"/>
             <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtDataFinalKeyReleased"/>
           </Events>
         </Component>
@@ -273,6 +285,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="listaentreasdatas">
           <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/icone/visualizador.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Listar entre as datas"/>
           </Properties>
           <Events>
@@ -299,6 +314,17 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="botdeleteTUDO">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/icone/claro.png"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Deletar Tudo"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botdeleteTUDOActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

@@ -34,6 +34,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenuItem11 = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
         jMenu6 = new javax.swing.JMenu();
         jMenuItem17 = new javax.swing.JMenuItem();
         jMenu7 = new javax.swing.JMenu();
@@ -48,16 +49,18 @@ public class TelaPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(153, 255, 153));
+        jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icone/sair.png"))); // NOI18N
         jButton1.setText("Sair");
+        jButton1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 580, -1, -1));
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 580, 70, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-60, 0, 1450, 670));
 
@@ -65,7 +68,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenu1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jMenu1.setText("Clientes");
 
-        jMenuItem1.setText("Cadastrar");
+        jMenuItem1.setText("Ir para as opções:");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem1ActionPerformed(evt);
@@ -78,7 +81,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenu2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jMenu2.setText("Produtos");
 
-        jMenuItem4.setText("Adicionar");
+        jMenuItem4.setText("Ir para as opções:");
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem4ActionPerformed(evt);
@@ -121,13 +124,21 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenu4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jMenu4.setText("Relatório ");
 
-        jMenuItem11.setText("Cadastrar");
+        jMenuItem11.setText("Ir para as opções:");
         jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem11ActionPerformed(evt);
             }
         });
         jMenu4.add(jMenuItem11);
+
+        jMenuItem5.setText("Detalhe do Lucro");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem5);
 
         jMenuBar1.add(jMenu4);
 
@@ -139,7 +150,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
 
-        jMenuItem17.setText("investir");
+        jMenuItem17.setText("Ir para as opções:");
         jMenuItem17.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem17ActionPerformed(evt);
@@ -152,7 +163,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenu7.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jMenu7.setText("Fornecedor");
 
-        jMenuItem18.setText("Cadastrar");
+        jMenuItem18.setText("Ir para as opções:");
         jMenuItem18.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem18ActionPerformed(evt);
@@ -165,7 +176,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenu5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jMenu5.setText("Usuário");
 
-        jMenuItem13.setText("Registrar");
+        jMenuItem13.setText("Ir para as opções:");
         jMenuItem13.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -184,7 +195,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
 
-        jMenuItem2.setText("Registrar");
+        jMenuItem2.setText("Ir para as opções:");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem2ActionPerformed(evt);
@@ -286,6 +297,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         dt.setVisible(true);
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+       LucroView lc = new LucroView();
+       lc.setVisible(true);
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
     public static void main(String args[]) {
       
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -314,6 +330,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JPanel jPanel1;

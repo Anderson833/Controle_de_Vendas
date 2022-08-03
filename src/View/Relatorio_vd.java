@@ -36,6 +36,9 @@ public class Relatorio_vd extends javax.swing.JFrame {
        rendimentoDoCapital();
        
        oLucroDepoisDasdespesas();
+       
+       
+       
     }
        //variável para receber o total da soma de todas as despesas
       double ValorTotalDespesas=0; 
@@ -47,6 +50,23 @@ public class Relatorio_vd extends javax.swing.JFrame {
        double valorTotalDeTDProdutosVendido=0;
        double valorDeTodoGanhoInvestido=0;
        double valorDeTodoLucro=0;
+       
+       
+       //ESSAS VARIAVEIS ESTÃO ALTERADAS PARA REALIZAR AS OPERAÇÕES DO DIA ATUAL
+       
+       
+       
+         //variável para receber o total da soma de todas as despesas do dia
+      double ValorTotalDespesasDiaAtual=0; 
+     //variavél para receber o valor do capital do dia presente
+      double capitalDiaAtual  =0;
+        //As Variaveis para receber os valores da jframe Investimento são else:
+        //investimento,lucro, todo valor dos produtos vendidos;
+       double valorDeTodoInvestimentoDiaAtual=0;
+       double valorTotalDeTDProdutosVendidoDiaAtual=0;
+       double valorDeTodoGanhoInvestidoDiaAtual=0;
+       double valorDeTodoLucroDiaAtual=0;
+       
        
        DecimalFormat def = new DecimalFormat("#,##0.00");
       
@@ -169,6 +189,16 @@ public class Relatorio_vd extends javax.swing.JFrame {
 
         jLabel12.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
         jLabel12.setText("       Data:");
+        jLabel12.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel12MouseClicked(evt);
+            }
+        });
+        jLabel12.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jLabel12KeyPressed(evt);
+            }
+        });
 
         txtData.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -254,20 +284,22 @@ public class Relatorio_vd extends javax.swing.JFrame {
                                 .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(142, 142, 142)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(478, 478, 478)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(318, 318, 318)
-                                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(313, 313, 313)
+                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(labelInvestimento1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(137, 137, 137)
-                                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(455, 455, 455)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(478, 478, 478)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(318, 318, 318)
+                                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(labelInvestimento1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(137, 137, 137)
+                                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(112, 112, 112)
@@ -284,7 +316,7 @@ public class Relatorio_vd extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(37, 37, 37)
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -451,7 +483,7 @@ public class Relatorio_vd extends javax.swing.JFrame {
         
      }
      
-     //método para saber do valor total do capital
+     //método para saber do valor tota do lucro depois das despesas
      public void oLucroDepoisDasdespesas(){
         
           valorDeTodoLucro=capital-valorDeTodoInvestimento;
@@ -695,12 +727,20 @@ public class Relatorio_vd extends javax.swing.JFrame {
            txtData.requestFocus();
          }
     }//GEN-LAST:event_txtDataKeyReleased
+
+    private void jLabel12KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jLabel12KeyPressed
+       
+    }//GEN-LAST:event_jLabel12KeyPressed
+
+    private void jLabel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel12MouseClicked
+         operacoesParaDiaAtual();
+    }//GEN-LAST:event_jLabel12MouseClicked
       
     
     //Método para permitir só números
       public boolean soNumeros(String str){
         
-         return str.matches("^[0.-9]+");
+         return str.matches("^[0/.-9]+");
         
       // return s.matches("[^0-9]+");
     }
@@ -748,8 +788,126 @@ public class Relatorio_vd extends javax.swing.JFrame {
         labelCapital.setText("");
     }
    
-    
+    //ESSAS AÇÕES DAQUI PARA BAIXO E PARA REALIZAR AS OPRERAÇÕES DO DIA PRESENTE
      
+       //Método para realizar as somas do investimentos, lucro e de todos produtos vendidos  
+       public  void RealizarOsCalculosEsetaValoresDiaAtual(){
+         
+           try {
+            Connection Conn = Conexao_BD.getConnection();
+        
+            //comando para realizar a soma
+            String sql = "SELECT (round(sum(valorinvest))),(round(sum(total))),(round(sum(Ganhor))) FROM lucro;";
+
+            PreparedStatement Patm = Conn.prepareStatement(sql);
+            
+            ResultSet Rst = Patm.executeQuery();
+        
+            while (Rst.next()) {
+                                
+                 valorDeTodoInvestimentoDiaAtual=Rst.getDouble("(round(sum(valorinvest)))");
+                
+                  valorTotalDeTDProdutosVendidoDiaAtual= Rst.getDouble("(round(sum(total)))");
+                  valorDeTodoGanhoInvestidoDiaAtual= Rst.getDouble("(round(sum(Ganhor)))");
+             
+                   labelInvestimento1.setText(""+valorDeTodoInvestimentoDiaAtual);
+                   Labeltotal.setText(""+valorTotalDeTDProdutosVendidoDiaAtual);
+                   labelganho.setText(""+valorDeTodoGanhoInvestidoDiaAtual);
+                  
+                  
+              // Passando os valores para 2 casas  decimais
+              String valorInvestir=def.format(valorDeTodoInvestimentoDiaAtual);
+              //String valorTotal=def.format(valorTotalDeTDProdutosVendido);
+              String valorTOTAL=def.format(valorTotalDeTDProdutosVendidoDiaAtual);
+              String valorDeTodoGanhoInvestidor=def.format(valorDeTodoGanhoInvestidoDiaAtual);
+                  
+                  labelInvestimento1.setText(""+valorInvestir);
+                   Labeltotal.setText(""+valorTOTAL);
+                   labelganho.setText(""+valorDeTodoGanhoInvestidor);
+                  
+            }
+
+            Rst.close();
+            Patm.close();
+            Conn.close();
+
+        } catch (SQLException e) {
+        
+         
+            
+            JOptionPane.showMessageDialog(null, "Soma do dia de hoje não realizada !");
+        }
+        
+     }
+        //método para saber do valor total do capital do dia atual
+     public void rendimentoDoCapitalDiaAtual(){
+        
+          capitalDiaAtual=valorTotalDeTDProdutosVendidoDiaAtual-ValorTotalDespesasDiaAtual;
+         
+         labelCapital.setText(""+capitalDiaAtual);
+         
+         String cptl=def.format(capitalDiaAtual);
+         
+         labelCapital.setText(cptl);
+        
+     }
+      //método para saber do valor tota do lucro depois das despesas do dia atual
+     public void oLucroDepoisDasdespesasDiaAtual(){
+        
+          valorDeTodoLucroDiaAtual=capitalDiaAtual-valorDeTodoInvestimentoDiaAtual;
+         
+         labelLucro.setText(""+valorDeTodoLucroDiaAtual);
+         
+         String lucrototal=def.format(valorDeTodoLucroDiaAtual);
+         
+         labelLucro.setText(lucrototal);
+        
+     }
+      //Método para realizar a soma das despesas
+        public  void RealizarSomaDasDespesasDiaAtual(){
+         
+           try {
+            Connection Conn = Conexao_BD.getConnection();
+        
+            
+            String sql = "SELECT (round(sum(valorTotal))) FROM despesas where data='"+txtData.getText()+"';";
+
+            PreparedStatement Patm = Conn.prepareStatement(sql);
+            
+            ResultSet Rst = Patm.executeQuery();
+          
+            while (Rst.next()) {
+                                
+                 ValorTotalDespesasDiaAtual=Rst.getDouble("(round(sum(valorTotal)))");
+            
+                  labelDespesa.setText(""+ValorTotalDespesasDiaAtual);
+              // Passando os valores para 2 casas  decimais
+              String valorDespesas=def.format(ValorTotalDespesasDiaAtual);
+             
+                  labelDespesa.setText(valorDespesas);
+              
+            }
+
+            Rst.close();
+            Patm.close();
+            Conn.close();
+
+        } catch (SQLException e) {
+        
+         
+            
+            JOptionPane.showMessageDialog(null, "Valor não Encontrado !");
+        }
+        
+     }
+        //método para realizar as operações para dia atual
+        public void operacoesParaDiaAtual(){
+              DataDoDia();
+         RealizarSomaDasDespesasDiaAtual();
+        RealizarOsCalculosEsetaValoresDiaAtual();
+         rendimentoDoCapitalDiaAtual();
+        oLucroDepoisDasdespesasDiaAtual();
+        }
          public void limpalinha(){
         DefaultTableModel dm = (DefaultTableModel) tbRelatorio.getModel();
 while(dm.getRowCount() > 0)

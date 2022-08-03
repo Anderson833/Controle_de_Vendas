@@ -3,7 +3,6 @@
 package Dao;
 
 import Conexao.Conexao_BD;
-import Model.IDvenda;
 import Model.VendaModel;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -74,7 +73,7 @@ public class VendaDao {
      }
     
       //Método para lista todos os dados das vendas pelo código da venda do cliente e da data;
-     public List<VendaModel> listaVendaPeloCodigoClienteData(String cod,String cli,String data){
+     public List<VendaModel> listaVendaPeloCodigoClienteData3(String cod,String cli,String data){
         //Criando uma Connection com Classe Conexao_BD; 
         Connection conn=Conexao_BD.getConnection();
      
@@ -120,14 +119,67 @@ public class VendaDao {
              
          } catch (Exception e) {
              //Algo de error, mostrar essa mensagem;
-             JOptionPane.showMessageDialog(null, "Error ao Visualizar Todas vendas!");
+             JOptionPane.showMessageDialog(null, "Error ao Visualizar Todos Itens!");
          }
          //Retornando uma Lista;
         return listVenda;
          
      }
     
+      //Método para lista todos os dados das vendas pelo codigo do cliente e da data;
+     public List<VendaModel> listaClienteData2(String cli,String data){
+        //Criando uma Connection com Classe Conexao_BD; 
+        Connection conn=Conexao_BD.getConnection();
      
+        //ArrayList de venda;
+         ArrayList<VendaModel> listVenda = new ArrayList<>();
+        
+         try {
+             
+             //Selecionando toda tabela de item;
+             String sql="SELECT * FROM item WHERE codCli='"+cli+"'and data='"+data+"'";
+             
+             PreparedStatement patm = conn.prepareStatement(sql);
+             
+             ResultSet rst=patm.executeQuery();
+             
+             while (rst.next()) {
+               
+                 //Instânciando  classe VendaModel;
+                 VendaModel venda = new VendaModel();
+                 //Setando os Valores;
+               venda.setIdDeleta(rst.getInt("codItem"));
+               venda.setCodVenda(rst.getInt("codVenda"));
+               venda.setCodCli(rst.getInt("codCli")); 
+               venda.setCodProd(rst.getInt("codProd"));
+               venda.setQtdProd(rst.getInt("Qtd"));
+               venda.setValorUnit(rst.getDouble("valorUnit"));
+               venda.setValorTotal(rst.getDouble("total"));
+               venda.setData(rst.getString("data"));
+             
+               listVenda.add(venda);
+                 //Adicionado na Lista;
+             
+             }
+             
+             //Fechando conexão ResultSet;
+             rst.close();
+             
+             //Fechando conexão PreparedStatement;
+            patm.close();
+            
+            //Fechando conexão Connection;
+            conn.close();
+             
+         } catch (Exception e) {
+             //Algo de error, mostrar essa mensagem;
+             JOptionPane.showMessageDialog(null, "Error ao lista itens vendas!");
+         }
+         //Retornando uma Lista;
+        return listVenda;
+         
+     }
+       
    //Método para adicionar itens na tabela vendas no banco de dados;
     public void adicionaItens(VendaModel venda){
         
@@ -175,8 +227,10 @@ public class VendaDao {
     }
      
      //Método para deletar item no banco de dados pelo código do Venda;
-      public void deletaVendaPeloCodigo(VendaModel vd){
-           //
+      public boolean deletaVendaPeloCodigo(VendaModel vd){
+          
+          boolean deletar=false;
+          
            //Criando uma Connection com Classe Conexao_BD; 
         Connection conn=Conexao_BD.getConnection();
              
@@ -194,11 +248,14 @@ public class VendaDao {
             int res = patm.executeUpdate();
 
             if (res > 0) {
+                
+                deletar=true;
                 //Caso de tudo certo será exibido essa mensagem para usuário;
                 JOptionPane.showMessageDialog(null, "Item Deletado com Sucesso !", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);
             } else {
                  //Caso de errado será exibido essa mensagem para usuário;
                 JOptionPane.showMessageDialog(null, "Item não Deletado !", "Error", JOptionPane.ERROR_MESSAGE);
+               deletar=false;
             }
 
             //Fechando conexão PreparedStatement;
@@ -210,9 +267,11 @@ public class VendaDao {
 
         } catch (Exception e) {
             //Caso de error ao deletar mostrar essa mensagem;
-             JOptionPane.showMessageDialog(null, "Error ao Deletar Item,  !", "Error", JOptionPane.ERROR_MESSAGE);
-             JOptionPane.showMessageDialog(null,"Se o problema persistir, excluir a venda na tabela de comprovante com código da venda  ");
+            // JOptionPane.showMessageDialog(null, "Error ao Deletar Item,  !", "Error", JOptionPane.ERROR_MESSAGE);
+             JOptionPane.showMessageDialog(null,"Esse item só poder se deletado quando a venda que está com esse item salvo for deletada  "
+                     + " ","Aviso:",JOptionPane.ERROR_MESSAGE);
         }
+         return deletar;
         
       }
       
@@ -256,7 +315,7 @@ public class VendaDao {
       }
       
        //Método para deletar o codigo da venda na tabela vendas;
-      public void deletaTodosCodigoDaTabelaVenda(VendaModel vd){
+      public void deletaTodosCodigoDaTabelaVenda(){
            //
            //Criando uma Connection com Classe Conexao_BD; 
         Connection conn=Conexao_BD.getConnection();
@@ -269,17 +328,17 @@ public class VendaDao {
             PreparedStatement patm = conn.prepareStatement(sql);
              
             //Passando em paramentros código da venda;
-            patm.setInt(1, vd.getCodVenda());
+          //  patm.setInt(1, vd.getCodVenda());
             
             //Executar;
             int res = patm.executeUpdate();
 
             if (res > 0) {
                 //Caso de tudo certo será exibido essa mensagem para usuário;
-                JOptionPane.showMessageDialog(null, "Código venda Deletado com Sucesso !", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Todos Código venda Deletado com Sucesso !", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);
             } else {
                  //Caso de errado será exibido essa mensagem para usuário;
-                JOptionPane.showMessageDialog(null, "Código venda não Deletado !", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "todos Código venda não Deletado !", "Error", JOptionPane.ERROR_MESSAGE);
             }
 
             //Fechando conexão PreparedStatement;
@@ -512,10 +571,10 @@ public class VendaDao {
             
             if(upd>0){
                 //Caso de tudo certo exibir essa mensagem;
-                JOptionPane.showMessageDialog(null, "Codigo da venda Adicionado Com Sucesso");
+               // JOptionPane.showMessageDialog(null, "Codigo da venda Adicionado Com Sucesso");
             }else{
                 //Caso de error  exibir essa mensagem;
-                JOptionPane.showMessageDialog(null, "codigo da venda não Adicionado !","Error ",JOptionPane.ERROR_MESSAGE);
+              //  JOptionPane.showMessageDialog(null, "codigo da venda não Adicionado !","Error ",JOptionPane.ERROR_MESSAGE);
             }
             
              //Fechando conexão PreparedStatement;
