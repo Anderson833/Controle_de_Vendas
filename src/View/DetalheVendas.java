@@ -34,7 +34,7 @@ public class DetalheVendas extends javax.swing.JFrame {
     //Método para seta os valor total  dos itens no campo de texto e na label;
     public void setaValorTotalDosItens() {
 
-        DecimalFormat formater = new DecimalFormat("#0.00");
+          DecimalFormat formater = new DecimalFormat("#,##0.00");
 
         try {
             Connection Conn = Conexao_BD.getConnection();
@@ -72,7 +72,7 @@ public class DetalheVendas extends javax.swing.JFrame {
     //Método para seta os valor total  dos itens no campo de texto e na label;
     public void setaValorTotalDosItensPelaDataEspecifica() {
 
-        DecimalFormat formater = new DecimalFormat("#0.00");
+        DecimalFormat formater = new DecimalFormat("#,##0.00");
 
         try {
             Connection Conn = Conexao_BD.getConnection();
@@ -110,7 +110,7 @@ public class DetalheVendas extends javax.swing.JFrame {
     //Método para seta os valor total  dos itens no campo de texto e na label;
     public void setaValorTotalPelaDataDeInicio_Final() {
 
-        DecimalFormat formater = new DecimalFormat("#0.00");
+     DecimalFormat formater = new DecimalFormat("#,##0.00");
 
         try {
             Connection Conn = Conexao_BD.getConnection();
@@ -256,6 +256,7 @@ public class DetalheVendas extends javax.swing.JFrame {
         jLabel1.setText("Valor Total =");
         jLabel1.setAlignmentX(10.0F);
 
+        txtcodvenda.setEnabled(false);
         txtcodvenda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtcodvendaActionPerformed(evt);
@@ -269,6 +270,7 @@ public class DetalheVendas extends javax.swing.JFrame {
 
         jLabel2.setText("Código Venda:");
 
+        txtcodcliente.setEnabled(false);
         txtcodcliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtcodclienteActionPerformed(evt);
@@ -280,6 +282,7 @@ public class DetalheVendas extends javax.swing.JFrame {
             }
         });
 
+        txtdata.setEnabled(false);
         txtdata.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtdataActionPerformed(evt);
@@ -464,30 +467,6 @@ public class DetalheVendas extends javax.swing.JFrame {
     private void ValorttActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ValorttActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_ValorttActionPerformed
-
-    private void txtcodvendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtcodvendaActionPerformed
-
-            if(txtcodvenda.getText().equals("")){
-             
-             JOptionPane.showMessageDialog(null, "Preencha o campo da data!","Por favor:",JOptionPane.INFORMATION_MESSAGE);
-              txtcodvenda.requestFocus();
-            }else if(txtcodvenda.getText()!=data){
-             JOptionPane.showMessageDialog(null, "Tente outra data diferente dessa  "+txtcodvenda.getText()+"","Data não encontrada:",JOptionPane.INFORMATION_MESSAGE);
-              txtcodvenda.requestFocus();
-         }else{
-           visualizarPeladate();
-             setaValorTotalDosItensPelaDataEspecifica();
-  
-         }
-               // setaValorTotalpelaData();
-    }//GEN-LAST:event_txtcodvendaActionPerformed
-
-    private void txtdataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtdataActionPerformed
-              
-       listaPeloCodigoClienteData();
-         setaValorTotalPeloCodigoClienteData();
-     
-    }//GEN-LAST:event_txtdataActionPerformed
         //Método para avisa se o campo de código está vázio
       public boolean avisoParaCampoDoCodigoVazio(){
           
@@ -534,52 +513,6 @@ public class DetalheVendas extends javax.swing.JFrame {
         setaValorTotalDosItens();
     }//GEN-LAST:event_ListaTudoActionPerformed
 
-    private void txtcodvendaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtcodvendaKeyReleased
-        
-            //condição para permitir apenas números
-        if(sonumeros(txtcodvenda.getText())){
-        }else{
-             if(txtcodvenda.getText().isEmpty()){
-                
-            }else{
-              JOptionPane.showMessageDialog(null, "Nesse campo você só poder colocar números! ","Por favor: ",JOptionPane.ERROR_MESSAGE);
-            }
-           txtcodvenda.setText("");
-           txtcodvenda.requestFocus();
-         }
-    }//GEN-LAST:event_txtcodvendaKeyReleased
-
-    private void txtcodclienteKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtcodclienteKeyReleased
-      
-           //condição para permitir apenas números
-        if(sonumeros(txtcodcliente.getText())){
-        }else{
-             if(txtcodcliente.getText().isEmpty()){
-                
-            }else{
-              JOptionPane.showMessageDialog(null, "Nesse campo você só poder colocar números! ","Por favor: ",JOptionPane.ERROR_MESSAGE);
-            }
-           txtcodcliente.setText("");
-           txtcodcliente.requestFocus();
-         }
-
-    }//GEN-LAST:event_txtcodclienteKeyReleased
-
-    private void txtdataKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtdataKeyReleased
-         //condição para permitir apenas números
-        if(sonumeros(txtdata.getText())){
-        }else{
-             if(txtdata.getText().isEmpty()){
-                
-            }else{
-              JOptionPane.showMessageDialog(null, "Nesse campo você só poder colocar números! ","Por favor: ",JOptionPane.ERROR_MESSAGE);
-            }
-           txtdata.setText("");
-           txtdata.requestFocus();
-         }
-
-    }//GEN-LAST:event_txtdataKeyReleased
-
     private void deletatdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deletatdActionPerformed
        
            int op=JOptionPane.showConfirmDialog(null, "Você tem certeza ?");
@@ -593,10 +526,6 @@ public class DetalheVendas extends javax.swing.JFrame {
         }
       
     }//GEN-LAST:event_deletatdActionPerformed
-
-    private void txtcodclienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtcodclienteActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtcodclienteActionPerformed
 
     private void deletaITENSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deletaITENSActionPerformed
        
@@ -623,6 +552,77 @@ public class DetalheVendas extends javax.swing.JFrame {
        
         
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void txtcodclienteKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtcodclienteKeyReleased
+
+        //condição para permitir apenas números
+        if(sonumeros(txtcodcliente.getText())){
+        }else{
+            if(txtcodcliente.getText().isEmpty()){
+
+            }else{
+                JOptionPane.showMessageDialog(null, "Nesse campo você só poder colocar números! ","Por favor: ",JOptionPane.ERROR_MESSAGE);
+            }
+            txtcodcliente.setText("");
+            txtcodcliente.requestFocus();
+        }
+    }//GEN-LAST:event_txtcodclienteKeyReleased
+
+    private void txtcodclienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtcodclienteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtcodclienteActionPerformed
+
+    private void txtcodvendaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtcodvendaKeyReleased
+
+        //condição para permitir apenas números
+        if(sonumeros(txtcodvenda.getText())){
+        }else{
+            if(txtcodvenda.getText().isEmpty()){
+
+            }else{
+                JOptionPane.showMessageDialog(null, "Nesse campo você só poder colocar números! ","Por favor: ",JOptionPane.ERROR_MESSAGE);
+            }
+            txtcodvenda.setText("");
+            txtcodvenda.requestFocus();
+        }
+    }//GEN-LAST:event_txtcodvendaKeyReleased
+
+    private void txtcodvendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtcodvendaActionPerformed
+
+        if(txtcodvenda.getText().equals("")){
+
+            JOptionPane.showMessageDialog(null, "Preencha o campo da data!","Por favor:",JOptionPane.INFORMATION_MESSAGE);
+            txtcodvenda.requestFocus();
+        }else if(txtcodvenda.getText()!=data){
+            JOptionPane.showMessageDialog(null, "Tente outra data diferente dessa  "+txtcodvenda.getText()+"","Data não encontrada:",JOptionPane.INFORMATION_MESSAGE);
+            txtcodvenda.requestFocus();
+        }else{
+            visualizarPeladate();
+            setaValorTotalDosItensPelaDataEspecifica();
+
+        }
+        // setaValorTotalpelaData();
+    }//GEN-LAST:event_txtcodvendaActionPerformed
+
+    private void txtdataKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtdataKeyReleased
+        //condição para permitir apenas números
+        if(sonumeros(txtdata.getText())){
+        }else{
+            if(txtdata.getText().isEmpty()){
+
+            }else{
+                JOptionPane.showMessageDialog(null, "Nesse campo você só poder colocar números! ","Por favor: ",JOptionPane.ERROR_MESSAGE);
+            }
+            txtdata.setText("");
+            txtdata.requestFocus();
+        }
+    }//GEN-LAST:event_txtdataKeyReleased
+
+    private void txtdataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtdataActionPerformed
+
+        listaPeloCodigoClienteData();
+        setaValorTotalPeloCodigoClienteData();
+    }//GEN-LAST:event_txtdataActionPerformed
    //método para limpas os campos
     public void limparCampos(){
          txtcodcliente.setText("");
@@ -774,7 +774,7 @@ public class DetalheVendas extends javax.swing.JFrame {
   //Método para seta os valor total  dos itens no campo de texto e na label;
     public void setaValorTotalpelaData() {
 
-        DecimalFormat formater = new DecimalFormat("#0.00");
+        DecimalFormat formater = new DecimalFormat("#,##0.00");
 
         try {
             Connection Conn = Conexao_BD.getConnection();
@@ -811,7 +811,7 @@ public class DetalheVendas extends javax.swing.JFrame {
     //Método para seta os valor total  dos itens pelo codigo cliente e data no campo de texto e na label;
     public void setaValorTotalpeloClienteData() {
 
-        DecimalFormat formater = new DecimalFormat("#0.00");
+        DecimalFormat formater = new DecimalFormat("#,##0.00");
 
         try {
             Connection Conn = Conexao_BD.getConnection();
@@ -848,7 +848,7 @@ public class DetalheVendas extends javax.swing.JFrame {
       //método para seta a soma dos itens pelo código da venda do cliente e pela data
      public void setaValorTotalPeloCodigoClienteData() {
 
-        DecimalFormat formater = new DecimalFormat("#0.00");
+        DecimalFormat formater = new DecimalFormat("#,##0.00");
 
         try {
             Connection Conn = Conexao_BD.getConnection();
@@ -886,7 +886,7 @@ public class DetalheVendas extends javax.swing.JFrame {
     //Método para seta os valor total  dos itens no campo de texto e na label;
     public void setaValorTotalEntreAsData() {
 
-        DecimalFormat formater = new DecimalFormat("#0.00");
+       DecimalFormat formater = new DecimalFormat("#,##0.00");
 
         try {
             Connection Conn = Conexao_BD.getConnection();
@@ -924,7 +924,7 @@ public class DetalheVendas extends javax.swing.JFrame {
 
     public void setaValorTotalpelaDataComecoEfinal() {
 
-        DecimalFormat formater = new DecimalFormat("#0.00");
+          DecimalFormat formater = new DecimalFormat("#,##0.00");
 
         try {
             Connection Conn = Conexao_BD.getConnection();

@@ -31,7 +31,7 @@ public class Investimento extends javax.swing.JFrame {
         //método para seta a data do dia no campo de texto
         DataDoDia();
     }
-
+        //variaveis para armazenar os dados de investimentos, valor total de todos produtos e o valor de todo lucro
      double valorDeTodoInvestimento=0;
      double valorTotalDeTDProdutosVendido=0;
      double valorDeTodoLucro=0;
@@ -507,17 +507,17 @@ public class Investimento extends javax.swing.JFrame {
 
     private void tbInvestimentoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbInvestimentoMouseClicked
       
-        if(tbInvestimento.getSelectedRow()!=-1){
+      
             txtCodInvestimento.setText(tbInvestimento.getValueAt(tbInvestimento.getSelectedRow(),0).toString());
             txtNomeProduto.setText(tbInvestimento.getValueAt(tbInvestimento.getSelectedRow(),1).toString());
             txtQuantidade.setText(tbInvestimento.getValueAt(tbInvestimento.getSelectedRow(),2).toString());
             txtValorDeComprar.setText(tbInvestimento.getValueAt(tbInvestimento.getSelectedRow(),3).toString());
             txtValorDeRevenda.setText(tbInvestimento.getValueAt(tbInvestimento.getSelectedRow(),4).toString());
-            LABELvalorDoInvestimento.setText(tbInvestimento.getValueAt(tbInvestimento.getSelectedRow(),5).toString());
+            LABELvalorDoInvestimento.setText(tbInvestimento.getValueAt(tbInvestimento.getSelectedRow(),5).toString()); 
             labelValorDEtodosVendidos.setText(tbInvestimento.getValueAt(tbInvestimento.getSelectedRow(),6).toString());
-            LABELvalorDoLucro.setText(tbInvestimento.getValueAt(tbInvestimento.getSelectedRow(),7).toString());
+            LABELvalorDoLucro.setText(tbInvestimento.getValueAt(tbInvestimento.getSelectedRow(),7).toString()); 
             txtData.setText(tbInvestimento.getValueAt(tbInvestimento.getSelectedRow(),8).toString());
-        }
+      
         
     }//GEN-LAST:event_tbInvestimentoMouseClicked
 
@@ -636,7 +636,7 @@ public class Investimento extends javax.swing.JFrame {
         }
         return vrg;
     }
-    
+    //método para a limpar os campos 
    public void limpaCampos(){
        txtCodInvestimento.setText(" ");
        txtData.setText("");
@@ -681,7 +681,9 @@ public class Investimento extends javax.swing.JFrame {
         LABELvalorDoLucro.setText(" "+lucro);
         // exibir o valor total de todos produtos vendidos
         labelValorDEtodosVendidos.setText(" "+total);
+        
     }
+    
     
     //Método para adicionar os dados do investimentos;
      public void addInvestimento(){
@@ -837,7 +839,7 @@ public class Investimento extends javax.swing.JFrame {
     //metodo para digita só nomes
     public boolean checkLetters(String str) {
 
-        return str.matches("[a-zA-Z é ê ô ó á!úûí õ ç â~,.ã^~,.]+");
+        return str.matches("[a-zA-Z Á É ÃÀ à í é ê ô ó á!úûí õ ç â~,.ã^~,.]+");
     }
     public static void main(String args[]) {
       

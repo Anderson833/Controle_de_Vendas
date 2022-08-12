@@ -11,6 +11,7 @@ public class ProdutoModel {
     private int codProd;
     private String descricao;
     private String produto;
+    private String codigoNome;
     private double ValorDeRevenda;
     private double valorDcomprar;
     private int Qtd_estoquer;
@@ -77,7 +78,10 @@ public class ProdutoModel {
 
     @Override
     public String toString() {
-        return String.valueOf(getCodProd());
+      //  return String.valueOf(getCodProd())+"  "+String.valueOf(getProduto
+    return String.valueOf(getCodProd());
+      // return String.valueOf(getProduto());
+
     }
 
     /**
@@ -92,6 +96,20 @@ public class ProdutoModel {
      */
     public void setCodFornec(int codFornec) {
         this.codFornec = codFornec;
+    }
+
+    /**
+     * @return the codigoNome
+     */
+    public String getCodigoNome() {
+        return codigoNome;
+    }
+
+    /**
+     * @param codigoNome the codigoNome to set
+     */
+    public void setCodigoNome(String codigoNome) {
+        this.codigoNome = codigoNome;
     }
 
      

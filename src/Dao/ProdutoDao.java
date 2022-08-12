@@ -73,6 +73,58 @@ public class ProdutoDao {
         return listProduto;
          
      }
+      //Método para visualizar todos Produtos;
+     public List<ProdutoModel> listaProdutocomNome(){
+        //Criando uma Connection com Classe Conexao_BD; 
+        Connection conn=Conexao_BD.getConnection();
+     
+        //ArrayList de Produto;
+         ArrayList<ProdutoModel> listProduto = new ArrayList<>();
+        
+         try {
+             
+             //Comando para selecionar toda tabela Produto;
+             String sql="SELECT * FROM produto";
+             
+             PreparedStatement patm = conn.prepareStatement(sql);
+             //Executar;
+             ResultSet rst=patm.executeQuery();
+             
+             while (rst.next()) {
+               
+                 //Instânciando  classe ProdutoModel;
+                 ProdutoModel prod = new ProdutoModel();
+                 //Setando os Valores;
+                prod.setCodProd(rst.getInt("codProd"));
+                prod.setProduto(rst.getString("nome"));
+                prod.setDescricao(rst.getString("descricao"));
+                prod.setValorDeRevenda(rst.getDouble("valorUnit"));
+                prod.setValorDcomprar(rst.getDouble("ValorDcompra"));
+                prod.setQtd_estoquer(rst.getInt("estoque"));
+                prod.setCodFornec(rst.getInt("codFornec"));
+              
+                 //Adicionando na Lista;
+                listProduto.add(prod);
+          
+             }
+             
+             //Fechando conexão ResultSet;
+             rst.close();
+             
+             //Fechando conexão PreparedStatement;
+            patm.close();
+            
+            //Fechando conexão Connection;
+            conn.close();
+             
+         } catch (Exception e) {
+             //Algo de error mostrar essa mensagem;
+             JOptionPane.showMessageDialog(null, "Error ao Visualizar Todos Produtos!");
+         }
+         //Retornando uma Lista de Produto;
+        return listProduto;
+         
+     }
     
       //Método para adicionar produto ao banco de dados;
     public void adicionarProduto(ProdutoModel produto){

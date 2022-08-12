@@ -67,7 +67,7 @@ public class Relatorio_vd extends javax.swing.JFrame {
        double valorDeTodoGanhoInvestidoDiaAtual=0;
        double valorDeTodoLucroDiaAtual=0;
        
-       
+       //método para colocar os números com casas decimais
        DecimalFormat def = new DecimalFormat("#,##0.00");
       
     @SuppressWarnings("unchecked")
@@ -677,7 +677,7 @@ public class Relatorio_vd extends javax.swing.JFrame {
           
       }
     
-     //Método para verificar se tem campos varios
+     //Método para verificar se tem campos vazios
     public boolean camposVazio(){
         boolean preencha=false;
        
@@ -700,11 +700,11 @@ public class Relatorio_vd extends javax.swing.JFrame {
            String capital=def.format(this.capital);
            
            txtCodRe.setText(tbRelatorio.getValueAt(tbRelatorio.getSelectedRow(),0).toString());
-            labelDespesa.setText(tbRelatorio.getValueAt(tbRelatorio.getSelectedRow(),1).toString()); labelDespesa.setText(despesas); labelganho.setText(""); 
-            labelganho.setText(tbRelatorio.getValueAt(tbRelatorio.getSelectedRow(),2).toString());  labelganho.setText(lucro);       labelganho.setText(""); 
-            labelInvestimento1.setText(tbRelatorio.getValueAt(tbRelatorio.getSelectedRow(),3).toString()); labelInvestimento1.setText(investimento); labelganho.setText(""); 
-            Labeltotal.setText(tbRelatorio.getValueAt(tbRelatorio.getSelectedRow(),4).toString());    Labeltotal.setText(valorTotal);labelganho.setText(""); 
-            labelCapital.setText(tbRelatorio.getValueAt(tbRelatorio.getSelectedRow(),5).toString());  labelCapital.setText(capital);labelganho.setText(""); 
+            labelDespesa.setText(tbRelatorio.getValueAt(tbRelatorio.getSelectedRow(),1).toString()); labelDespesa.setText(despesas); //labelganho.setText(""); 
+            labelganho.setText(tbRelatorio.getValueAt(tbRelatorio.getSelectedRow(),2).toString());  labelganho.setText(lucro);      // labelganho.setText(""); 
+            labelInvestimento1.setText(tbRelatorio.getValueAt(tbRelatorio.getSelectedRow(),3).toString()); labelInvestimento1.setText(investimento); //labelganho.setText(""); 
+            Labeltotal.setText(tbRelatorio.getValueAt(tbRelatorio.getSelectedRow(),4).toString());    Labeltotal.setText(valorTotal);//labelganho.setText(""); 
+            labelCapital.setText(tbRelatorio.getValueAt(tbRelatorio.getSelectedRow(),5).toString());  labelCapital.setText(capital);//labelganho.setText(""); 
             txtData.setText(tbRelatorio.getValueAt(tbRelatorio.getSelectedRow(),6).toString());
             
         
