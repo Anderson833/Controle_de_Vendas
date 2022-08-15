@@ -458,6 +458,11 @@ public class Venda extends javax.swing.JFrame {
 
         jLabel6.setText("Informe o valor recebido:");
 
+        txtValorReceb.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtValorRecebMouseClicked(evt);
+            }
+        });
         txtValorReceb.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtValorRecebActionPerformed(evt);
@@ -1356,15 +1361,17 @@ public class Venda extends javax.swing.JFrame {
                 txtValortotal.requestFocus();
         }else{
             
+           
+               //Passando valor total de String para double;
+            double valorTotal = Double.parseDouble(txtValortotal.getText());
+         
+            
             //CASO CONTRÁRIO REALIZA ESSA MÉTODO;
 
-            //Passando valor recebido de String para double;
+  //Passando valor recebido de String para double;
             double valorReb = Double.parseDouble(txtValorReceb.getText());
 
-            //Passando valor total de String para double;
-            double valorTotal = Double.parseDouble(txtValortotal.getText());
-
-            if (valorReb < valorTotal) {
+              if (valorReb < valorTotal) {
                 JOptionPane.showMessageDialog(null, "Valor a Baixo do Valor Total !");
                 txtValorReceb.requestFocus();
                  // realizarVenda();
@@ -1400,6 +1407,12 @@ public class Venda extends javax.swing.JFrame {
            txtValorReceb.requestFocus();
          }
     }//GEN-LAST:event_txtValorRecebKeyReleased
+
+    private void txtValorRecebMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtValorRecebMouseClicked
+        
+        //seta valor total da labeltotal no campo de valor total
+        txtValortotal.setText(labelTotal.getText());
+    }//GEN-LAST:event_txtValorRecebMouseClicked
 // VER SE TEM O CODIGO VENDA SALVO NA TABELA VENDAS 
     public void verificar() {
         boolean clik;
