@@ -97,7 +97,7 @@ public class Produto extends javax.swing.JFrame {
             }
         });
 
-        jLabel4.setText("Valor  Revendar:");
+        jLabel4.setText("Valor De  Revendar:");
 
         txtValorUnt.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -144,7 +144,7 @@ public class Produto extends javax.swing.JFrame {
         jLabel6.setBackground(new java.awt.Color(204, 255, 204));
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icone/produtos.png"))); // NOI18N
-        jLabel6.setText("        PRODUTOS");
+        jLabel6.setText("    Cadastrar    Produtos");
         jLabel6.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         jLabel8.setText("Qtd em  Estoque: ");
@@ -192,7 +192,7 @@ public class Produto extends javax.swing.JFrame {
             }
         });
 
-        jLabel5.setText("Fornecedor:");
+        jLabel5.setText("Código do Fornecedor:");
 
         valorDcompra.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -251,9 +251,9 @@ public class Produto extends javax.swing.JFrame {
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtValorUnt, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtValorUnt, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(52, 52, 52)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -282,7 +282,7 @@ public class Produto extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 418, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -435,13 +435,18 @@ public class Produto extends javax.swing.JFrame {
   
     
     private void salvarProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvarProdActionPerformed
-        
+      
+          
           //Condição para saber se tem capo vazio
         if(preencherCampos()){
         }else{
             
+             if(jComboBoxFornecedor.getSelectedIndex()==0){
+          JOptionPane.showMessageDialog(null," Escolha  o código do Fornecedor! "," Por Favor",JOptionPane.INFORMATION_MESSAGE);
+           jComboBoxFornecedor.requestFocus();
+               }
             setaCodigoDoProduto();
-// Adicionando os Produtos no Banco de Dados;
+         // Adicionando os Produtos no Banco de Dados;
         adicionarProdutos();
         // Exibindo os Dados dos Produtos No Banco de Dados;
         visualizarProdutos();
@@ -465,7 +470,8 @@ public class Produto extends javax.swing.JFrame {
         }else{
                if(jComboBoxFornecedor.getSelectedIndex()==0){
           JOptionPane.showMessageDialog(null," Escolha  o código do Fornecedor! "," Por Favor",JOptionPane.INFORMATION_MESSAGE);
-      }else{
+           jComboBoxFornecedor.requestFocus();
+               }else{
               //Método para atualizar produtos;
         atualizarProdutos();
         // Exibindo os Dados dos Produtos No Banco de Dados;
@@ -579,8 +585,15 @@ public class Produto extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNomeKeyReleased
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-         //método para seta os dados do investimento
-          setaDadosInvestimento();
+       
+         if(txtCodInvestimento.getText().isEmpty()){
+     JOptionPane.showMessageDialog(null, "Informe  o código do investimento!","Por favor:",JOptionPane.INFORMATION_MESSAGE);
+           txtCodInvestimento.requestFocus();
+         }else{ 
+        //método para seta os dados do investimento
+          setaDadosInvestimento(); 
+         }
+       
     }//GEN-LAST:event_jButton2ActionPerformed
       //Método para mandar preenche os campos
     public boolean preencherCampos(){
@@ -789,6 +802,7 @@ public class Produto extends javax.swing.JFrame {
           txtEstoque.setText("");
          jComboBoxFornecedor.setSelectedIndex(0);
          valorDcompra.setText("");
+         txtCodInvestimento.setText("");
     }
     
      // Método para limpar as linhas ;

@@ -88,9 +88,9 @@
                               <Component id="txtDescricao" min="-2" pref="223" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="32767" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabel4" min="-2" pref="96" max="-2" attributes="0"/>
-                              <Component id="txtValorUnt" min="-2" pref="123" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="txtValorUnt" pref="123" max="32767" attributes="0"/>
+                              <Component id="jLabel4" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" attributes="0">
@@ -131,7 +131,7 @@
                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="txtNome" min="-2" pref="302" max="-2" attributes="0"/>
-                      <Component id="jLabel6" min="-2" pref="308" max="-2" attributes="0"/>
+                      <Component id="jLabel6" min="-2" pref="418" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
               </Group>
@@ -232,7 +232,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel4">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Valor  Revendar:"/>
+            <Property name="text" type="java.lang.String" value="Valor De  Revendar:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtValorUnt">
@@ -315,7 +315,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/icone/produtos.png"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="        PRODUTOS"/>
+            <Property name="text" type="java.lang.String" value="    Cadastrar    Produtos"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
                 <BevelBorder/>
@@ -379,7 +379,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel5">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Fornecedor:"/>
+            <Property name="text" type="java.lang.String" value="C&#xf3;digo do Fornecedor:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="valorDcompra">

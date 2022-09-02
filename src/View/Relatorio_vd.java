@@ -39,8 +39,11 @@ public class Relatorio_vd extends javax.swing.JFrame {
        
        
        
+    
     }
-       //variável para receber o total da soma de todas as despesas
+      int clique=0;
+
+    //variável para receber o total da soma de todas as despesas
       double ValorTotalDespesas=0; 
      //variavél para receber o valor do capital
       double capital  =0;
@@ -307,7 +310,7 @@ public class Relatorio_vd extends javax.swing.JFrame {
                 .addGap(101, 101, 101))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                    .addContainerGap(974, Short.MAX_VALUE)
+                    .addGap(974, 974, 974)
                     .addComponent(labelLucro, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(95, 95, 95)))
         );
@@ -370,7 +373,7 @@ public class Relatorio_vd extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addGap(190, 190, 190)
                     .addComponent(labelLucro, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(449, Short.MAX_VALUE)))
+                    .addGap(449, 449, 449)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -498,7 +501,14 @@ public class Relatorio_vd extends javax.swing.JFrame {
      
     
     private void visualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_visualizarActionPerformed
-     //Método para visualizar relatorio;
+   
+        clique++;
+        if(clique==3){
+            operacoesParaDiaAtual();
+        }
+        
+        
+        //Método para visualizar relatorio;
       visualizaRelatorio();
     }//GEN-LAST:event_visualizarActionPerformed
       //Método para visualizar todo Relatório;
@@ -786,6 +796,7 @@ public class Relatorio_vd extends javax.swing.JFrame {
         labelInvestimento1.setText("");
         labelganho.setText("");
         labelCapital.setText("");
+        labelLucro.setText("");
     }
    
     //ESSAS AÇÕES DAQUI PARA BAIXO E PARA REALIZAR AS OPRERAÇÕES DO DIA PRESENTE

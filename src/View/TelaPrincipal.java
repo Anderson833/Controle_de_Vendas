@@ -80,7 +80,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icone/clientes.png"))); // NOI18N
         jMenu1.setText("Clientes");
 
-        jMenuItem1.setText("Ir para as opções:");
+        jMenuItem1.setText("Ir para as funções:");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem1ActionPerformed(evt);
@@ -94,7 +94,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenu2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icone/produtos_1.png"))); // NOI18N
         jMenu2.setText("Produtos");
 
-        jMenuItem4.setText("Ir para as opções:");
+        jMenuItem4.setText("Ir para as funções:");
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem4ActionPerformed(evt);
@@ -106,7 +106,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jMenu3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jMenu3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icone/venda-rapida_1.png"))); // NOI18N
-        jMenu3.setText(" venda");
+        jMenu3.setText(" vendas");
 
         jMenuItem7.setText("Realizar venda");
         jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
@@ -138,7 +138,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenu4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icone/relatorio.png"))); // NOI18N
         jMenu4.setText("Relatório ");
 
-        jMenuItem11.setText("Ir para as opções:");
+        jMenuItem11.setText("Ir para as funções:");
         jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem11ActionPerformed(evt);
@@ -165,7 +165,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
 
-        jMenuItem17.setText("Ir para as opções:");
+        jMenuItem17.setText("Ir para as funções:");
         jMenuItem17.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem17ActionPerformed(evt);
@@ -179,7 +179,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenu7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icone/fornecedor.png"))); // NOI18N
         jMenu7.setText("Fornecedores");
 
-        jMenuItem18.setText("Ir para as opções:");
+        jMenuItem18.setText("Ir para as funções:");
         jMenuItem18.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem18ActionPerformed(evt);
@@ -193,7 +193,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenu5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icone/perfil-de-usuario.png"))); // NOI18N
         jMenu5.setText("Usuário");
 
-        jMenuItem13.setText("Ir para as opções:");
+        jMenuItem13.setText("Ir para as funções:");
         jMenuItem13.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -213,7 +213,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
 
-        jMenuItem2.setText("Ir para as opções:");
+        jMenuItem2.setText("Ir para as funções:");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem2ActionPerformed(evt);

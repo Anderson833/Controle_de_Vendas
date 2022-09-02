@@ -96,7 +96,7 @@ public class ClienteDao {
              
              //Fechando conexão ResultSet;
              rst.close();
-             
+    
              //Fechando conexão PreparedStatement;
             patm.close();
             

@@ -256,6 +256,7 @@ public class DetalheVendas extends javax.swing.JFrame {
         jLabel1.setText("Valor Total =");
         jLabel1.setAlignmentX(10.0F);
 
+        txtcodvenda.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
         txtcodvenda.setEnabled(false);
         txtcodvenda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
