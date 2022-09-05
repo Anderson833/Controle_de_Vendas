@@ -7,7 +7,7 @@ import java.util.Date;
 
 public class Data {
     
-    
+     // atributo
     private String data;
     
     

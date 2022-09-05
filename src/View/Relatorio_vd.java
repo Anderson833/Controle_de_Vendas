@@ -7,6 +7,7 @@ import Conexao.Conexao_BD;
 import Dao.RelatorioDao;
 import Model.Data;
 import Model.RelatorioModel;
+import java.awt.Color;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -33,11 +34,14 @@ public class Relatorio_vd extends javax.swing.JFrame {
        //Método para realizar as soma de investimento, lucro, e valor todal de todos produtos na tabela de investimento;
        RealizarOsCalculosEsetaValores();
        
+       //método para exibir o valor do capital
        rendimentoDoCapital();
        
+       // método para saber do lucro depois das despesas
        oLucroDepoisDasdespesas();
        
-       
+       //método para avisa existencia de danos
+       avisoDeDanos();
        
     
     }
@@ -505,13 +509,27 @@ public class Relatorio_vd extends javax.swing.JFrame {
         clique++;
         if(clique==3){
             operacoesParaDiaAtual();
+        }else if(clique==4){
+            clique=0;
+              //Método para visualizar relatorio;
+      visualizaRelatorio(); 
+        
+      
         }
         
-        
-        //Método para visualizar relatorio;
-      visualizaRelatorio();
     }//GEN-LAST:event_visualizarActionPerformed
-      //Método para visualizar todo Relatório;
+      //método para aviso de danos
+     public void avisoDeDanos(){     
+         //uma condição para verificar se o valor do capital está a baixo do investido.
+          if(capital<valorDeTodoInvestimento){
+              //informa a mensagem caso exista.
+             JOptionPane.showMessageDialog(null,"Em seus investimentos está havendo perda de "+def.format(valorDeTodoLucro));
+             labelLucro.setForeground(Color.red );
+         }else{
+           
+         }   
+     }
+//Método para visualizar todo Relatório;
     public void visualizaRelatorio(){
         
         DefaultTableModel modelo = (DefaultTableModel) tbRelatorio.getModel();

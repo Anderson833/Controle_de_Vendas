@@ -3,7 +3,6 @@ package View;
 import Conexao.Conexao_BD;
 import Dao.ClienteDao;
 import Dao.ComprovanteDao;
-import Dao.DataDao;
 import Dao.LucroDao;
 import Dao.ProdutoDao;
 import Dao.VendaDao;
